@@ -14,31 +14,31 @@
          <children>
             <TableView fx:id="customerTbl" layoutX="14.0" layoutY="48.0" prefHeight="200.0" prefWidth="335.0">
                <columns>
-                  <TableColumn prefWidth="75.0" text="C1" />
-                  <TableColumn prefWidth="75.0" text="C2" />
-                  <TableColumn prefWidth="75.0" text="C2" />
-                  <TableColumn prefWidth="109.0" text="C2" />
+                  <TableColumn prefWidth="99.0" text="Cust. Name" />
+                  <TableColumn prefWidth="98.0" text="Address" />
+                  <TableColumn prefWidth="53.0" text="# of App" />
+                  <TableColumn prefWidth="90.0" text="Next App" />
                </columns>
             </TableView>
             <TableView fx:id="customerAppTbl" layoutX="365.0" layoutY="47.0" prefHeight="200.0" prefWidth="335.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn prefWidth="75.0" text="App. ID" />
+                <TableColumn prefWidth="75.0" text="Location" />
                   <TableColumn prefWidth="75.0" text="C2" />
                   <TableColumn prefWidth="109.0" text="C2" />
               </columns>
             </TableView>
-            <RadioButton fx:id="monthViewRdBtn" layoutX="44.0" layoutY="18.0" mnemonicParsing="false" text="App. Month View" />
-            <RadioButton fx:id="weekViewRdBtn" layoutX="199.0" layoutY="18.0" mnemonicParsing="false" text="App. Week View" />
+            <RadioButton fx:id="monthViewRdBtn" layoutX="16.0" layoutY="17.0" mnemonicParsing="false" text="App. Month View" />
+            <RadioButton fx:id="weekViewRdBtn" layoutX="171.0" layoutY="17.0" mnemonicParsing="false" text="App. Week View" />
             <TableView fx:id="appMonthCal" layoutX="15.0" layoutY="290.0" prefHeight="215.0" prefWidth="686.0">
               <columns>
-                <TableColumn fx:id="monthMonCol" prefWidth="75.0" text="Mon" />
-                <TableColumn fx:id="monthTueCol" prefWidth="75.0" text="Tue" />
-                  <TableColumn fx:id="monthWedCol" prefWidth="75.0" text="Wed" />
-                  <TableColumn fx:id="monthThuCol" prefWidth="75.0" text="Thu" />
-                  <TableColumn fx:id="monthFriCol" prefWidth="75.0" text="Fri" />
-                  <TableColumn fx:id="monthSatCol" prefWidth="75.0" text="Sat" />
-                  <TableColumn fx:id="monthSunCol" prefWidth="75.0" text="Sun" />
+                <TableColumn fx:id="monthMonCol" minWidth="20.0" prefWidth="98.0" text="Mon" />
+                <TableColumn fx:id="monthTueCol" minWidth="20.0" prefWidth="98.0" text="Tue" />
+                  <TableColumn fx:id="monthWedCol" minWidth="20.0" prefWidth="98.0" text="Wed" />
+                  <TableColumn fx:id="monthThuCol" minWidth="20.0" prefWidth="98.0" text="Thu" />
+                  <TableColumn fx:id="monthFriCol" minWidth="20.0" prefWidth="98.0" text="Fri" />
+                  <TableColumn fx:id="monthSatCol" minWidth="20.0" prefWidth="98.0" text="Sat" />
+                  <TableColumn fx:id="monthSunCol" minWidth="20.0" prefWidth="98.0" text="Sun" />
               </columns>
             </TableView>
             <Button fx:id="exitBtn" layoutX="16.0" layoutY="513.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="86.0" text="Exit Program" />
@@ -46,9 +46,11 @@
             <Button fx:id="addCustomerBtn" layoutX="15.0" layoutY="257.0" mnemonicParsing="false" text="Add Customer" />
             <Button fx:id="addAppBtn" layoutX="366.0" layoutY="256.0" mnemonicParsing="false" text="Add App" />
             <Button fx:id="modAppBtn" layoutX="440.0" layoutY="256.0" mnemonicParsing="false" text="Modify App" />
+            <Button fx:id="deleteCustomerBtn" layoutX="236.0" layoutY="257.0" mnemonicParsing="false" text="Delete Customer" />
+            <Button fx:id="DeletAppBtn" layoutX="529.0" layoutY="256.0" mnemonicParsing="false" text="Delete Appointment" />
          </children>
       </AnchorPane>
-      <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="174.0" text="Database Management Tool" textAlignment="CENTER" textFill="#1317e8">
+      <Label layoutX="14.0" layoutY="10.0" prefHeight="17.0" prefWidth="174.0" text="Database Management Tool" textAlignment="CENTER" textFill="#1317e8">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
