@@ -20,19 +20,19 @@ public class DBConnection
     private static final String userName = "U04PCG";
     private static final String userPassword = "53688304534";
     private static final String driver = "com.mysql.jdbc.Driver";
-    static Connection conn;
+    public static Connection conn;
     
     public static void makeConnection() throws ClassNotFoundException, SQLException, Exception
     {
         Class.forName(driver);
         conn = (Connection) DriverManager.getConnection(db_Url, userName, userPassword);
         
-        System.out.println("Connection successfull");
+        System.out.println("DB Connection successfull");
     }
     
     public static void closeConnection() throws ClassNotFoundException, SQLException, Exception
     {
         conn.close();
-        System.out.println("Connection closed");
+        System.out.println(" DB Connection closed");
     }
 }

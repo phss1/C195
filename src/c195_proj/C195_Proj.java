@@ -14,13 +14,14 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import JDBC.DBConnection;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import JDBC.DBConnection;
+import java.sql.ResultSet;
 
-/**
- *
- * @author 39ds03d
- */
 public class C195_Proj extends Application
 {
     
@@ -31,34 +32,33 @@ public class C195_Proj extends Application
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        
-        /*Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
-        
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        
-        Scene scene = new Scene(root, 300, 250);
-        
-        primaryStage.setTitle("Hello World!");
-        primaryStage.setScene(scene);
-        primaryStage.show();*/
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) throws ClassNotFoundException, SQLException, Exception
+    public static void main(String[] args)
     {
-        DBConnection.makeConnection();
+        try
+        {
+            DBConnection.makeConnection();
+            
+            Statement stmt = DBConnection.conn.createStatement();
+            String sqlStatement = "select * from employee_tbl";
+            ResultSet result = stmt.executeQuery(sqlStatement);
+            
+            while(result.next())
+            {
+                System.out.print(result.getInt("EmployeeID") + ", ");
+                System.out.print(result.getString("EmployeeName") + ", ");
+                System.out.print(result.getString("Department") + ", ");
+                System.out.print(result.getDate("HireDate"));
+                System.out.print(result.getTime("HireDate"));
+                System.out.println();
+            }
+        }
+        catch (Exception ex)
+        {
+            System.out.println("Error " + ex.getMessage());
+        }
+        
         launch(args);
     }
-    
 }
