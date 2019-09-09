@@ -21,6 +21,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import JDBC.DBConnection;
 import java.sql.ResultSet;
+import java.util.Scanner;
 
 public class C195_Proj extends Application
 {
@@ -39,6 +40,14 @@ public class C195_Proj extends Application
         try
         {
             DBConnection.makeConnection();
+            
+            Scanner keyboard = new Scanner(System.in);
+            int employeeId;
+            String employeeName, department, hireDate;
+            
+            System.out.print("Enter employee name: ");
+            employeeName = keyboard.nextLine();
+            
             
             Statement stmt = DBConnection.conn.createStatement();
             String sqlStatement = "select * from employee_tbl";
