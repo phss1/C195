@@ -72,15 +72,14 @@ public class UtilityMethods
     public ResultSet runSqlQuery(String query) throws SQLException
     {
         Statement stmt = DBConnection.conn.createStatement();
-        String sqlStatement = "select * from user";
-        ResultSet result = stmt.executeQuery(sqlStatement);
+        ResultSet result = stmt.executeQuery(query);
         
         return result;
     }
     
     public void recordUserLogin(String logEntry) throws FileNotFoundException, IOException
     {
-        String fileName = "log.txt", item;
+        String fileName = ".\\src\\Utilities\\log.txt", item;
         FileWriter fWriter = new FileWriter(fileName, true);
         PrintWriter outputFile = new PrintWriter(fWriter);
         
@@ -89,7 +88,6 @@ public class UtilityMethods
             item = logEntry;
             outputFile.println(item);
         }
-        
         outputFile.close();
     }
     

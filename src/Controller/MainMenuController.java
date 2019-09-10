@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -114,18 +115,36 @@ public class MainMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        
+        
         try
         {
             ResultSet result = utility.runSqlQuery("Select customer.customerId, customer.customerName, address.address " +
                     "from customer, address " +
                     "where customer.addressId = address.addressId;");
+            ObservableList<String> mainMenuCustomerList = FXCollections.observableArrayList(result.toString());
             
-            List<String> listOfSomething;
-            int index=-1;
-            while (result.next())
+            /*index=-1;
+            while(result.next())
             {
+                index++;
+                String currentResultRow = (result.getRow()).toString();
+                mainMenuCustomerList.add(e);
                 
+            }*/
+            
+            
+            System.out.println("First row in mainMenuCustomerList is: " + mainMenuCustomerList.get(0));
+            /*
+            //int index=-1;
+            //while (result.next())
+            //{
+                String customerId = Integer.toString(result.getInt("customerId"));
+                String customerName = result.getString("customerName");
+                String address = result.getString("address");
+
             }
+            
             
             Customer.setAllCustomers((ObservableList<Customer>) result);
             System.out.println(Customer.getAllCustomers().get(0));
@@ -133,11 +152,11 @@ public class MainMenuController implements Initializable {
             customerTbl.setItems(Customer.getAllCustomers());
             customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
             customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-            customerAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+            customerAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));*/
         }
         catch(Exception e)
         {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }    
 

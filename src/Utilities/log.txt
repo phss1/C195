@@ -1,0 +1,4 @@
+2019-09-10 12:40:32.634 : User ***test*** logged into the application.
+2019-09-10 12:40:58.214 : User ***test*** logged into the application.
+2019-09-10 13:15:48.493 : User ***test*** logged into the application.
+2019-09-10 13:17:32.428 : User ***test*** logged into the application.
