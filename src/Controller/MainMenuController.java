@@ -1,29 +1,34 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Controller;
 
+import Utilities.UtilityMethods;
+import Model.*;
+import java.io.IOException;
+import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import Model.*;
-import Controller.*;
-import JDBC.DBConnection;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Optional;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class MainMenuController
-{
-    UtilityMethods utility = new UtilityMethods();
-    Stage stage;
-    Parent scene;
-    
+public class MainMenuController implements Initializable {
+
     @FXML
     private TableView<Customer> customerTbl;
 
@@ -101,11 +106,48 @@ public class MainMenuController
 
     @FXML
     private Button deleteAppBtn;
-
-    @FXML
-    void onActionAddAppBtn(ActionEvent event)
+    
+    UtilityMethods utility = new UtilityMethods();
+    Stage stage;
+    Parent scene;
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb)
     {
+        try
+        {
+            ResultSet result = utility.runSqlQuery("Select customer.customerId, customer.customerName, address.address " +
+                    "from customer, address " +
+                    "where customer.addressId = address.addressId;");
+            
+            List<String> listOfSomething;
+            int index=-1;
+            while (result.next())
+            {
+                
+            }
+            
+            Customer.setAllCustomers((ObservableList<Customer>) result);
+            System.out.println(Customer.getAllCustomers().get(0));
 
+            customerTbl.setItems(Customer.getAllCustomers());
+            customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+            customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+            customerAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+    }    
+
+        @FXML
+    void onActionAddAppBtn(ActionEvent event) throws IOException
+    {
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("/View/AddAppointment.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
     @FXML
@@ -137,15 +179,21 @@ public class MainMenuController
     }
 
     @FXML
-    void onActionModAppBtn(ActionEvent event)
+    void onActionModAppBtn(ActionEvent event) throws IOException
     {
-
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("/View/ModifyCustomer.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
     @FXML
-    void onActionModCustomerBtn(ActionEvent event)
+    void onActionModCustomerBtn(ActionEvent event) throws IOException
     {
-
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("/View/ModifyCustomer.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
     @FXML
@@ -159,5 +207,5 @@ public class MainMenuController
     {
         monthViewRdBtn.setSelected(false);
     }
-
+    
 }

@@ -7,6 +7,8 @@ package Model;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -21,8 +23,10 @@ public class Customer
     private Date createDate;
     private String createdBy;
     private Timestamp lastUpdate;
-    private String lastUpdatedBy;
-    
+    private String lastUpdatedBy;    
+    private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+    private static ObservableList<Customer> allCustomersFiltered = FXCollections.observableArrayList();
+
     public Customer(int customerId, String customerName, int addressId, int active, Date createDate, String createdBy,
                         Timestamp lastUpdate, String lastUpdatedBy)
     {
@@ -34,6 +38,26 @@ public class Customer
         this.createdBy = createdBy;
         this.lastUpdate = lastUpdate;
         this.lastUpdatedBy = lastUpdatedBy;
+    }
+    
+    public static ObservableList<Customer> getAllCustomersFiltered()
+    {
+        return allCustomersFiltered;
+    }
+
+    public static void setAllCustomersFiltered(ObservableList<Customer> allCustomersFiltered)
+    {
+        Customer.allCustomersFiltered = allCustomersFiltered;
+    }
+    
+    public static ObservableList<Customer> getAllCustomers()
+    {
+        return allCustomers;
+    }
+
+    public static void setAllCustomers(ObservableList<Customer> allCustomers)
+    {
+        Customer.allCustomers = allCustomers;
     }
 
     public int getCustomerId()

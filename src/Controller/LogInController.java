@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Utilities.UtilityMethods;
 import java.net.URL;
 import java.util.Locale;
 import java.util.Optional;
@@ -28,6 +29,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import Model.*;
+import java.io.IOException;
 
 /**
  * FXML Controller class
@@ -74,11 +76,9 @@ public class LogInController implements Initializable
     }
     
     @FXML
-    void onActionLogInBtn(ActionEvent event) throws SQLException, Exception
+    void onActionLogInBtn(ActionEvent event) throws SQLException, IOException
     {
-        Statement stmt = DBConnection.conn.createStatement();
-        String sqlStatement = "select * from user";
-        ResultSet result = stmt.executeQuery(sqlStatement);
+        ResultSet result = utility.runSqlQuery("select * from user");
 
         while(result.next())
         {

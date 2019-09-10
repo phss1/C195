@@ -43,8 +43,8 @@
             <Button fx:id="exitBtn" layoutX="16.0" layoutY="513.0" mnemonicParsing="false" onAction="#onActionExitBtn" prefHeight="25.0" prefWidth="86.0" text="Exit Program" />
             <Button fx:id="modCustomerBtn" layoutX="118.0" layoutY="257.0" mnemonicParsing="false" onAction="#onActionModCustomerBtn" text="Modify Customer" />
             <Button fx:id="addCustomerBtn" layoutX="15.0" layoutY="257.0" mnemonicParsing="false" onAction="#onActionAddCustomerBtn" text="Add Customer" />
-            <Button fx:id="addAppBtn" layoutX="366.0" layoutY="256.0" mnemonicParsing="false" onAction="#onActionAddAppBtn" text="Add App" />
-            <Button fx:id="modAppBtn" layoutX="440.0" layoutY="256.0" mnemonicParsing="false" onAction="#onActionModAppBtn" text="Modify App" />
+            <Button fx:id="addAppBtn" layoutX="366.0" layoutY="256.0" mnemonicParsing="false" onAction="#onActionAddAppBtn" text="Add Appt." />
+            <Button fx:id="modAppBtn" layoutX="440.0" layoutY="256.0" mnemonicParsing="false" onAction="#onActionModAppBtn" text="Modify Appt." />
             <Button fx:id="deleteCustomerBtn" layoutX="236.0" layoutY="257.0" mnemonicParsing="false" onAction="#onActionDeleteCustomerBtn" text="Delete Customer" />
             <Button fx:id="deleteAppBtn" layoutX="529.0" layoutY="256.0" mnemonicParsing="false" onAction="#onActionDeleteAppBtn" text="Delete Appointment" />
          </children>
