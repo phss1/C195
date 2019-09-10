@@ -10,10 +10,6 @@ import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- *
- * @author 39ds03d
- */
 public class DBConnection
 {
     private static final String databaseName = "U04PCG";

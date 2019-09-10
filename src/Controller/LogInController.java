@@ -30,6 +30,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import Model.*;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class LogInController implements Initializable
 {
@@ -81,7 +82,6 @@ public class LogInController implements Initializable
                     passwordTxtFld.getText().equals(result.getString("password")))
             {                
                 String currentDateTime = utility.createTimeStamp();
-                System.out.println(currentDateTime);
                 utility.recordUserLogin(currentDateTime + " : User ***" + userNameTxtFld.getText() + "*** logged " +
                                             "into the application.");
                 

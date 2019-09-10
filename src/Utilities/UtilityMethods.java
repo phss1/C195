@@ -8,7 +8,9 @@ package Utilities;
 import JDBC.DBConnection;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -76,22 +78,19 @@ public class UtilityMethods
         return result;
     }
     
-    public void recordUserLogin(String logEntry) throws FileNotFoundException
+    public void recordUserLogin(String logEntry) throws FileNotFoundException, IOException
     {
-        try
+        String fileName = "log.txt", item;
+        FileWriter fWriter = new FileWriter(fileName, true);
+        PrintWriter outputFile = new PrintWriter(fWriter);
+        
+        for(int i=0; i<1; i++)
         {
-            Logger logger = Logger.getLogger("UserLog"); 
-            FileHandler handler = new FileHandler("C:\\Users\\39ds03d\\Documents\\WGU\\C195\\C195_Proj\\src\\Utilities\\log.txt");
-            logger.addHandler(handler);
-            SimpleFormatter formatter = new SimpleFormatter();  
-            handler.setFormatter(formatter);
-            logger.info("\n" + logEntry); 
-            
+            item = logEntry;
+            outputFile.println(item);
         }
-        catch(IOException e)
-        {
-            System.out.println(e);
-        }
+        
+        outputFile.close();
     }
     
     public String createTimeStamp()
