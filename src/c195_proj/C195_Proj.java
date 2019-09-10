@@ -35,11 +35,14 @@ public class C195_Proj extends Application
         stage.show();
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws SQLException, Exception
     {
-        try
+        DBConnection.makeConnection();
+        launch(args);
+        
+        /*try
         {
-            DBConnection.makeConnection();
+            
             
             Scanner keyboard = new Scanner(System.in);
             int employeeId;
@@ -66,8 +69,8 @@ public class C195_Proj extends Application
         catch (Exception ex)
         {
             System.out.println("Error " + ex.getMessage());
-        }
+        }*/
         
-        launch(args);
+        
     }
 }

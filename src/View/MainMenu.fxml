@@ -8,28 +8,27 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="594.0" prefWidth="744.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="594.0" prefWidth="744.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainMenuController">
    <children>
       <AnchorPane layoutX="14.0" layoutY="31.0" prefHeight="542.0" prefWidth="720.0">
          <children>
             <TableView fx:id="customerTbl" layoutX="14.0" layoutY="48.0" prefHeight="200.0" prefWidth="335.0">
                <columns>
-                  <TableColumn prefWidth="99.0" text="Cust. Name" />
-                  <TableColumn prefWidth="98.0" text="Address" />
-                  <TableColumn prefWidth="53.0" text="# of App" />
-                  <TableColumn prefWidth="90.0" text="Next App" />
+                  <TableColumn fx:id="customerIdCol" prefWidth="42.0" text="ID" />
+                  <TableColumn fx:id="customerNameCol" prefWidth="105.0" text="Customer Name" />
+                  <TableColumn fx:id="customerAddressCol" prefWidth="186.0" text="Address" />
                </columns>
             </TableView>
             <TableView fx:id="customerAppTbl" layoutX="365.0" layoutY="47.0" prefHeight="200.0" prefWidth="335.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="App. ID" />
-                <TableColumn prefWidth="75.0" text="Location" />
-                  <TableColumn prefWidth="75.0" text="C2" />
-                  <TableColumn prefWidth="109.0" text="C2" />
+                <TableColumn fx:id="appCustomerIdCol" prefWidth="57.0" text="Cust. ID" />
+                <TableColumn fx:id="appTitleCol" prefWidth="93.0" text="App. Title" />
+                  <TableColumn fx:id="appTypeCol" prefWidth="75.0" text="App. Type" />
+                  <TableColumn fx:id="appLocationCol" prefWidth="109.0" text="Location" />
               </columns>
             </TableView>
-            <RadioButton fx:id="monthViewRdBtn" layoutX="16.0" layoutY="17.0" mnemonicParsing="false" text="App. Month View" />
-            <RadioButton fx:id="weekViewRdBtn" layoutX="171.0" layoutY="17.0" mnemonicParsing="false" text="App. Week View" />
+            <RadioButton fx:id="monthViewRdBtn" layoutX="16.0" layoutY="17.0" mnemonicParsing="false" onAction="#onActionMonthViewRdBtn" text="App. Month View" />
+            <RadioButton fx:id="weekViewRdBtn" layoutX="171.0" layoutY="17.0" mnemonicParsing="false" onAction="#onActionWeekViewRdBtn" text="App. Week View" />
             <TableView fx:id="appMonthCal" layoutX="15.0" layoutY="290.0" prefHeight="215.0" prefWidth="686.0">
               <columns>
                 <TableColumn fx:id="monthMonCol" minWidth="20.0" prefWidth="98.0" text="Mon" />
