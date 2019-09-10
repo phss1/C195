@@ -12,8 +12,13 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -26,8 +31,6 @@ import javafx.stage.Modality;
  */
 public class UtilityMethods
 {
-    ObservableList<String> tempLogFileData = FXCollections.observableArrayList();
-    
     public boolean displayLocaleError(String alertType, String title, String header, String message)
     {
         Optional<ButtonType> result;
@@ -73,22 +76,27 @@ public class UtilityMethods
         return result;
     }
     
-    public void recordUserLogin(String user, String timeStamp) throws FileNotFoundException
+    public void recordUserLogin(String logEntry) throws FileNotFoundException
     {
         try
         {
-            File logfile = new File("C:\\Users\\39ds03d\\Documents\\WGU\\C195\\C195_Proj\\src\\Utilities\\log.txt");
-            Scanner inputFile = new Scanner(logfile);
+            Logger logger = Logger.getLogger("UserLog"); 
+            FileHandler handler = new FileHandler("C:\\Users\\39ds03d\\Documents\\WGU\\C195\\C195_Proj\\src\\Utilities\\log.txt");
+            logger.addHandler(handler);
+            SimpleFormatter formatter = new SimpleFormatter();  
+            handler.setFormatter(formatter);
+            logger.info("\n" + logEntry); 
             
-            while(inputFile.hasNext())
-            {
-                tempLogFileData.add("\nUser **" + user + "** logged into program at: " + timeStamp);
-            }
-            //
         }
         catch(IOException e)
         {
             System.out.println(e);
         }
+    }
+    
+    public String createTimeStamp()
+    {
+        Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+        return currentTimestamp.toString();
     }
 }
