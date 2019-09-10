@@ -8,9 +8,22 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import Model.*;
 import Controller.*;
+import JDBC.DBConnection;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Optional;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.ButtonType;
+import javafx.stage.Stage;
 
-public class MainMenuController {
-
+public class MainMenuController
+{
+    UtilityMethods utility = new UtilityMethods();
+    Stage stage;
+    Parent scene;
+    
     @FXML
     private TableView<Customer> customerTbl;
 
@@ -96,9 +109,12 @@ public class MainMenuController {
     }
 
     @FXML
-    void onActionAddCustomerBtn(ActionEvent event)
+    void onActionAddCustomerBtn(ActionEvent event) throws IOException
     {
-
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("/View/AddCustomer.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
     @FXML
@@ -114,9 +130,10 @@ public class MainMenuController {
     }
 
     @FXML
-    void onActionExitBtn(ActionEvent event)
+    void onActionExitBtn(ActionEvent event) throws SQLException, Exception
     {
-
+        boolean result = utility.displayLocaleError("CONFIRMATION", "Exit", "Exit Program", "Are you sure you want to close the program?");
+        String test = result ? utility.closeProgram() : "";
     }
 
     @FXML

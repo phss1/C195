@@ -39,38 +39,5 @@ public class C195_Proj extends Application
     {
         DBConnection.makeConnection();
         launch(args);
-        
-        /*try
-        {
-            
-            
-            Scanner keyboard = new Scanner(System.in);
-            int employeeId;
-            String employeeName, department, hireDate;
-            
-            System.out.print("Enter employee name: ");
-            employeeName = keyboard.nextLine();
-            
-            
-            Statement stmt = DBConnection.conn.createStatement();
-            String sqlStatement = "select * from employee_tbl";
-            ResultSet result = stmt.executeQuery(sqlStatement);
-            
-            while(result.next())
-            {
-                System.out.print(result.getInt("EmployeeID") + ", ");
-                System.out.print(result.getString("EmployeeName") + ", ");
-                System.out.print(result.getString("Department") + ", ");
-                System.out.print(result.getDate("HireDate"));
-                System.out.print(result.getTime("HireDate"));
-                System.out.println();
-            }
-        }
-        catch (Exception ex)
-        {
-            System.out.println("Error " + ex.getMessage());
-        }*/
-        
-        
     }
 }

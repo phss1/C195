@@ -27,6 +27,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import Model.*;
 
 /**
  * FXML Controller class
@@ -37,6 +38,9 @@ public class LogInController implements Initializable
 {
     Locale userLocale = Locale.getDefault();
     boolean userLocaleEqualsEng = userLocale.toString().contains("en_US");
+    UtilityMethods utility = new UtilityMethods();
+    Stage stage;
+    Parent scene;
     
     @FXML
     private TextField userNameTxtFld;
@@ -80,62 +84,39 @@ public class LogInController implements Initializable
         {
             if(userNameTxtFld.getText().equals(result.getString("userName")) &&
                     passwordTxtFld.getText().equals(result.getString("password")))
-            {
-                System.out.println("username/passwords matched values in DB.");
-                
-                Stage stage = new Stage();
-                Parent root = FXMLLoader.load(getClass().getResource("/View/MainMenu.fxml"));
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
+            {                
+                stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+                scene = FXMLLoader.load(getClass().getResource("/View/MainMenu.fxml"));
+                stage.setScene(new Scene(scene));
                 stage.show();
             }
             else
             {
                 if(userLocaleEqualsEng)
                 {
-                    displayLocaleError("error", "", "Entry Error", "Either username/password was incorrect or null.");
+                    utility.displayLocaleError("error", "", "Entry Error", "Either username/password was incorrect or null.");
                 }
                 else
                 {
-                    displayLocaleError("error", "", "Fehler beim Eintragung", "Entwieder die Bunutzerinformation war Falsch eingetragen order nichts in den Textfelden geschrieben.");
+                    utility.displayLocaleError("error", "", "Fehler beim Eintragung", "Entwieder die Bunutzerinformation war Falsch eingetragen order nichts in den Textfelden geschrieben.");
                 }
             }
         }
     }
     
-    public void displayLocaleError(String alertType, String title, String header, String message)
-    {
-        if(alertType.equals("CONFIRMATION"))
-        {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.initModality(Modality.NONE);
-            alert.setTitle(title);
-            alert.setHeaderText(header);
-            alert.setContentText(message);
-            Optional<ButtonType> result = alert.showAndWait();
-        }
-        else
-        {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.initModality(Modality.NONE);
-            alert.setTitle(title);
-            alert.setHeaderText(header);
-            alert.setContentText(message);
-            Optional<ButtonType> result = alert.showAndWait();
-        }
-    }
-    
     @FXML
-    void onActionCancelBtn(ActionEvent event)
+    void onActionCancelBtn(ActionEvent event) throws Exception
     {
         if(userLocaleEqualsEng)
         {
-            displayLocaleError("CONFIRMATION", "Exit", "Exit Program", "Are you sure you want to close the program?");
+            boolean result = utility.displayLocaleError("CONFIRMATION", "Exit", "Exit Program", "Are you sure you want to close the program?");
+            String test = result ? utility.closeProgram() : "";
         }
         else
         {
-            displayLocaleError("error", "CONFIRMATION", "Program Schließen", "Möchten Sie wirklich das Program beended?");
+            boolean result = utility.displayLocaleError("error", "CONFIRMATION", "Program Schließen", "Möchten Sie wirklich das Program beended?");
+            String test = result ? utility.closeProgram() : "";
         }
-        System.exit(0);
+        
     }
 }
