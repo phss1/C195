@@ -18,26 +18,38 @@ public class Customer
 {
     private int customerId;
     private String customerName;
-    private int addressId;
-    private int active;
-    private Date createDate;
-    private String createdBy;
-    private Timestamp lastUpdate;
-    private String lastUpdatedBy;    
+    private String address;
+    //private String address2;
+    //private String postalCode;
+    //private String phone;
+    //private int active;
+    //private Date createDate;
+    //private String createdBy;
+    //private Timestamp lastUpdate;
+    //private String lastUpdatedBy;    
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
     private static ObservableList<Customer> allCustomersFiltered = FXCollections.observableArrayList();
 
-    public Customer(int customerId, String customerName, int addressId, int active, Date createDate, String createdBy,
-                        Timestamp lastUpdate, String lastUpdatedBy)
+    public Customer(int customerId, String customerName, String address)//, String address2,
+            //String postalCode, String phone), int active, Date createDate, String createdBy,
+            //Timestamp lastUpdate, String lastUpdatedBy)
     {
         this.customerId = customerId;
         this.customerName = customerName;
-        this.addressId = addressId;
+        this.address = address;
+        /*this.address2 = address2;
+        this.postalCode = postalCode;
+        this.phone = phone;
         this.active = active;
         this.createDate = createDate;
         this.createdBy = createdBy;
         this.lastUpdate = lastUpdate;
-        this.lastUpdatedBy = lastUpdatedBy;
+        this.lastUpdatedBy = lastUpdatedBy;*/
+    }
+    
+    public static void addCustomer(Customer customer)
+    {
+         allCustomers.add(customer);
     }
     
     public static ObservableList<Customer> getAllCustomersFiltered()
@@ -80,17 +92,17 @@ public class Customer
         this.customerName = customerName;
     }
 
-    public int getAddressId()
+    public String getAddress()
     {
-        return addressId;
+        return address;
     }
 
-    public void setAddressId(int addressId)
+    public void setAddress(String address)
     {
-        this.addressId = addressId;
+        this.address = address;
     }
 
-    public int getActive()
+    /*public int getActive()
     {
         return active;
     }
@@ -138,5 +150,5 @@ public class Customer
     public void setLastUpdatedBy(String lastUpdatedBy)
     {
         this.lastUpdatedBy = lastUpdatedBy;
-    }
+    }*/
 }
