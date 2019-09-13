@@ -133,6 +133,10 @@ public class MainMenuController implements Initializable
         }
         
         appointmentTbl.setItems(selectedCustomer.getAllCustomerAppointments());
+        appCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        appTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        appTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        appLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
     }    
 
         @FXML
