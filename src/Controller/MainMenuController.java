@@ -33,7 +33,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class MainMenuController implements Initializable {
+public class MainMenuController implements Initializable
+{
 
     @FXML
     private TableView<Customer> customerTbl;
@@ -119,34 +120,11 @@ public class MainMenuController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb)
-    {
-        try
-        {
-            ResultSet result = utility.runSqlQuery("Select customer.customerId, customer.customerName, address.address " +
-                    "from customer, address " +
-                    "where customer.addressId = address.addressId;");
-            
-            while(result.next())
-            {
-                int customerId = result.getInt("customerId");
-                String customerName = result.getString("customerName");
-                String address = result.getString("address");
-                
-                Customer customer = new Customer(customerId, customerName, address);
-                Customer.addCustomer(customer);
-            }
-            
-            
-            
-            customerTbl.setItems(Customer.getAllCustomers());
-            customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-            customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-            customerAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
-        }
-        catch(Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
+    {        
+        customerTbl.setItems(Customer.getAllCustomers());
+        customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        customerAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
     }    
 
         @FXML
@@ -161,10 +139,7 @@ public class MainMenuController implements Initializable {
     @FXML
     void onActionAddCustomerBtn(ActionEvent event) throws IOException
     {
-        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-        scene = FXMLLoader.load(getClass().getResource("/View/AddCustomer.fxml"));
-        stage.setScene(new Scene(scene));
-        stage.show();
+        utility.changeGuiScreen(event, "AddCustomer");
     }
 
     @FXML
@@ -189,10 +164,7 @@ public class MainMenuController implements Initializable {
     @FXML
     void onActionModAppBtn(ActionEvent event) throws IOException
     {
-        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-        scene = FXMLLoader.load(getClass().getResource("/View/ModifyCustomer.fxml"));
-        stage.setScene(new Scene(scene));
-        stage.show();
+        
     }
 
     @FXML

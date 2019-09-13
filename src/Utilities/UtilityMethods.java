@@ -23,9 +23,16 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ListView;
 import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  *
@@ -33,6 +40,39 @@ import javafx.stage.Modality;
  */
 public class UtilityMethods
 {
+    Stage stage;
+    Parent scene;
+    
+    public int createNewId(String tableName) throws SQLException
+    {
+        ResultSet result = runSqlQuery("Select * from " + tableName + "Id");
+        
+        return 1;
+    }
+    
+    public ObservableList<String> prepareComboBxStrings(ResultSet results, String columnName) throws SQLException
+    {
+        //ListView<String> listView = new ListView<String>();
+        ObservableList<String> tempObsList = FXCollections.observableArrayList();
+        while(results.next())
+        {
+            String item = results.getString(columnName);
+            tempObsList.add(item);
+        }
+        //listView.setItems(tempObsList);
+        
+        //return listView;
+        return tempObsList;
+    }
+    
+    public void changeGuiScreen(ActionEvent event, String viewName) throws IOException
+    {
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("/View/" + viewName + ".fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
+    
     public boolean displayLocaleError(String alertType, String title, String header, String message)
     {
         Optional<ButtonType> result;

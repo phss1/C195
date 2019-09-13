@@ -5,6 +5,8 @@
  */
 package Controller;
 
+import Utilities.UtilityMethods;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -41,6 +43,8 @@ public class ModifyCustomerController implements Initializable
     private Button cancelBtn;
     @FXML
     private Button saveBtn;
+    
+    UtilityMethods utility = new UtilityMethods();
 
     public void initialize(URL url, ResourceBundle rb)
     {
@@ -58,8 +62,13 @@ public class ModifyCustomerController implements Initializable
     }
 
     @FXML
-    private void onActionCancelBtn(ActionEvent event)
+    private void onActionCancelBtn(ActionEvent event) throws IOException
     {
+        boolean result = utility.displayLocaleError("CONFIRMATION", "Cancel", "Close Window", "Are you sure you want to exit adding a new customer?");
+        if(result)
+        {
+            utility.changeGuiScreen(event, "MainMenu");
+        }
     }
 
     @FXML
