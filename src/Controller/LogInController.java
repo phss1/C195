@@ -80,10 +80,13 @@ public class LogInController implements Initializable
         {
             if(userNameTxtFld.getText().equals(result.getString("userName")) &&
                     passwordTxtFld.getText().equals(result.getString("password")))
-            {                
+            {    
                 String currentDateTime = utility.createTimeStamp();
                 utility.recordUserLogin(currentDateTime + " : User ***" + userNameTxtFld.getText() + "*** logged " +
                                             "into the application.");
+                
+                String sqlQuery = "update user set lastUpdate = now() where userId = " + result.getInt("userId");
+                utility.runUpdateSqlQuery(sqlQuery);
                 
                 stage = (Stage)((Button)event.getSource()).getScene().getWindow();
                 scene = FXMLLoader.load(getClass().getResource("/View/MainMenu.fxml"));

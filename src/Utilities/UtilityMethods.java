@@ -117,6 +117,12 @@ public class UtilityMethods
         return result;
     }
     
+    public void runUpdateSqlQuery(String query) throws SQLException
+    {
+        Statement stmt = DBConnection.conn.createStatement();
+        stmt.executeUpdate(query);
+    }
+    
     public void recordUserLogin(String logEntry) throws FileNotFoundException, IOException
     {
         String fileName = ".\\src\\Utilities\\log.txt", item;

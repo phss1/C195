@@ -5,7 +5,10 @@
  */
 package Model;
 
+import Utilities.UtilityMethods;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 /**
@@ -14,6 +17,8 @@ import java.sql.Timestamp;
  */
 public class User
 {
+    UtilityMethods utility = new UtilityMethods();
+    
     private int userId;
     private String userName;
     private String password;
@@ -34,6 +39,19 @@ public class User
         this.createdBy = createdBy;
         this.lastUpdate = lastUpdate;
         this.lastUpdatedBy = lastUpdatedBy;
+    }
+    
+    public String getCurrentUser() throws SQLException
+    {
+        ResultSet results = utility.runSqlQuery("select * from user");
+        int resultItems = results.getRow();
+        
+        for(int i = 0; i < resultItems; i++)
+        {
+            
+        }
+        
+        return "";
     }
 
     public int getUserId()

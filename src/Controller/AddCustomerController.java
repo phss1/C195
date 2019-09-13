@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.*;
 import Utilities.UtilityMethods;
 import java.io.IOException;
 import java.net.URL;
@@ -60,24 +61,11 @@ public class AddCustomerController implements Initializable
             ObservableList<String> countryObsList = utility.prepareComboBxStrings(countryResults, "country");
             countryComboBx.setItems(countryObsList);
             countryComboBx.setValue(countryObsList.get(0));
-            
         }
         catch(SQLException ex)
         {
             Logger.getLogger(AddCustomerController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }    
-
-    @FXML
-    void onActionCityComboBx(ActionEvent event)
-    {
-
-    }
-
-    @FXML
-    void onActionCountryComboBx(ActionEvent event)
-    {
-
     }
 
     @FXML
@@ -93,6 +81,10 @@ public class AddCustomerController implements Initializable
     @FXML
     private void onActionSaveBtn(ActionEvent event)
     {
+        String customerName = nameTxtLbl.getText();
+        String address = addressTxtLbl.getText();
         
+        //Customer customer = new Customer(customerId, customerName, address);
+        //Customer.addCustomer(customer);
     }
 }
