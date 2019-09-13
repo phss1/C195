@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
@@ -42,12 +43,69 @@ public class UtilityMethods
 {
     Stage stage;
     Parent scene;
+    private static int currentUserId;
+    
+    public String buildSqlQueryEnding() throws SQLException
+    {
+        String userName = getCurLoggedInUserName();
+        String sqlQueryEnding = "now(), \"" +  userName + "\", now(), \"" + userName + "\");";
+        
+        return sqlQueryEnding;
+    }
+    
+    public int getIdFromCityName(String cityName) throws SQLException
+    {
+        ResultSet cityNameResults = runSqlQuery(("select cityId from city where city = \"" + cityName + "\";").toString());
+        int cityId = 0;
+        while(cityNameResults.next())
+        {
+            cityId = cityNameResults.getInt("cityId");
+        }
+        
+        return cityId;
+    }
+    
+    public static int getCurrentUserId()
+    {
+        return currentUserId;
+    }
+    
+    public String getCurLoggedInUserName() throws SQLException
+    {
+        String sqlCurrentUsrQuery = ("select userName from user where userId = " + UtilityMethods.getCurrentUserId() + ";").toString();
+        ResultSet currentUserData = runSqlQuery(sqlCurrentUsrQuery);
+        String currentUser = null;
+        
+        while(currentUserData.next())
+        {
+            currentUser = currentUserData.getString("userName");
+        }
+        
+        return currentUser;
+    }
+
+    public void setCurrentUserId(int currentUserId)
+    {
+        UtilityMethods.currentUserId = currentUserId;
+    }
     
     public int createNewId(String tableName) throws SQLException
     {
         ResultSet result = runSqlQuery("Select * from " + tableName + "Id");
         
         return 1;
+    }
+    
+    public int getSqlTableRowCount(ResultSet resultSet) throws SQLException
+    {
+        int itemTotalCount = 1;
+        while(resultSet.next())
+        {
+            itemTotalCount++;
+            System.out.println(itemTotalCount);
+        }
+        
+        return itemTotalCount;
     }
     
     public ObservableList<String> prepareComboBxStrings(ResultSet results, String columnName) throws SQLException

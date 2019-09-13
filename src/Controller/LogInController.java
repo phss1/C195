@@ -86,7 +86,7 @@ public class LogInController implements Initializable
                                             "into the application.");
                 
                 String sqlQuery = "update user set lastUpdate = now() where userId = " + result.getInt("userId");
-                utility.runUpdateSqlQuery(sqlQuery);
+                utility.setCurrentUserId(result.getInt("userId"));
                 
                 stage = (Stage)((Button)event.getSource()).getScene().getWindow();
                 scene = FXMLLoader.load(getClass().getResource("/View/MainMenu.fxml"));

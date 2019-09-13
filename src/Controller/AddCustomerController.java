@@ -79,10 +79,33 @@ public class AddCustomerController implements Initializable
     }
 
     @FXML
-    private void onActionSaveBtn(ActionEvent event)
+    private void onActionSaveBtn(ActionEvent event) throws SQLException
     {
-        String customerName = nameTxtLbl.getText();
+        ResultSet addressResults = utility.runSqlQuery("select * from address");
+        int newAddId =  utility.getSqlTableRowCount(addressResults);
         String address = addressTxtLbl.getText();
+        String address2 = address2TxtLbl.getText();
+        int cityId = utility.getIdFromCityName(cityComboBx.getSelectionModel().getSelectedItem());
+        String postalCode = postalCodeTxtLbl.getText();
+        String phone = phoneTxtLbl.getText();
+        
+        String sqlNewAddQuery = "insert into address(addressId, address, address2, cityId, postalCode, phone, "
+                                    + "createDate, createdBy, lastUpdate, lastUpdateBy)"
+                                    + " values(" + newAddId + ", \"" + address + "\", \"" + address2 + "\", " + cityId
+                                    + ", \"" + postalCode + "\", \"" + phone + "\", " + utility.buildSqlQueryEnding();
+        System.out.println(sqlNewAddQuery);
+               
+        
+        String customerName = nameTxtLbl.getText();
+        ResultSet customerResults = utility.runSqlQuery("select * from customer");
+        int newCustId =  utility.getSqlTableRowCount(customerResults);
+        String userName = utility.getCurLoggedInUserName();
+        String sqlNewCustQuery = "insert into customer(customerId, customerName, addressId, createDate, createdBy,"
+                                    + "lastUpdate, lastUpdateBy) values("
+                                    + newCustId + ", \"" + customerName + "\", \"" + newAddId + "\", "
+                                    + "1, " + utility.buildSqlQueryEnding();
+        
+        System.out.println(sqlNewCustQuery);
         
         //Customer customer = new Customer(customerId, customerName, address);
         //Customer.addCustomer(customer);

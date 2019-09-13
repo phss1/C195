@@ -10,41 +10,19 @@ import java.sql.Timestamp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-/**
- *
- * @author 39ds03d
- */
 public class Customer
 {
     private int customerId;
     private String customerName;
-    private String address;
-    //private String address2;
-    //private String postalCode;
-    //private String phone;
-    //private int active;
-    //private Date createDate;
-    //private String createdBy;
-    //private Timestamp lastUpdate;
-    //private String lastUpdatedBy;    
+    private String address; 
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
     private static ObservableList<Customer> allCustomersFiltered = FXCollections.observableArrayList();
 
-    public Customer(int customerId, String customerName, String address)//, String address2,
-            //String postalCode, String phone), int active, Date createDate, String createdBy,
-            //Timestamp lastUpdate, String lastUpdatedBy)
+    public Customer(int customerId, String customerName, String address)
     {
         this.customerId = customerId;
         this.customerName = customerName;
         this.address = address;
-        /*this.address2 = address2;
-        this.postalCode = postalCode;
-        this.phone = phone;
-        this.active = active;
-        this.createDate = createDate;
-        this.createdBy = createdBy;
-        this.lastUpdate = lastUpdate;
-        this.lastUpdatedBy = lastUpdatedBy;*/
     }
     
     public static void addCustomer(Customer customer)
@@ -101,54 +79,4 @@ public class Customer
     {
         this.address = address;
     }
-
-    /*public int getActive()
-    {
-        return active;
-    }
-
-    public void setActive(int active)
-    {
-        this.active = active;
-    }
-
-    public Date getCreateDate()
-    {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate)
-    {
-        this.createDate = createDate;
-    }
-
-    public String getCreatedBy()
-    {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy)
-    {
-        this.createdBy = createdBy;
-    }
-
-    public Timestamp getLastUpdate()
-    {
-        return lastUpdate;
-    }
-
-    public void setLastUpdate(Timestamp lastUpdate)
-    {
-        this.lastUpdate = lastUpdate;
-    }
-
-    public String getLastUpdatedBy()
-    {
-        return lastUpdatedBy;
-    }
-
-    public void setLastUpdatedBy(String lastUpdatedBy)
-    {
-        this.lastUpdatedBy = lastUpdatedBy;
-    }*/
 }

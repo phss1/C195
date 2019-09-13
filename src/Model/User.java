@@ -23,35 +23,13 @@ public class User
     private String userName;
     private String password;
     private int active;
-    private Date createDate;
-    private String createdBy;
-    private Timestamp lastUpdate;
-    private String lastUpdatedBy;
     
-    public User(int userId, String userName, String password, int active, Date createDate, String createdBy,
-                    Timestamp lastUpdate, String lastUpdatedBy)
+    public User(int userId, String userName, String password, int active)
     {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
         this.active = active;
-        this.createDate = createDate;
-        this.createdBy = createdBy;
-        this.lastUpdate = lastUpdate;
-        this.lastUpdatedBy = lastUpdatedBy;
-    }
-    
-    public String getCurrentUser() throws SQLException
-    {
-        ResultSet results = utility.runSqlQuery("select * from user");
-        int resultItems = results.getRow();
-        
-        for(int i = 0; i < resultItems; i++)
-        {
-            
-        }
-        
-        return "";
     }
 
     public int getUserId()
@@ -92,45 +70,5 @@ public class User
     public void setActive(int active)
     {
         this.active = active;
-    }
-
-    public Date getCreateDate()
-    {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate)
-    {
-        this.createDate = createDate;
-    }
-
-    public String getCreatedBy()
-    {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy)
-    {
-        this.createdBy = createdBy;
-    }
-
-    public Timestamp getLastUpdate()
-    {
-        return lastUpdate;
-    }
-
-    public void setLastUpdate(Timestamp lastUpdate)
-    {
-        this.lastUpdate = lastUpdate;
-    }
-
-    public String getLastUpdatedBy()
-    {
-        return lastUpdatedBy;
-    }
-
-    public void setLastUpdatedBy(String lastUpdatedBy)
-    {
-        this.lastUpdatedBy = lastUpdatedBy;
     }
 }

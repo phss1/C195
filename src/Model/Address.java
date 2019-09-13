@@ -20,13 +20,8 @@ public class Address
     private int cityId;
     private String postalCode;
     private String phone;
-    private Date createDate;
-    private String createdBy;
-    private Timestamp lastUpdated;
-    private String lastUpdatedBy;
     
-    public Address(int addressId, String address, String address2, int cityId, String postalCode, String phone, 
-                        Date createDate, String createdBy, Timestamp lastUpdated, String lastUpdatedBy)
+    public Address(int addressId, String address, String address2, int cityId, String postalCode, String phone)
     {
         this.addressId = addressId;
         this.address = address;
@@ -34,10 +29,6 @@ public class Address
         this.cityId = cityId;
         this.postalCode = postalCode;
         this.phone = phone;
-        this.createDate = createDate;
-        this.createdBy = createdBy;
-        this.lastUpdated = lastUpdated;
-        this.lastUpdatedBy = lastUpdatedBy;
     }
 
     public int getAddressId()
@@ -98,47 +89,5 @@ public class Address
     public void setPhone(String phone)
     {
         this.phone = phone;
-    }
-
-    public Date getCreateDate()
-    {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate)
-    {
-        this.createDate = createDate;
-    }
-
-    public String getCreatedBy()
-    {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy)
-    {
-        this.createdBy = createdBy;
-    }
-
-    public Timestamp getLastUpdated()
-    {
-        return lastUpdated;
-    }
-
-    public void setLastUpdated(Timestamp lastUpdated)
-    {
-        this.lastUpdated = lastUpdated;
-    }
-
-    public String getLastUpdatedBy()
-    {
-        return lastUpdatedBy;
-    }
-
-    public void setLastUpdatedBy(String lastUpdatedBy)
-    {
-        this.lastUpdatedBy = lastUpdatedBy;
-    }
-    
-    
+    }    
 }

@@ -25,14 +25,9 @@ public class Appointment
     private String url;
     private Date start;
     private Date end;
-    private Date createDate;
-    private String createdBy;
-    private Timestamp lastUpdate;
-    private String lastUpdatedBy;
     
     public Appointment(int appointmentId, int customerId, int userId, String title, String description, String location, 
-                            String contact, String type, String url, Date start, Date end, Date createDate, 
-                            String createdBy, Timestamp lastUpdate, String lastUpdatedBy)
+                            String contact, String type, String url, Date start, Date end)
     {
         this.appointmentId = appointmentId;
         this.customerId = customerId;
@@ -45,10 +40,6 @@ public class Appointment
         this.url = url;
         this.start = start;
         this.end = end;
-        this.createDate = createDate;
-        this.createdBy = createdBy;
-        this.lastUpdate = lastUpdate;
-        this.lastUpdatedBy = lastUpdatedBy;
     }
 
     public int getAppointmentId()
@@ -160,46 +151,4 @@ public class Appointment
     {
         this.end = end;
     }
-
-    public Date getCreateDate()
-    {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate)
-    {
-        this.createDate = createDate;
-    }
-
-    public String getCreatedBy()
-    {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy)
-    {
-        this.createdBy = createdBy;
-    }
-
-    public Timestamp getLastUpdate()
-    {
-        return lastUpdate;
-    }
-
-    public void setLastUpdate(Timestamp lastUpdate)
-    {
-        this.lastUpdate = lastUpdate;
-    }
-
-    public String getLastUpdatedBy()
-    {
-        return lastUpdatedBy;
-    }
-
-    public void setLastUpdatedBy(String lastUpdatedBy)
-    {
-        this.lastUpdatedBy = lastUpdatedBy;
-    }
-    
-    
 }
