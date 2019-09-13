@@ -5,8 +5,6 @@
  */
 package Model;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

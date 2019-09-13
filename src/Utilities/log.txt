@@ -38,3 +38,4 @@
 2019-09-13 09:55:25.4 : User ***test*** logged into the application.
 2019-09-13 09:57:16.605 : User ***test*** logged into the application.
 2019-09-13 10:01:22.071 : User ***test*** logged into the application.
+2019-09-13 10:25:23.587 : User ***test*** logged into the application.

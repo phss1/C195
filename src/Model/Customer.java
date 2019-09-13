@@ -5,8 +5,6 @@
  */
 package Model;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -18,6 +16,7 @@ public class Customer
     private int addressId;
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
     private static ObservableList<Customer> allCustomersFiltered = FXCollections.observableArrayList();
+    private static ObservableList<Appointment> allCustomerAppointments = FXCollections.observableArrayList();
 
     public Customer(int customerId, String customerName, int addressId, String address)
     {
@@ -27,8 +26,23 @@ public class Customer
         this.address = address;
     }
     
+    public void addCustomerAppointment(Appointment appointment)
+    {
+        allCustomerAppointments.add(appointment);
+    }
+    
+    public ObservableList<Appointment> getAllCustomerAppointments()
+    {
+        return allCustomerAppointments;
+    }
+
+    public void setAllCustomerAppointments(ObservableList<Appointment> allCustomerAppointments)
+    {
+        Customer.allCustomerAppointments = allCustomerAppointments;
+    }
+    
     public int getAddressId()
-        {
+    {
         return addressId;
     }
 

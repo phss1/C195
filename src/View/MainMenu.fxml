@@ -25,6 +25,7 @@
                 <TableColumn fx:id="appTitleCol" prefWidth="93.0" text="App. Title" />
                   <TableColumn fx:id="appTypeCol" prefWidth="75.0" text="App. Type" />
                   <TableColumn fx:id="appLocationCol" prefWidth="109.0" text="Location" />
+                  <TableColumn fx:id="appCustomerIdCol1" prefWidth="57.0" text="Cust. ID" />
               </columns>
             </TableView>
             <RadioButton fx:id="monthViewRdBtn" layoutX="16.0" layoutY="17.0" mnemonicParsing="false" onAction="#onActionMonthViewRdBtn" text="App. Month View" />

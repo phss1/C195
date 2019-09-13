@@ -6,22 +6,16 @@
 package Utilities;
 
 import JDBC.DBConnection;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Optional;
-import java.util.Scanner;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,9 +25,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import Model.*;
+import java.sql.Date;
 
 /**
  *
@@ -45,6 +40,29 @@ public class UtilityMethods
     Parent scene;
     private static int currentUserId;
     
+    public void addNewAppointmentToCustomer(Customer customer, ResultSet results) throws SQLException
+    {
+        while(results.next())
+        {
+            int customerId = results.getInt("customerId");
+            int appointmentId = results.getInt("appointmentId");
+            int userId = results.getInt("userId");
+            String title = results.getString("title");
+            String description = results.getString("description");
+            String location = results.getString("location");
+            String contact = results.getString("contact");
+            String type = results.getString("type");
+            String url = results.getString("url");
+            Date start = results.getDate("start");
+            Date end = results.getDate("end");
+            
+            Appointment appointment = new Appointment(appointmentId, customerId, userId, title, description, location,
+                                        contact, type, url, start, end);
+            
+            customer.addCustomerAppointment(appointment);
+        }
+    }
+    
     public String buildSqlQueryEnding() throws SQLException
     {
         String userName = getCurLoggedInUserName();
@@ -55,7 +73,8 @@ public class UtilityMethods
     
     public int getIdFromCityName(String cityName) throws SQLException
     {
-        ResultSet cityNameResults = runSqlQuery(("select cityId from city where city = \"" + cityName + "\";").toString());
+        ResultSet cityNameResults = runSqlQuery(("select cityId from city where city = \"" + cityName
+                                                    + "\";").toString());
         int cityId = 0;
         while(cityNameResults.next())
         {
@@ -72,7 +91,8 @@ public class UtilityMethods
     
     public String getCurLoggedInUserName() throws SQLException
     {
-        String sqlCurrentUsrQuery = ("select userName from user where userId = " + UtilityMethods.getCurrentUserId() + ";").toString();
+        String sqlCurrentUsrQuery = ("select userName from user where userId = "
+                                        + UtilityMethods.getCurrentUserId() + ";").toString();
         ResultSet currentUserData = runSqlQuery(sqlCurrentUsrQuery);
         String currentUser = null;
         

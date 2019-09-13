@@ -19,10 +19,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.input.DragEvent;
 
 public class AddCustomerController implements Initializable
 {
@@ -79,7 +77,7 @@ public class AddCustomerController implements Initializable
     }
 
     @FXML
-    private void onActionSaveBtn(ActionEvent event) throws SQLException
+    private void onActionSaveBtn(ActionEvent event) throws SQLException, IOException
     {
         ResultSet addressResults = utility.runSqlQuery("select * from address");
         int newAddId =  utility.getSqlTableRowCount(addressResults);
@@ -115,5 +113,7 @@ public class AddCustomerController implements Initializable
                 + " " + postalCode + " " + countryComboBx.getSelectionModel().getSelectedItem();
         Customer customer = new Customer(newCustId, customerName, newAddId, fullCustAddress);
         Customer.addCustomer(customer);
+        
+        utility.changeGuiScreen(event, "MainMenu");
     }
 }

@@ -11,14 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -61,7 +54,7 @@ public class MainMenuController implements Initializable
 
     @FXML
     private TableColumn<Appointment, String> appLocationCol;
-
+    
     @FXML
     private RadioButton monthViewRdBtn;
 
@@ -124,15 +117,28 @@ public class MainMenuController implements Initializable
         customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         customerAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+        customerTbl.getSelectionModel().selectFirst();
+        
+        Customer selectedCustomer = customerTbl.getSelectionModel().getSelectedItem();
+        String sqlQuery = "select * from appointment where customerId = " + selectedCustomer.getCustomerId() + ";";
+        
+        try
+        {
+            ResultSet results = utility.runSqlQuery(sqlQuery);
+            utility.addNewAppointmentToCustomer(selectedCustomer, results);
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        
+        appointmentTbl.setItems(selectedCustomer.getAllCustomerAppointments());
     }    
 
         @FXML
     void onActionAddAppBtn(ActionEvent event) throws IOException
     {
-        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-        scene = FXMLLoader.load(getClass().getResource("/View/AddAppointment.fxml"));
-        stage.setScene(new Scene(scene));
-        stage.show();
+        utility.changeGuiScreen(event, "AddAppointment");
     }
 
     @FXML
@@ -169,10 +175,7 @@ public class MainMenuController implements Initializable
     @FXML
     void onActionModCustomerBtn(ActionEvent event) throws IOException
     {
-        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-        scene = FXMLLoader.load(getClass().getResource("/View/ModifyCustomer.fxml"));
-        stage.setScene(new Scene(scene));
-        stage.show();
+        utility.changeGuiScreen(event, "ModifyCustomer");
     }
 
     @FXML
