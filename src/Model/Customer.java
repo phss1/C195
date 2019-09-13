@@ -14,15 +14,27 @@ public class Customer
 {
     private int customerId;
     private String customerName;
-    private String address; 
+    private String address;
+    private int addressId;
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
     private static ObservableList<Customer> allCustomersFiltered = FXCollections.observableArrayList();
 
-    public Customer(int customerId, String customerName, String address)
+    public Customer(int customerId, String customerName, int addressId, String address)
     {
         this.customerId = customerId;
         this.customerName = customerName;
+        this.addressId = addressId;
         this.address = address;
+    }
+    
+    public int getAddressId()
+        {
+        return addressId;
+    }
+
+    public void setAddressId(int addressId)
+    {
+        this.addressId = addressId;
     }
     
     public static void addCustomer(Customer customer)

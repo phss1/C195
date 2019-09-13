@@ -89,25 +89,31 @@ public class AddCustomerController implements Initializable
         String postalCode = postalCodeTxtLbl.getText();
         String phone = phoneTxtLbl.getText();
         
-        String sqlNewAddQuery = "insert into address(addressId, address, address2, cityId, postalCode, phone, "
+        String sqlNewAddQuery = ("insert into address(addressId, address, address2, cityId, postalCode, phone, "
                                     + "createDate, createdBy, lastUpdate, lastUpdateBy)"
                                     + " values(" + newAddId + ", \"" + address + "\", \"" + address2 + "\", " + cityId
-                                    + ", \"" + postalCode + "\", \"" + phone + "\", " + utility.buildSqlQueryEnding();
-        System.out.println(sqlNewAddQuery);
-               
+                                    + ", \"" + postalCode + "\", \"" + phone + "\", " + utility.buildSqlQueryEnding()).toString();
+        //System.out.println(sqlNewAddQuery);
+        utility.runUpdateSqlQuery(sqlNewAddQuery);
+        
+        Address newAddress = new Address(newAddId, address, address2, cityId, postalCode, phone);
+        Address.addAddress(newAddress);
+        
         
         String customerName = nameTxtLbl.getText();
         ResultSet customerResults = utility.runSqlQuery("select * from customer");
         int newCustId =  utility.getSqlTableRowCount(customerResults);
         String userName = utility.getCurLoggedInUserName();
-        String sqlNewCustQuery = "insert into customer(customerId, customerName, addressId, createDate, createdBy,"
+        String sqlNewCustQuery = "insert into customer(customerId, customerName, addressId, active, createDate, createdBy,"
                                     + "lastUpdate, lastUpdateBy) values("
-                                    + newCustId + ", \"" + customerName + "\", \"" + newAddId + "\", "
-                                    + "1, " + utility.buildSqlQueryEnding();
+                                    + newCustId + ", \"" + customerName + "\", " + newAddId + ", " + 1 + ", "
+                                    + utility.buildSqlQueryEnding();
+        //System.out.println(sqlNewCustQuery);
+        utility.runUpdateSqlQuery(sqlNewCustQuery);
         
-        System.out.println(sqlNewCustQuery);
-        
-        //Customer customer = new Customer(customerId, customerName, address);
-        //Customer.addCustomer(customer);
+        String fullCustAddress = address + " " + address2 + " " + cityComboBx.getSelectionModel().getSelectedItem()
+                + " " + postalCode + " " + countryComboBx.getSelectionModel().getSelectedItem();
+        Customer customer = new Customer(newCustId, customerName, newAddId, fullCustAddress);
+        Customer.addCustomer(customer);
     }
 }

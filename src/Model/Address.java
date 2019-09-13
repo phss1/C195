@@ -7,6 +7,8 @@ package Model;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -20,6 +22,8 @@ public class Address
     private int cityId;
     private String postalCode;
     private String phone;
+    private static ObservableList<Address> allAddresses = FXCollections.observableArrayList();
+    private static ObservableList<Address> allAddressesFiltered = FXCollections.observableArrayList();
     
     public Address(int addressId, String address, String address2, int cityId, String postalCode, String phone)
     {
@@ -89,5 +93,30 @@ public class Address
     public void setPhone(String phone)
     {
         this.phone = phone;
-    }    
+    }
+    
+    public static void addAddress(Address address)
+    {
+         allAddresses.add(address);
+    }
+    
+    public static ObservableList<Address> getAllAddressesFiltered()
+    {
+        return allAddressesFiltered;
+    }
+
+    public static void setAllCustomersFiltered(ObservableList<Address> allCustomersFiltered)
+    {
+        Address.allAddressesFiltered = allAddressesFiltered;
+    }
+    
+    public static ObservableList<Address> getAllCustomers()
+    {
+        return allAddresses;
+    }
+
+    public static void setAllCustomers(ObservableList<Address> allAddresses)
+    {
+        Address.allAddresses = allAddresses;
+    }
 }

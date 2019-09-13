@@ -32,10 +32,11 @@ public class C195_Proj extends Application
     @Override
     public void start(Stage stage) throws Exception
     {
+        //setting up data for customers in address main menu table
         try
         {
-            ResultSet result = utility.runSqlQuery("Select customer.customerId, customer.customerName, address.address " +
-                    "from customer, address " +
+            ResultSet result = utility.runSqlQuery("Select customer.customerId, customer.customerName, address.addressId, "
+                    + "address.address from customer, address " +
                     "where customer.addressId = address.addressId;");
             
             while(result.next())
@@ -43,8 +44,9 @@ public class C195_Proj extends Application
                 int customerId = result.getInt("customerId");
                 String customerName = result.getString("customerName");
                 String address = result.getString("address");
+                int addressId = result.getInt("addressId");
                 
-                Customer customer = new Customer(customerId, customerName, address);
+                Customer customer = new Customer(customerId, customerName, addressId, address);
                 Customer.addCustomer(customer);
             }
         }
@@ -52,7 +54,29 @@ public class C195_Proj extends Application
         {
             System.out.println(e.getMessage());
         }
-
+        
+        //setting up data for addresses in address main menu table
+        try
+        {
+            ResultSet result = utility.runSqlQuery("Select customer.customerId, customer.customerName, address.addressId, "
+                    + "address.address from customer, address " +
+                    "where customer.addressId = address.addressId;");
+            
+            while(result.next())
+            {
+                int customerId = result.getInt("customerId");
+                String customerName = result.getString("customerName");
+                String address = result.getString("address");
+                int addressId = result.getInt("addressId");
+                
+                Customer customer = new Customer(customerId, customerName, addressId, address);
+                Customer.addCustomer(customer);
+            }
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
         
         Parent root = FXMLLoader.load(getClass().getResource("/View/LogIn.fxml"));
         Scene scene = new Scene(root);
