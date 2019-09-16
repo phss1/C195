@@ -9,13 +9,21 @@ import Utilities.UtilityMethods;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.DragEvent;
+import Model.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.control.ComboBox;
 
 /**
  * FXML Controller class
@@ -36,29 +44,74 @@ public class ModifyCustomerController implements Initializable
     @FXML
     private TextField phoneTxtLbl;
     @FXML
-    private ChoiceBox<?> countryChoiceBx;
+    private ComboBox<String> cityComboBx;
+
     @FXML
-    private ChoiceBox<?> cityChoiceBx;
+    private ComboBox<String> countryComboBx;
     @FXML
     private Button cancelBtn;
     @FXML
     private Button saveBtn;
     
     UtilityMethods utility = new UtilityMethods();
+    ObservableList<String> cityObsListTemp;
+    ObservableList<String> countryObsListTemp;
 
     public void initialize(URL url, ResourceBundle rb)
     {
-        
-    }    
-
-    @FXML
-    private void onDragDroppedCountryChBx(DragEvent event)
-    {
+        try
+        {
+            ResultSet cityResults = utility.runSqlQuery("Select * from city");
+            ObservableList<String> cityObsList = utility.prepareComboBxStrings(cityResults, "city");
+            cityComboBx.setItems(cityObsList);
+            cityObsListTemp = cityObsList;
+            //cityComboBx.setValue(cityObsList.get(0));
+            
+            ResultSet countryResults = utility.runSqlQuery("Select * from country");
+            ObservableList<String> countryObsList = utility.prepareComboBxStrings(countryResults, "country");
+            countryObsListTemp = countryObsList;
+            countryComboBx.setItems(countryObsList);
+            //countryComboBx.setValue(countryObsList.get(0));
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(AddCustomerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-
-    @FXML
-    private void onDragDroppedCityChBx(DragEvent event)
+    
+    public void sendInfo(Customer customer) throws SQLException
     {
+        Address.getAllAddressesFiltered().clear();
+        nameTxtLbl.setText(String.valueOf(customer.getCustomerName()));
+        ResultSet results = utility.runSqlQuery("Select * from address where customerId = "
+                                                    + customer.getAddressId() + ";");
+        
+        while(results.next())
+        {
+            int addressId = results.getInt("addressId");
+            String address = results.getString("address");
+            String address2 = results.getString("address2");
+            int cityId = results.getInt("cityId");
+            String postalCode = results.getString("postalCode");
+            int countryId = results.getInt("countryId");
+            String phone = results.getString("phone");
+            
+            Address tempAddress = new Address(addressId, address, address2, cityId, postalCode, phone);
+            Address.setAllCustomersFiltered((ObservableList<Address>) tempAddress);
+        }
+        
+        
+        
+        Address tempAddress = Address.getAllAddressesFiltered().get(0);
+        addressTxtLbl.setText(tempAddress.getAddress());
+        address2TxtLbl.setText(tempAddress.getAddress2());
+        System.out.println("results data for cityId: " + results.getString("cityId"));
+        int cityIdIndex = cityObsListTemp.indexOf(); //getInt("cityId")
+        System.out.println("Int value of cityIdIndex: " + cityIdIndex);
+        cityComboBx.setValue(cityObsListTemp.get(cityIdIndex)); //.getSelectionModel().select(results.getString("address2"));
+        postalCodeTxtLbl.setText(tempAddress.getPostalCode());
+        //countryComboBx.setText(String.valueOf(chosenProduct.getMax()));
+        phoneTxtLbl.setText(tempAddress.getPhone());
     }
 
     @FXML
