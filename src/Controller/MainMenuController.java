@@ -167,7 +167,7 @@ public class MainMenuController implements Initializable
         int selectedAppointmentId = (appointmentTbl.getSelectionModel().getSelectedItem()).getAppointmentId();
         Appointment.deleteAppointment(customerToDelete, selectedAppointmentId);
         
-        String deleteCustomerQuery = "delete from appointment where customerId = " + selectedAppointmentId + ";";
+        String deleteCustomerQuery = "delete from appointment where appointmentId = " + selectedAppointmentId + ";";
         utility.runUpdateSqlQuery(deleteCustomerQuery);
     }
 

@@ -7,6 +7,7 @@ package Model;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -51,6 +52,8 @@ public class Appointment
             if(currentAppointment.getAppointmentId() == appointmentId)
             {
                 customer.getAllCustomerAppointments().remove(index);
+                customer.setAllCustomerAppointments(customer.getAllCustomerAppointments());
+                break;
             }
         }
     }
