@@ -91,7 +91,6 @@ public class AddCustomerController implements Initializable
                                     + "createDate, createdBy, lastUpdate, lastUpdateBy)"
                                     + " values(" + newAddId + ", \"" + address + "\", \"" + address2 + "\", " + cityId
                                     + ", \"" + postalCode + "\", \"" + phone + "\", " + utility.buildSqlQueryEnding()).toString();
-        //System.out.println(sqlNewAddQuery);
         utility.runUpdateSqlQuery(sqlNewAddQuery);
         
         Address newAddress = new Address(newAddId, address, address2, cityId, postalCode, phone);
@@ -106,7 +105,6 @@ public class AddCustomerController implements Initializable
                                     + "lastUpdate, lastUpdateBy) values("
                                     + newCustId + ", \"" + customerName + "\", " + newAddId + ", " + 1 + ", "
                                     + utility.buildSqlQueryEnding();
-        //System.out.println(sqlNewCustQuery);
         utility.runUpdateSqlQuery(sqlNewCustQuery);
         
         String fullCustAddress = address + " " + address2 + " " + cityComboBx.getSelectionModel().getSelectedItem()

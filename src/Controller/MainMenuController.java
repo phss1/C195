@@ -117,29 +117,33 @@ public class MainMenuController implements Initializable
         customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         customerAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+        
         customerTbl.getSelectionModel().selectFirst();
-        
         Customer selectedCustomer = customerTbl.getSelectionModel().getSelectedItem();
-        String sqlQuery = "select * from appointment where customerId = " + selectedCustomer.getCustomerId() + ";";
-        
-        try
-        {
-            ResultSet results = utility.runSqlQuery(sqlQuery);
-            utility.addNewAppointmentToCustomer(selectedCustomer, results);
-        }
-        catch(Exception e)
-        {
-            System.out.println(e);
-        }
+        utility.setApptTableViewItems(selectedCustomer);
         
         appointmentTbl.setItems(selectedCustomer.getAllCustomerAppointments());
         appCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         appTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         appTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         appLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
-    }    
+        
+        customerTbl.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                appointmentTbl.getItems().clear();
+                Customer customer = customerTbl.getSelectionModel().getSelectedItem();
+                utility.setApptTableViewItems(customer);
+                
+                appointmentTbl.setItems(selectedCustomer.getAllCustomerAppointments());
+                appCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+                appTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+                appTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+                appLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+            }
+        });
+    }
 
-        @FXML
+    @FXML
     void onActionAddAppBtn(ActionEvent event) throws IOException
     {
         utility.changeGuiScreen(event, "AddAppointment");
@@ -154,19 +158,36 @@ public class MainMenuController implements Initializable
     @FXML
     void onActionDeleteAppBtn(ActionEvent event)
     {
-
+        Customer customerToDelete = customerTbl.getSelectionModel().getSelectedItem();
+        
+        
+        
+        int customerId = customerToDelete.getCustomerId();
+        String deleteCustomerQuery = "delete from customer where customerId = " + customerId + ";";
     }
 
     @FXML
     void onActionDeleteCustomerBtn(ActionEvent event)
     {
-
+        boolean selectionResult = utility.displayLocaleError("CONFIRMATION", "Delete Customer",
+                                    "Confirm Customer Deletion", "Are you sure you want to delete this customer"
+                                            + " and all associated records?");
+        if(selectionResult == true)
+        {
+            Customer selectedCustomer = customerTbl.getSelectionModel().getSelectedItem();
+            int addressId = selectedCustomer.getAddressId();
+            int customerId = selectedCustomer.getCustomerId();
+            String deleteAddressQuery = "delete from address where addressId = " + addressId + ";";
+            String deleteCustomerQuery = "delete from customer where customerId = " + customerId + ";";
+            String deleteAppointmentQuery = "delete from appointment where customerId = " + customerId + ";";
+        }
     }
 
     @FXML
     void onActionExitBtn(ActionEvent event) throws SQLException, Exception
     {
-        boolean result = utility.displayLocaleError("CONFIRMATION", "Exit", "Exit Program", "Are you sure you want to close the program?");
+        boolean result = utility.displayLocaleError("CONFIRMATION", "Exit", "Exit Program", 
+                                                        "Are you sure you want to close the program?");
         String test = result ? utility.closeProgram() : "";
     }
 
@@ -193,5 +214,4 @@ public class MainMenuController implements Initializable
     {
         monthViewRdBtn.setSelected(false);
     }
-    
 }
