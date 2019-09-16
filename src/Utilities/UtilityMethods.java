@@ -41,6 +41,13 @@ public class UtilityMethods
     Parent scene;
     private static int currentUserId;
     
+    public void deleteCustomerAppointments(Customer customer) throws SQLException
+    {
+        int numberOfCustAppt = customer.getAllCustomerAppointments().size();
+        String deleteAppointmentQuery = "delete from appointment where customerId = " + customer.getCustomerId() + ";";
+        runUpdateSqlQuery(deleteAppointmentQuery);
+    }
+    
     public void setApptTableViewItems(Customer customerData)
     {
         String sqlQuery = "select * from appointment where customerId = " + customerData.getCustomerId() + ";";

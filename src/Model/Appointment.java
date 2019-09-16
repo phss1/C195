@@ -41,6 +41,19 @@ public class Appointment
         this.start = start;
         this.end = end;
     }
+    
+    public static void deleteAppointment(Customer customer, int appointmentId)
+    {
+        int index = -1;
+        for(Appointment currentAppointment : customer.getAllCustomerAppointments())
+        {
+            index++;
+            if(currentAppointment.getAppointmentId() == appointmentId)
+            {
+                customer.getAllCustomerAppointments().remove(index);
+            }
+        }
+    }
 
     public int getAppointmentId()
     {

@@ -26,6 +26,19 @@ public class Customer
         this.address = address;
     }
     
+    public static void deleteCustomer(Customer customer)
+    {
+        int index = -1;
+        for(Customer currentCustomer : Customer.getAllCustomers())
+        {
+            index++;
+            if(currentCustomer.getCustomerId() == customer.getCustomerId())
+            {
+                Customer.getAllCustomers().remove(currentCustomer);
+            }
+        }
+    }
+    
     public void addCustomerAppointment(Appointment appointment)
     {
         allCustomerAppointments.add(appointment);

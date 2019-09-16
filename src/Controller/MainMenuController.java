@@ -56,6 +56,9 @@ public class MainMenuController implements Initializable
     private TableColumn<Appointment, String> appLocationCol;
     
     @FXML
+    private TableColumn<Appointment, Integer> appIdCol;
+            
+    @FXML
     private RadioButton monthViewRdBtn;
 
     @FXML
@@ -127,6 +130,7 @@ public class MainMenuController implements Initializable
         appTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         appTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         appLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        appIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         
         customerTbl.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -139,6 +143,7 @@ public class MainMenuController implements Initializable
                 appTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
                 appTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
                 appLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+                appIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
             }
         });
     }
@@ -156,18 +161,18 @@ public class MainMenuController implements Initializable
     }
 
     @FXML
-    void onActionDeleteAppBtn(ActionEvent event)
+    void onActionDeleteAppBtn(ActionEvent event) throws SQLException
     {
         Customer customerToDelete = customerTbl.getSelectionModel().getSelectedItem();
+        int selectedAppointmentId = (appointmentTbl.getSelectionModel().getSelectedItem()).getAppointmentId();
+        Appointment.deleteAppointment(customerToDelete, selectedAppointmentId);
         
-        
-        
-        int customerId = customerToDelete.getCustomerId();
-        String deleteCustomerQuery = "delete from customer where customerId = " + customerId + ";";
+        String deleteCustomerQuery = "delete from appointment where customerId = " + selectedAppointmentId + ";";
+        utility.runUpdateSqlQuery(deleteCustomerQuery);
     }
 
     @FXML
-    void onActionDeleteCustomerBtn(ActionEvent event)
+    void onActionDeleteCustomerBtn(ActionEvent event) throws SQLException
     {
         boolean selectionResult = utility.displayLocaleError("CONFIRMATION", "Delete Customer",
                                     "Confirm Customer Deletion", "Are you sure you want to delete this customer"
@@ -177,9 +182,18 @@ public class MainMenuController implements Initializable
             Customer selectedCustomer = customerTbl.getSelectionModel().getSelectedItem();
             int addressId = selectedCustomer.getAddressId();
             int customerId = selectedCustomer.getCustomerId();
-            String deleteAddressQuery = "delete from address where addressId = " + addressId + ";";
+            
+            utility.deleteCustomerAppointments(selectedCustomer);
+            
             String deleteCustomerQuery = "delete from customer where customerId = " + customerId + ";";
-            String deleteAppointmentQuery = "delete from appointment where customerId = " + customerId + ";";
+            utility.runUpdateSqlQuery(deleteCustomerQuery);
+            
+            String deleteAddressQuery = "delete from address where addressId = " + addressId + ";";
+            utility.runUpdateSqlQuery(deleteAddressQuery);
+            
+            Customer.deleteCustomer(selectedCustomer);
+            customerTbl.setItems(Customer.getAllCustomers());
+            customerTbl.getSelectionModel().selectFirst();
         }
     }
 
