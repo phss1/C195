@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -28,13 +28,13 @@
             <Label layoutX="8.0" layoutY="223.0" text="Country" />
             <TextField fx:id="phoneTxtLbl" layoutX="61.0" layoutY="253.0" />
             <Label layoutX="10.0" layoutY="251.0" text="Phone#" />
-            <ChoiceBox fx:id="countryChoiceBx" layoutX="62.0" layoutY="219.0" prefWidth="150.0" />
-            <ChoiceBox fx:id="cityChoiceBx" layoutX="62.0" layoutY="150.0" prefWidth="150.0" />
             <TextField fx:id="customerIdTxtFld" disable="true" editable="false" layoutX="60.0" layoutY="10.0" />
             <Label layoutX="7.0" layoutY="14.0" text="Cust_ID" />
          </children>
       </AnchorPane>
       <Button fx:id="cancelBtn" layoutX="181.0" layoutY="322.0" mnemonicParsing="false" onAction="#onActionCancelBtn" text="Cancel" />
       <Button fx:id="saveBtn" layoutX="130.0" layoutY="323.0" mnemonicParsing="false" onAction="#onActionSaveBtn" text="Save" />
+      <ComboBox fx:id="cityComboBx" layoutX="78.0" layoutY="178.0" prefHeight="25.0" prefWidth="149.0" />
+      <ComboBox fx:id="countryComboBx" layoutX="76.0" layoutY="247.0" prefHeight="25.0" prefWidth="149.0" />
    </children>
 </AnchorPane>
