@@ -149,7 +149,8 @@ public class MainMenuController implements Initializable
         appIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         
         //https://stackoverflow.com/questions/26424769/javafx8-how-to-create-listener-for-selection-of-row-in-tableview
-        customerTbl.getSelectionModel().selectedItemProperty().addListener(
+        customerTbl.getSelectionModel().selectedItemProperty().addListener
+            (
                 (obs, oldSelection, newSelection) ->
                 {
                     if (newSelection != null)

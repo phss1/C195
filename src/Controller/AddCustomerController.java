@@ -96,7 +96,6 @@ public class AddCustomerController implements Initializable
         Address newAddress = new Address(newAddId, address, address2, cityId, postalCode, phone);
         Address.addAddress(newAddress);
         
-        
         String customerName = nameTxtLbl.getText();
         ResultSet customerResults = utility.runSqlQuery("select * from customer");
         int newCustId =  utility.getSqlTableRowCount(customerResults);

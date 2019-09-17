@@ -49,6 +49,21 @@ public class UtilityMethods
         runUpdateSqlQuery(deleteAppointmentQuery);
     }
     
+    public void refreshCustomerList() throws SQLException
+    {
+        Customer.getAllCustomers().clear();
+        String sqlQuery = "select * from customer";
+        ResultSet results = runSqlQuery(sqlQuery);
+        
+        while(results.next())
+        {
+            int customerId = results.getInt("userId");
+            String title = results.getString("title");
+            String description = results.getString("description");
+        }
+        
+    }
+    
     public void setApptTableViewItems(Customer customerData)
     {
         String sqlQuery = "select * from appointment where customerId = " + customerData.getCustomerId() + ";";

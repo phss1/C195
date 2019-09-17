@@ -39,6 +39,19 @@ public class Customer
         }
     }
     
+    public static void modifyCustomer(Customer customer, int customerId)
+    {
+        int index = -1;
+        for(Customer currentPart : Customer.getAllCustomers())
+        {
+            index++;
+            if(currentPart.getCustomerId() == customerId)
+            {
+                Customer.getAllCustomers().set(index, customer);
+            }
+        }
+    }
+    
     public void addCustomerAppointment(Appointment appointment)
     {
         allCustomerAppointments.add(appointment);

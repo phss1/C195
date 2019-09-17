@@ -46,7 +46,8 @@ public class ModifyCustomerController implements Initializable
     private TextField phoneTxtLbl;
     @FXML
     private ComboBox<String> cityComboBx;
-
+    @FXML
+    private TextField addressIdTxtLbl;
     @FXML
     private ComboBox<String> countryComboBx;
     @FXML
@@ -119,6 +120,7 @@ public class ModifyCustomerController implements Initializable
         }
         
         customerIdTxtFld.setText(String.valueOf(customer.getCustomerId()));
+        addressIdTxtLbl.setText(String.valueOf(tempAddress.getAddressId()));
         addressTxtLbl.setText(tempAddress.getAddress());
         address2TxtLbl.setText(tempAddress.getAddress2());
         postalCodeTxtLbl.setText(tempAddress.getPostalCode());
@@ -142,8 +144,34 @@ public class ModifyCustomerController implements Initializable
     }
 
     @FXML
-    private void onActionSaveBtn(ActionEvent event)
+    private void onActionSaveBtn(ActionEvent event) throws SQLException, IOException
     {
+        int addressId = Integer.valueOf(addressIdTxtLbl.getText());
+        String address = addressTxtLbl.getText();
+        String address2 = address2TxtLbl.getText();
+        int cityId = utility.getIdFromCityName(cityComboBx.getSelectionModel().getSelectedItem());
+        String postalCode = postalCodeTxtLbl.getText();
+        String phone = phoneTxtLbl.getText();
         
+        String sqlAddressUpdateQuery = "update address set address = \"" + address
+                + "\", address2 = \"" + address2 + "\", cityId = \"" + cityId + "\", postalCode = \"" + postalCode 
+                + "\", phone = \"" + phone + "\", lastUpdate = now(), lastUpdateBy = \""
+                + utility.getCurLoggedInUserName().toString() + "\" where addressId = " + addressId + ";";
+        utility.runUpdateSqlQuery(sqlAddressUpdateQuery);
+        
+        int customerId = Integer.valueOf(customerIdTxtFld.getText());
+        String customerName = nameTxtLbl.getText();
+        String tempAddress = address + " " + address2 + " " + cityComboBx.getSelectionModel().getSelectedItem()
+                + " " + countryComboBx.getSelectionModel().getSelectedItem() + " " + postalCode;
+        String sqlCustUpdateQuery = "update customer set customerName = \"" + customerName + 
+                "\" where customerId = " + customerId + ";";
+        
+        Customer tempCustomer = new Customer(customerId, customerName, addressId, tempAddress);
+        Customer.modifyCustomer(tempCustomer, customerId);
+        
+        System.out.println(sqlCustUpdateQuery);
+        utility.runUpdateSqlQuery(sqlCustUpdateQuery);
+        
+        utility.changeGuiScreen(event, "MainMenu");
     }
 }
