@@ -17,7 +17,7 @@ public class Customer
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
     private static ObservableList<Customer> customerToModify = FXCollections.observableArrayList();
     private static ObservableList<Appointment> allCustomerAppointments = FXCollections.observableArrayList();
-
+    
     public Customer(int customerId, String customerName, int addressId, String address)
     {
         this.customerId = customerId;

@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="502.0" prefWidth="455.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ModifyCustomerController">
+<AnchorPane id="AnchorPane" prefHeight="403.0" prefWidth="254.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ModifyCustomerController">
    <children>
       <Label layoutX="10.0" layoutY="10.0" text="Modify Customer" textFill="#100861">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <AnchorPane layoutX="92.0" layoutY="27.0" prefHeight="317.0" prefWidth="232.0">
+      <AnchorPane layoutX="14.0" layoutY="27.0" prefHeight="317.0" prefWidth="232.0">
          <children>
             <TextField fx:id="nameTxtLbl" layoutX="60.0" layoutY="46.0" />
             <Label layoutX="8.0" layoutY="50.0" text="Name" />
@@ -36,7 +36,7 @@
             <Label layoutX="10.0" layoutY="83.0" text="Add_Id" />
          </children>
       </AnchorPane>
-      <Button fx:id="cancelBtn" layoutX="181.0" layoutY="353.0" mnemonicParsing="false" onAction="#onActionCancelBtn" text="Cancel" />
-      <Button fx:id="saveBtn" layoutX="130.0" layoutY="354.0" mnemonicParsing="false" onAction="#onActionSaveBtn" text="Save" />
+      <Button fx:id="cancelBtn" layoutX="171.0" layoutY="353.0" mnemonicParsing="false" onAction="#onActionCancelBtn" text="Cancel" />
+      <Button fx:id="saveBtn" layoutX="120.0" layoutY="354.0" mnemonicParsing="false" onAction="#onActionSaveBtn" text="Save" />
    </children>
 </AnchorPane>

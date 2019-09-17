@@ -29,7 +29,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import Model.*;
 import java.sql.Date;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  *
@@ -49,21 +48,6 @@ public class UtilityMethods
         runUpdateSqlQuery(deleteAppointmentQuery);
     }
     
-    public void refreshCustomerList() throws SQLException
-    {
-        Customer.getAllCustomers().clear();
-        String sqlQuery = "select * from customer";
-        ResultSet results = runSqlQuery(sqlQuery);
-        
-        while(results.next())
-        {
-            int customerId = results.getInt("userId");
-            String title = results.getString("title");
-            String description = results.getString("description");
-        }
-        
-    }
-    
     public void setApptTableViewItems(Customer customerData)
     {
         String sqlQuery = "select * from appointment where customerId = " + customerData.getCustomerId() + ";";
@@ -77,7 +61,7 @@ public class UtilityMethods
         {
             System.out.println(e);
         }
-}
+    }
     
     public void addNewAppointmentToCustomer(Customer customer, ResultSet results) throws SQLException
     {
