@@ -120,12 +120,24 @@ public class MainMenuController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {        
+        weekViewRdBtn.setSelected(true);
+        
         customerTbl.setItems(Customer.getAllCustomers());
         customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         customerAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
         
-        customerTbl.getSelectionModel().selectFirst();
+        int rowIndexValue = utility.getSelectedRowIndex();
+        if(rowIndexValue == 0)
+        {
+            customerTbl.getSelectionModel().selectFirst();
+        }
+        else
+        {
+            customerTbl.getSelectionModel().select(rowIndexValue);
+        }
+        
+        appointmentTbl.getItems().clear();
         Customer selectedCustomer = customerTbl.getSelectionModel().getSelectedItem();
         utility.setApptTableViewItems(selectedCustomer);
         
@@ -136,20 +148,25 @@ public class MainMenuController implements Initializable
         appLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
         appIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         
-        customerTbl.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                appointmentTbl.getItems().clear();
-                Customer customer = customerTbl.getSelectionModel().getSelectedItem();
-                utility.setApptTableViewItems(customer);
-                
-                appointmentTbl.setItems(selectedCustomer.getAllCustomerAppointments());
-                appCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-                appTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
-                appTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-                appLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
-                appIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
-            }
-        });
+        //https://stackoverflow.com/questions/26424769/javafx8-how-to-create-listener-for-selection-of-row-in-tableview
+        customerTbl.getSelectionModel().selectedItemProperty().addListener(
+                (obs, oldSelection, newSelection) ->
+                {
+                    if (newSelection != null)
+                    {
+                        appointmentTbl.getItems().clear();
+                        Customer customer = customerTbl.getSelectionModel().getSelectedItem();
+                        utility.setApptTableViewItems(customer);
+
+                        appointmentTbl.setItems(selectedCustomer.getAllCustomerAppointments());
+                        appCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+                        appTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+                        appTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+                        appLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+                        appIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+                    }
+                }
+            );
     }
 
     @FXML
@@ -218,19 +235,21 @@ public class MainMenuController implements Initializable
     @FXML
     void onActionModCustomerBtn(ActionEvent event) throws IOException, SQLException
     {
-        //utility.changeGuiScreen(event, "ModifyCustomer");
+        utility.setSelectedRowIndex(customerTbl.getSelectionModel().getFocusedIndex());
+        int rowIndexValue = utility.getSelectedRowIndex();
+        System.out.println(rowIndexValue);
         
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/View/ModifyCustomer.fxml"));
-            loader.load();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/View/ModifyCustomer.fxml"));
+        loader.load();
 
-            ModifyCustomerController MPSController = loader.getController();
-            MPSController.sendInfo(customerTbl.getSelectionModel().getSelectedItem());
+        ModifyCustomerController MPSController = loader.getController();
+        MPSController.sendInfo(customerTbl.getSelectionModel().getSelectedItem());
 
-            stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-            Parent scene = loader.getRoot();
-            stage.setScene(new Scene(scene));
-            stage.show();
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        Parent scene = loader.getRoot();
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
     @FXML

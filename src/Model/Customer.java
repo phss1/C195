@@ -15,7 +15,7 @@ public class Customer
     private String address;
     private int addressId;
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
-    private static ObservableList<Customer> allCustomersFiltered = FXCollections.observableArrayList();
+    private static ObservableList<Customer> customerToModify = FXCollections.observableArrayList();
     private static ObservableList<Appointment> allCustomerAppointments = FXCollections.observableArrayList();
 
     public Customer(int customerId, String customerName, int addressId, String address)
@@ -69,14 +69,19 @@ public class Customer
          allCustomers.add(customer);
     }
     
-    public static ObservableList<Customer> getAllCustomersFiltered()
+    public static ObservableList<Customer> getCustomerToModify()
     {
-        return allCustomersFiltered;
+        return customerToModify;
+    }
+    
+    public static void addCustomerToModify(Customer customer)
+    {
+        customerToModify.add(customer);
     }
 
-    public static void setAllCustomersFiltered(ObservableList<Customer> allCustomersFiltered)
+    public static void setCustomerToModify(ObservableList<Customer> customerToModify)
     {
-        Customer.allCustomersFiltered = allCustomersFiltered;
+        Customer.customerToModify = customerToModify;
     }
     
     public static ObservableList<Customer> getAllCustomers()

@@ -57,33 +57,35 @@ public class ModifyCustomerController implements Initializable
     private Button saveBtn;
     
     UtilityMethods utility = new UtilityMethods();
+    ObservableList<String> cityObsList;
+    ObservableList<String> countryObsList;
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        /*try
+        try
         {
             ResultSet cityResults = utility.runSqlQuery("Select * from city");
-            ObservableList<String> cityObsList = utility.prepareComboBxStrings(cityResults, "city");
+            cityObsList = utility.prepareComboBxStrings(cityResults, "city");
             cityComboBx.setItems(cityObsList);
             cityComboBx.setValue(cityObsList.get(0));
             
             ResultSet countryResults = utility.runSqlQuery("Select * from country");
-            ObservableList<String> countryObsList = utility.prepareComboBxStrings(countryResults, "country");
+            countryObsList = utility.prepareComboBxStrings(countryResults, "country");
             countryComboBx.setItems(countryObsList);
             countryComboBx.setValue(countryObsList.get(0));
         }
         catch(SQLException ex)
         {
             Logger.getLogger(AddCustomerController.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
+        
     }
     
     public void sendInfo(Customer customer) throws SQLException
     {
         Address.getAllAddressesFiltered().clear();
         nameTxtLbl.setText(String.valueOf(customer.getCustomerName()));
-        System.out.println(customer.getAddressId());
         ResultSet results = utility.runSqlQuery("Select * from address where addressId = "
                                                     + customer.getAddressId() + ";");
         
@@ -95,7 +97,6 @@ public class ModifyCustomerController implements Initializable
             String address2 = results.getString("address2");
             int cityId = results.getInt("cityId");
             String postalCode = results.getString("postalCode");
-            //int countryId = results.getInt("countryId");
             String phone = results.getString("phone");
             
             ObservableList<Address> tempAddresses = FXCollections.observableArrayList();
@@ -107,17 +108,14 @@ public class ModifyCustomerController implements Initializable
         Address tempAddress = Address.getAllAddressesFiltered().get(0);
         int cityId = tempAddress.getCityId();
         
-        String cityName;
-        String countryName;
+        int tempCityId;
+        int tempCountryId;
         switch(cityId)
         {
-            case 1 : cityName = "Raleigh"; countryName = "USA";
-            case 2 : cityName = "Durham"; countryName = "USA";
-            case 3 : cityName = "Hamburg"; countryName = "Germany";
-            case 4 : cityName = "Saarbrücken"; countryName = "Germany";
-            cityComboBx.setValue(cityName);
-            countryComboBx.setValue(countryName);
-            break;
+            case 1 : tempCityId = 0; tempCountryId = 0; setComboBoxValues(tempCityId, tempCountryId); break;
+            case 2 : tempCityId = 1; tempCountryId = 0; setComboBoxValues(tempCityId, tempCountryId); break;
+            case 3 : tempCityId = 2; tempCountryId = 1; setComboBoxValues(tempCityId, tempCountryId); break;
+            case 4 : tempCityId = 3; tempCountryId = 1; setComboBoxValues(tempCityId, tempCountryId); break;
         }
         
         customerIdTxtFld.setText(String.valueOf(customer.getCustomerId()));
@@ -125,6 +123,12 @@ public class ModifyCustomerController implements Initializable
         address2TxtLbl.setText(tempAddress.getAddress2());
         postalCodeTxtLbl.setText(tempAddress.getPostalCode());
         phoneTxtLbl.setText(tempAddress.getPhone());
+    }
+    
+    public void setComboBoxValues(int cityId, int countryId)
+    {
+        cityComboBx.setValue(cityObsList.get(cityId));
+        countryComboBx.setValue(countryObsList.get(countryId));
     }
 
     @FXML
@@ -140,6 +144,6 @@ public class ModifyCustomerController implements Initializable
     @FXML
     private void onActionSaveBtn(ActionEvent event)
     {
+        
     }
-    
 }

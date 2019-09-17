@@ -40,6 +40,7 @@ public class UtilityMethods
     Stage stage;
     Parent scene;
     private static int currentUserId;
+    private static int selectedRowIndex;
     
     public void deleteCustomerAppointments(Customer customer) throws SQLException
     {
@@ -241,5 +242,15 @@ public class UtilityMethods
     {
         Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
         return currentTimestamp.toString();
+    }
+    
+    public int getSelectedRowIndex()
+    {
+        return selectedRowIndex;
+    }
+
+    public void setSelectedRowIndex(int selectedRowIndex)
+    {
+        this.selectedRowIndex = selectedRowIndex;
     }
 }
