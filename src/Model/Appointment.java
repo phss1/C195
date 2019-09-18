@@ -46,14 +46,39 @@ public class Appointment
         this.end = end;
     }
     
-    public static ObservableList<Integer> prepDateComboBoxValues(int maxValues)
+    public static ObservableList<String> createAppointmentTimes()
     {
-        ObservableList<Integer> values = FXCollections.observableArrayList();
-        System.out.println(maxValues);
-        for(int i = 0; i > maxValues ; i++)
+        int startOfDay = 9;
+        int endOfDay = 18;
+        int appointmentIncrememnt = 15;
+        int possApptInOneHr = 60 / appointmentIncrememnt;
+        int hoursInDay = 18-9;
+        ObservableList<String> possAppInOneDay = FXCollections.observableArrayList();
+        
+        for(int i = 0; i<hoursInDay; i++)
         {
-            values.add((i + 1));
-            System.out.println(values.get(i + 1));
+            appointmentIncrememnt = 0;
+            for(int z = 0; z<possApptInOneHr; z++)
+            {
+                String appTimeTemp = appointmentIncrememnt == 0 ? (String.valueOf(startOfDay) + ":00") : 
+                        (String.valueOf(startOfDay) + ":" + String.valueOf(appointmentIncrememnt));
+                appointmentIncrememnt = appointmentIncrememnt + 15;
+                possAppInOneDay.add(appTimeTemp);
+            }
+            startOfDay++;
+            
+            String testCase = startOfDay == endOfDay ? String.valueOf(possAppInOneDay.add(endOfDay + ":00")) : "";
+        }
+        
+        return possAppInOneDay;
+    }
+    
+    public static ObservableList<String> prepDateComboBoxValues(int maxValues)
+    {
+        ObservableList<String> values = FXCollections.observableArrayList();
+        for(int i = 0; i < maxValues ; i++)
+        {
+            values.add(String.valueOf(i + 1));
         }
         
         return values;

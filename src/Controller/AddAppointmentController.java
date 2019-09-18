@@ -6,6 +6,7 @@
 package Controller;
 
 import Model.Appointment;
+import Model.Customer;
 import Utilities.UtilityMethods;
 import java.io.IOException;
 import java.net.URL;
@@ -22,6 +23,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * FXML Controller class
@@ -82,6 +84,7 @@ public class AddAppointmentController implements Initializable {
     private Button cancelBtn;
     
     UtilityMethods utility = new UtilityMethods();
+    //int daysInMonth;
     
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -98,28 +101,41 @@ public class AddAppointmentController implements Initializable {
         typeComboBx.setValue(type.get(0));
         custIdTxtFld.setText(String.valueOf((Appointment.getRefCustToAppointment().get(0)).getCustomerId()));
         
-        ObservableList<Integer> startMonth = Appointment.prepDateComboBoxValues(12);
-        System.out.println(startMonth);
-        //appStartMonthComboBx.setItems(startMonth);
-        //appStartMonthComboBx.setValue(startMonth.get(0));
-        /*
-        comboBoxValueStore.add("2019");
-        comboBoxValueStore.add("2020");
-        appStartYearCmbBox.setItems(comboBoxValueStore);
-        appStartYearCmbBox.setValue(comboBoxValueStore.get(0));
-        comboBoxValueStore.clear();
+        ObservableList<String> startMonth = Appointment.prepDateComboBoxValues(12);
+        appStartMonthComboBx.setItems(startMonth);
+        appStartMonthComboBx.setValue(startMonth.get(0));
         
-        int daysInMonth = utility.getDaysInMonth(Integer.valueOf(appStartYearCmbBox.getValue()),
+        ObservableList<String> startYear = FXCollections.observableArrayList();
+        startYear.add("2019");
+        startYear.add("2020");
+        appStartYearCmbBox.setItems(startYear);
+        appStartYearCmbBox.setValue(startYear.get(0));
+        
+        int daysInStartMonth = utility.getDaysInMonth(Integer.valueOf(appStartYearCmbBox.getValue()),
                                                    Integer.valueOf(appStartMonthComboBx.getValue()));
-        System.out.println(daysInMonth);
-        */
-        //appStartDayCmbBox
-        //appStartYearCmbBox
-        //apptStartTimeComboBox
-        //appEndMonthCmbBx
-        //appEndDayCmbBx
-        //appEndYearCmbBox
-        //apptEndTimeComboBx
+        ObservableList<String> startDays = Appointment.prepDateComboBoxValues(daysInStartMonth);
+        appStartDayCmbBox.setItems(startDays);
+        appStartDayCmbBox.setValue(startDays.get(0));
+        
+        ObservableList<String> endMonth = Appointment.prepDateComboBoxValues(12);
+        appEndMonthCmbBx.setItems(endMonth);
+        appEndMonthCmbBx.setValue(endMonth.get(0));
+        
+        ObservableList<String> endYear = FXCollections.observableArrayList();
+        endYear.add("2019");
+        endYear.add("2020");
+        appEndYearCmbBox.setItems(endYear);
+        appEndYearCmbBox.setValue(endYear.get(0));
+        
+        int daysInEndMonth = utility.getDaysInMonth(Integer.valueOf(appEndYearCmbBox.getValue()),
+                                                   Integer.valueOf(appEndMonthCmbBx.getValue()));
+        ObservableList<String> endDays = Appointment.prepDateComboBoxValues(daysInEndMonth);
+        appEndDayCmbBx.setItems(endDays);
+        appEndDayCmbBx.setValue(endDays.get(0));
+        
+        ObservableList<String> startAppTimes = Appointment.createAppointmentTimes();
+        apptStartTimeComboBox.setItems(startAppTimes);
+        apptStartTimeComboBox.setValue(startAppTimes.get(0));
     }
     
     @FXML
@@ -148,5 +164,51 @@ public class AddAppointmentController implements Initializable {
         
         
         utility.changeGuiScreen(event, "MainMenu");
+    }
+    
+    @FXML
+    void onActionAppEndDay(ActionEvent event)
+    {
+
+    }
+
+    @FXML
+    void onActionAppEndMonth(ActionEvent event)
+    {
+        int daysInEndMonth = utility.getDaysInMonth(Integer.valueOf(appEndYearCmbBox.getValue()),
+                                                   Integer.valueOf(appEndMonthCmbBx.getValue()));
+        ObservableList<String> endDays = Appointment.prepDateComboBoxValues(daysInEndMonth);
+        appEndDayCmbBx.setItems(endDays);
+        appEndDayCmbBx.setValue(endDays.get(0));
+    }
+
+    @FXML
+    void onActionAppEndYear(ActionEvent event)
+    {
+        int daysInEndMonth = utility.getDaysInMonth(Integer.valueOf(appEndYearCmbBox.getValue()),
+                                                   Integer.valueOf(appEndMonthCmbBx.getValue()));
+        ObservableList<String> endDays = Appointment.prepDateComboBoxValues(daysInEndMonth);
+        appEndDayCmbBx.setItems(endDays);
+        appEndDayCmbBx.setValue(endDays.get(0));
+    }
+
+    @FXML
+    void onActionAppStartMonth(ActionEvent event)
+    {
+        int daysInMonth = utility.getDaysInMonth(Integer.valueOf(appStartYearCmbBox.getValue()),
+                                                   Integer.valueOf(appStartMonthComboBx.getValue()));
+        ObservableList<String> startDays = Appointment.prepDateComboBoxValues(daysInMonth);
+        appStartDayCmbBox.setItems(startDays);
+        appStartDayCmbBox.setValue(startDays.get(0));
+    }
+
+    @FXML
+    void onActionAppStartYear(ActionEvent event)
+    {
+        int daysInMonth = utility.getDaysInMonth(Integer.valueOf(appStartYearCmbBox.getValue()),
+                                                   Integer.valueOf(appStartMonthComboBx.getValue()));
+        ObservableList<String> startDays = Appointment.prepDateComboBoxValues(daysInMonth);
+        appStartDayCmbBox.setItems(startDays);
+        appStartDayCmbBox.setValue(startDays.get(0));
     }
 }
