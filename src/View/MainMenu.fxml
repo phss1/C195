@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="594.0" prefWidth="744.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainMenuController">
+<AnchorPane id="AnchorPane" prefHeight="594.0" prefWidth="796.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainMenuController">
    <children>
-      <AnchorPane layoutX="14.0" layoutY="31.0" prefHeight="542.0" prefWidth="720.0">
+      <AnchorPane layoutX="14.0" layoutY="31.0" prefHeight="542.0" prefWidth="768.0">
          <children>
             <TableView fx:id="customerTbl" layoutX="14.0" layoutY="48.0" prefHeight="200.0" prefWidth="335.0">
                <columns>
@@ -19,7 +19,7 @@
                   <TableColumn fx:id="customerAddressCol" prefWidth="186.0" text="Address" />
                </columns>
             </TableView>
-            <TableView fx:id="appointmentTbl" layoutX="365.0" layoutY="47.0" prefHeight="200.0" prefWidth="366.0">
+            <TableView fx:id="appointmentTbl" layoutX="365.0" layoutY="47.0" prefHeight="200.0" prefWidth="393.0">
               <columns>
                 <TableColumn fx:id="appCustomerIdCol" prefWidth="57.0" text="Cust. ID" />
                 <TableColumn fx:id="appTitleCol" prefWidth="93.0" text="App. Title" />
@@ -30,15 +30,15 @@
             </TableView>
             <RadioButton fx:id="monthViewRdBtn" layoutX="16.0" layoutY="17.0" mnemonicParsing="false" onAction="#onActionMonthViewRdBtn" text="App. Month View" />
             <RadioButton fx:id="weekViewRdBtn" layoutX="171.0" layoutY="17.0" mnemonicParsing="false" onAction="#onActionWeekViewRdBtn" text="App. Week View" />
-            <TableView fx:id="appMonthCal" layoutX="15.0" layoutY="290.0" prefHeight="215.0" prefWidth="686.0">
+            <TableView fx:id="appMonthCal" layoutX="15.0" layoutY="290.0" prefHeight="215.0" prefWidth="744.0">
               <columns>
-                <TableColumn fx:id="monthMonCol" minWidth="20.0" prefWidth="98.0" text="Mon" />
-                <TableColumn fx:id="monthTueCol" minWidth="20.0" prefWidth="98.0" text="Tue" />
-                  <TableColumn fx:id="monthWedCol" minWidth="20.0" prefWidth="98.0" text="Wed" />
-                  <TableColumn fx:id="monthThuCol" minWidth="20.0" prefWidth="98.0" text="Thu" />
-                  <TableColumn fx:id="monthFriCol" minWidth="20.0" prefWidth="98.0" text="Fri" />
-                  <TableColumn fx:id="monthSatCol" minWidth="20.0" prefWidth="98.0" text="Sat" />
-                  <TableColumn fx:id="monthSunCol" minWidth="20.0" prefWidth="98.0" text="Sun" />
+                <TableColumn fx:id="monthMonCol" minWidth="20.0" prefWidth="106.0" text="Mon" />
+                <TableColumn fx:id="monthTueCol" minWidth="20.0" prefWidth="106.0" text="Tue" />
+                  <TableColumn fx:id="monthWedCol" minWidth="20.0" prefWidth="106.0" text="Wed" />
+                  <TableColumn fx:id="monthThuCol" minWidth="20.0" prefWidth="106.0" text="Thu" />
+                  <TableColumn fx:id="monthFriCol" minWidth="20.0" prefWidth="106.0" text="Fri" />
+                  <TableColumn fx:id="monthSatCol" minWidth="20.0" prefWidth="106.0" text="Sat" />
+                  <TableColumn fx:id="monthSunCol" minWidth="20.0" prefWidth="106.0" text="Sun" />
               </columns>
             </TableView>
             <Button fx:id="exitBtn" layoutX="16.0" layoutY="513.0" mnemonicParsing="false" onAction="#onActionExitBtn" prefHeight="25.0" prefWidth="86.0" text="Exit Program" />

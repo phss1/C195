@@ -152,16 +152,13 @@ public class UtilityMethods
     
     public ObservableList<String> prepareComboBxStrings(ResultSet results, String columnName) throws SQLException
     {
-        //ListView<String> listView = new ListView<String>();
         ObservableList<String> tempObsList = FXCollections.observableArrayList();
         while(results.next())
         {
             String item = results.getString(columnName);
             tempObsList.add(item);
         }
-        //listView.setItems(tempObsList);
         
-        //return listView;
         return tempObsList;
     }
     

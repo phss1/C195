@@ -116,11 +116,14 @@ public class MainMenuController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {        
         weekViewRdBtn.setSelected(true);
+        //customerTbl.getItems().clear();
+        appointmentTbl.getItems().clear();
         
         customerTbl.setItems(Customer.getAllCustomers());
         customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         customerAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+        
         
         int rowIndexValue = utility.getSelectedRowIndex();
         if(rowIndexValue == 0)
@@ -132,7 +135,6 @@ public class MainMenuController implements Initializable
             customerTbl.getSelectionModel().select(rowIndexValue);
         }
         
-        appointmentTbl.getItems().clear();
         Customer selectedCustomer = customerTbl.getSelectionModel().getSelectedItem();
         utility.setApptTableViewItems(selectedCustomer);
         
@@ -151,10 +153,11 @@ public class MainMenuController implements Initializable
                     if (newSelection != null)
                     {
                         appointmentTbl.getItems().clear();
+                        customerTbl.setItems(Customer.getAllCustomers());
                         Customer customer = customerTbl.getSelectionModel().getSelectedItem();
                         utility.setApptTableViewItems(customer);
 
-                        appointmentTbl.setItems(selectedCustomer.getAllCustomerAppointments());
+                        appointmentTbl.setItems(customer.getAllCustomerAppointments());
                         appCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
                         appTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
                         appTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -168,6 +171,9 @@ public class MainMenuController implements Initializable
     @FXML
     void onActionAddAppBtn(ActionEvent event) throws IOException
     {
+        Appointment.getRefCustToAppointment().clear();
+        Appointment.addRefCustToAppointment(customerTbl.getSelectionModel().getSelectedItem());
+        
         utility.changeGuiScreen(event, "AddAppointment");
     }
 
@@ -233,7 +239,7 @@ public class MainMenuController implements Initializable
     {
         utility.setSelectedRowIndex(customerTbl.getSelectionModel().getFocusedIndex());
         int rowIndexValue = utility.getSelectedRowIndex();
-        System.out.println(rowIndexValue);
+        appointmentTbl.getItems().clear();
         
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/View/ModifyCustomer.fxml"));

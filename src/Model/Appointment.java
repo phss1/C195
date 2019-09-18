@@ -7,6 +7,7 @@ package Model;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
@@ -26,7 +27,9 @@ public class Appointment
     private String url;
     private Date start;
     private Date end;
-    
+    private static ObservableList<Customer> refCustToAppointment = FXCollections.observableArrayList();
+    private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+
     public Appointment(int appointmentId, int customerId, int userId, String title, String description, String location, 
                             String contact, String type, String url, Date start, Date end)
     {
@@ -56,6 +59,26 @@ public class Appointment
                 break;
             }
         }
+    }
+    
+    public static void addItemToAllAppointments(Appointment appointment)
+    {
+         allAppointments.add(appointment);
+    }
+    
+    public static void addRefCustToAppointment(Customer customer)
+    {
+         refCustToAppointment.add(customer);
+    }
+    
+    public static ObservableList<Customer> getRefCustToAppointment()
+    {
+        return refCustToAppointment;
+    }
+
+    public static void setRefCustToAppointment(ObservableList<Customer> refCustToAppointment)
+    {
+        Appointment.refCustToAppointment = refCustToAppointment;
     }
 
     public int getAppointmentId()
