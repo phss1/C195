@@ -29,6 +29,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import Model.*;
 import java.sql.Date;
+import java.time.YearMonth;
 
 /**
  *
@@ -40,6 +41,13 @@ public class UtilityMethods
     Parent scene;
     private static int currentUserId;
     private static int selectedRowIndex;
+    
+    public int getDaysInMonth(int year, int month)
+    {
+        YearMonth yearMonthObject = YearMonth.of(year, month);
+        int daysInMonth = yearMonthObject.lengthOfMonth(); 
+        return daysInMonth;
+    }
     
     public void deleteCustomerAppointments(Customer customer) throws SQLException
     {

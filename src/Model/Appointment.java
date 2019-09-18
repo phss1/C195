@@ -46,6 +46,19 @@ public class Appointment
         this.end = end;
     }
     
+    public static ObservableList<Integer> prepDateComboBoxValues(int maxValues)
+    {
+        ObservableList<Integer> values = FXCollections.observableArrayList();
+        System.out.println(maxValues);
+        for(int i = 0; i > maxValues ; i++)
+        {
+            values.add((i + 1));
+            System.out.println(values.get(i + 1));
+        }
+        
+        return values;
+    }
+    
     public static void deleteAppointment(Customer customer, int appointmentId)
     {
         int index = -1;

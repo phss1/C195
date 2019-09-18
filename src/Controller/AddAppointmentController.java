@@ -32,45 +32,94 @@ public class AddAppointmentController implements Initializable {
 
     @FXML
     private TextField custIdTxtFld;
+
     @FXML
     private TextField titleTxtFld;
+
     @FXML
     private TextField descriptionTxtFld;
-    @FXML
-    private TextField locationTxtFld;
+
     @FXML
     private TextField contactTxtFld;
-    @FXML
-    private ComboBox<String> typeComboBx;
+
     @FXML
     private TextField urlTxtFld;
+
     @FXML
-    private TextField apptEndTxtFld;
-    @FXML
-    private TextField apptStartTxtFld;
-    @FXML
-    private Button saveBtn;
-    @FXML
-    private Button cancelBtn;
+    private ComboBox<String> typeComboBx;
+
     @FXML
     private ComboBox<String> locationComboBox;
+
+    @FXML
+    private ComboBox<String> apptStartTimeComboBox;
+
+    @FXML
+    private ComboBox<String> apptEndTimeComboBx;
+
+    @FXML
+    private ComboBox<String> appStartMonthComboBx;
+
+    @FXML
+    private ComboBox<String> appStartDayCmbBox;
+
+    @FXML
+    private ComboBox<String> appStartYearCmbBox;
+
+    @FXML
+    private ComboBox<String> appEndMonthCmbBx;
+
+    @FXML
+    private ComboBox<String> appEndDayCmbBx;
+
+    @FXML
+    private ComboBox<String> appEndYearCmbBox;
+
+    @FXML
+    private Button saveBtn;
+
+    @FXML
+    private Button cancelBtn;
     
     UtilityMethods utility = new UtilityMethods();
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        ObservableList<String> locationObsList = FXCollections.observableArrayList();
-        locationObsList.add("Office");
-        locationComboBox.setItems(locationObsList);
-        locationComboBox.setValue(locationObsList.get(0));
-
-        ObservableList<String> typeObsList = FXCollections.observableArrayList();
-        typeObsList.add("Doctor");
-        typeObsList.add("Chiropractic");
-        typeComboBx.setItems(typeObsList);
-        typeComboBx.setValue(typeObsList.get(0));
+        ObservableList<String> location = FXCollections.observableArrayList();
+        location.add("Office");
+        locationComboBox.setItems(location);
+        locationComboBox.setValue(location.get(0));
+        
+        ObservableList<String> type = FXCollections.observableArrayList();
+        type.add("Doctor");
+        type.add("Chiropractic");
+        typeComboBx.setItems(type);
+        typeComboBx.setValue(type.get(0));
         custIdTxtFld.setText(String.valueOf((Appointment.getRefCustToAppointment().get(0)).getCustomerId()));
+        
+        ObservableList<Integer> startMonth = Appointment.prepDateComboBoxValues(12);
+        System.out.println(startMonth);
+        //appStartMonthComboBx.setItems(startMonth);
+        //appStartMonthComboBx.setValue(startMonth.get(0));
+        /*
+        comboBoxValueStore.add("2019");
+        comboBoxValueStore.add("2020");
+        appStartYearCmbBox.setItems(comboBoxValueStore);
+        appStartYearCmbBox.setValue(comboBoxValueStore.get(0));
+        comboBoxValueStore.clear();
+        
+        int daysInMonth = utility.getDaysInMonth(Integer.valueOf(appStartYearCmbBox.getValue()),
+                                                   Integer.valueOf(appStartMonthComboBx.getValue()));
+        System.out.println(daysInMonth);
+        */
+        //appStartDayCmbBox
+        //appStartYearCmbBox
+        //apptStartTimeComboBox
+        //appEndMonthCmbBx
+        //appEndDayCmbBx
+        //appEndYearCmbBox
+        //apptEndTimeComboBx
     }
     
     @FXML
