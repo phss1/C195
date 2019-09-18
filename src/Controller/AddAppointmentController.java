@@ -111,11 +111,7 @@ public class AddAppointmentController implements Initializable {
         appStartYearCmbBox.setItems(startYear);
         appStartYearCmbBox.setValue(startYear.get(0));
         
-        int daysInStartMonth = utility.getDaysInMonth(Integer.valueOf(appStartYearCmbBox.getValue()),
-                                                   Integer.valueOf(appStartMonthComboBx.getValue()));
-        ObservableList<String> startDays = Appointment.prepDateComboBoxValues(daysInStartMonth);
-        appStartDayCmbBox.setItems(startDays);
-        appStartDayCmbBox.setValue(startDays.get(0));
+        createAppointmentStartDays();
         
         ObservableList<String> endMonth = Appointment.prepDateComboBoxValues(12);
         appEndMonthCmbBx.setItems(endMonth);
@@ -127,17 +123,21 @@ public class AddAppointmentController implements Initializable {
         appEndYearCmbBox.setItems(endYear);
         appEndYearCmbBox.setValue(endYear.get(0));
         
-        int daysInEndMonth = utility.getDaysInMonth(Integer.valueOf(appEndYearCmbBox.getValue()),
-                                                   Integer.valueOf(appEndMonthCmbBx.getValue()));
-        ObservableList<String> endDays = Appointment.prepDateComboBoxValues(daysInEndMonth);
-        appEndDayCmbBx.setItems(endDays);
-        appEndDayCmbBx.setValue(endDays.get(0));
+        createAppointmentEndDays();
         
         ObservableList<String> startAppTimes = Appointment.createAppointmentTimes(9, 15);
         apptStartTimeComboBox.setItems(startAppTimes);
         apptStartTimeComboBox.setValue(startAppTimes.get(0));
         
-        createAppointmentEndTimes();
+        String [] endTimeMinArray = ((apptStartTimeComboBox.getSelectionModel().getSelectedItem()).split(":", 2));
+        String endTimeHourTemp = endTimeMinArray[0];
+        String endTimeMinTemp = endTimeMinArray[1];
+        int endTimeInHours = Integer.valueOf(endTimeHourTemp);
+        
+        ObservableList<String> endAppTimes = Appointment.createAppointmentTimes(endTimeInHours, 15);
+        endAppTimes.remove(0);
+        apptEndTimeComboBx.setItems(endAppTimes);
+        apptEndTimeComboBx.setValue(endAppTimes.get(0));
     }
     
     @FXML
@@ -167,51 +167,46 @@ public class AddAppointmentController implements Initializable {
         
         utility.changeGuiScreen(event, "MainMenu");
     }
-    
+
     @FXML
     void onActionAppEndMonth(ActionEvent event)
     {
-        createAppointmentEndTimes();
+        createAppointmentEndDays();
     }
 
     @FXML
     void onActionAppEndYear(ActionEvent event)
     {
-        createAppointmentEndTimes();
+        createAppointmentEndDays();
     }
 
     @FXML
     void onActionAppStartMonth(ActionEvent event)
     {
-        
+        createAppointmentStartDays();
     }
 
     @FXML
     void onActionAppStartYear(ActionEvent event)
     {
-        int daysInMonth = utility.getDaysInMonth(Integer.valueOf(appStartYearCmbBox.getValue()),
+        createAppointmentStartDays();
+    }
+    
+    private void createAppointmentStartDays()
+    {
+        int daysInStartMonth = utility.getDaysInMonth(Integer.valueOf(appStartYearCmbBox.getValue()),
                                                    Integer.valueOf(appStartMonthComboBx.getValue()));
-        ObservableList<String> startDays = Appointment.prepDateComboBoxValues(daysInMonth);
+        ObservableList<String> startDays = Appointment.prepDateComboBoxValues(daysInStartMonth);
         appStartDayCmbBox.setItems(startDays);
         appStartDayCmbBox.setValue(startDays.get(0));
     }
     
-    private void createAppointmentEndTimes()
+    private void createAppointmentEndDays()
     {
-        ObservableList<String> startAppTimes = Appointment.createAppointmentTimes(9, 15);
-        apptStartTimeComboBox.setItems(startAppTimes);
-        apptStartTimeComboBox.setValue(startAppTimes.get(0));
-        
-        String [] endTimeMinArray = ((apptStartTimeComboBox.getSelectionModel().getSelectedItem()).split(":", 2));
-        String endTimeHourTemp = endTimeMinArray[0];
-        String endTimeMinTemp = endTimeMinArray[1];
-        int endTimeInHours = Integer.valueOf(endTimeHourTemp);
-        int endTimeInMin = Integer.valueOf(endTimeMinTemp);
-        System.out.println(endTimeInMin);
-        
-        ObservableList<String> endAppTimes = Appointment.createAppointmentTimes(endTimeInHours, 15);
-        endAppTimes.remove(0);
-        apptEndTimeComboBx.setItems(endAppTimes);
-        apptEndTimeComboBx.setValue(endAppTimes.get(0));
+        int daysInEndMonth = utility.getDaysInMonth(Integer.valueOf(appEndYearCmbBox.getValue()),
+                                                   Integer.valueOf(appEndMonthCmbBx.getValue()));
+        ObservableList<String> endDays = Appointment.prepDateComboBoxValues(daysInEndMonth);
+        appEndDayCmbBx.setItems(endDays);
+        appEndDayCmbBx.setValue(endDays.get(0));
     }
 }
