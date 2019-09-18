@@ -46,13 +46,14 @@ public class Appointment
         this.end = end;
     }
     
-    public static ObservableList<String> createAppointmentTimes()
+    public static ObservableList<String> createAppointmentTimes(int startHour, int minInterval)
     {
-        int startOfDay = 9;
+        int startOfDay = startHour;
         int endOfDay = 18;
-        int appointmentIncrememnt = 15;
+        int appointmentIncrememnt = minInterval;
         int possApptInOneHr = 60 / appointmentIncrememnt;
         int hoursInDay = 18-9;
+        boolean alreadyRanOnce = false;
         ObservableList<String> possAppInOneDay = FXCollections.observableArrayList();
         
         for(int i = 0; i<hoursInDay; i++)

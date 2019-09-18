@@ -44,8 +44,8 @@
                   <Font size="10.0" />
                </font>
             </Label>
-            <ComboBox fx:id="apptStartTimeComboBox" layoutX="92.0" layoutY="339.0" prefHeight="25.0" prefWidth="103.0" />
-            <ComboBox fx:id="apptEndTimeComboBx" layoutX="90.0" layoutY="468.0" prefHeight="25.0" prefWidth="113.0" />
+            <ComboBox fx:id="apptStartTimeComboBox" layoutX="84.0" layoutY="339.0" prefHeight="25.0" prefWidth="103.0" />
+            <ComboBox fx:id="apptEndTimeComboBx" layoutX="84.0" layoutY="468.0" prefHeight="25.0" prefWidth="103.0" />
             <ComboBox fx:id="appStartMonthComboBx" layoutX="83.0" layoutY="242.0" onAction="#onActionAppStartMonth" prefHeight="25.0" prefWidth="61.0" />
             <Label layoutX="3.0" layoutY="278.0" text="Appt. Start Day">
                <font>
@@ -58,7 +58,7 @@
                   <Font size="10.0" />
                </font>
             </Label>
-            <ComboBox fx:id="appStartYearCmbBox" layoutX="84.0" layoutY="307.0" onAction="#onActionAppStartYear" prefHeight="25.0" prefWidth="61.0" />
+            <ComboBox fx:id="appStartYearCmbBox" layoutX="84.0" layoutY="307.0" onAction="#onActionAppStartYear" prefHeight="25.0" prefWidth="87.0" />
             <Label layoutX="2.0" layoutY="375.0" text="Appt. End Month">
                <font>
                   <Font size="10.0" />
@@ -70,13 +70,13 @@
                   <Font size="10.0" />
                </font>
             </Label>
-            <ComboBox fx:id="appEndDayCmbBx" layoutX="84.0" layoutY="403.0" onAction="#onActionAppEndDay" prefHeight="25.0" prefWidth="61.0" />
+            <ComboBox fx:id="appEndDayCmbBx" layoutX="84.0" layoutY="403.0" prefHeight="25.0" prefWidth="61.0" />
             <Label layoutX="3.0" layoutY="440.0" text="Appt. End Year">
                <font>
                   <Font size="10.0" />
                </font>
             </Label>
-            <ComboBox fx:id="appEndYearCmbBox" layoutX="84.0" layoutY="436.0" onAction="#onActionAppEndYear" prefHeight="25.0" prefWidth="61.0" />
+            <ComboBox fx:id="appEndYearCmbBox" layoutX="84.0" layoutY="436.0" onAction="#onActionAppEndYear" prefHeight="25.0" prefWidth="87.0" />
          </children>
       </AnchorPane>
       <Button fx:id="saveBtn" layoutX="143.0" layoutY="534.0" mnemonicParsing="false" onAction="#onActionSaveBtn" text="Save" />

@@ -133,9 +133,11 @@ public class AddAppointmentController implements Initializable {
         appEndDayCmbBx.setItems(endDays);
         appEndDayCmbBx.setValue(endDays.get(0));
         
-        ObservableList<String> startAppTimes = Appointment.createAppointmentTimes();
+        ObservableList<String> startAppTimes = Appointment.createAppointmentTimes(9, 15);
         apptStartTimeComboBox.setItems(startAppTimes);
         apptStartTimeComboBox.setValue(startAppTimes.get(0));
+        
+        createAppointmentEndTimes();
     }
     
     @FXML
@@ -167,39 +169,21 @@ public class AddAppointmentController implements Initializable {
     }
     
     @FXML
-    void onActionAppEndDay(ActionEvent event)
-    {
-
-    }
-
-    @FXML
     void onActionAppEndMonth(ActionEvent event)
     {
-        int daysInEndMonth = utility.getDaysInMonth(Integer.valueOf(appEndYearCmbBox.getValue()),
-                                                   Integer.valueOf(appEndMonthCmbBx.getValue()));
-        ObservableList<String> endDays = Appointment.prepDateComboBoxValues(daysInEndMonth);
-        appEndDayCmbBx.setItems(endDays);
-        appEndDayCmbBx.setValue(endDays.get(0));
+        createAppointmentEndTimes();
     }
 
     @FXML
     void onActionAppEndYear(ActionEvent event)
     {
-        int daysInEndMonth = utility.getDaysInMonth(Integer.valueOf(appEndYearCmbBox.getValue()),
-                                                   Integer.valueOf(appEndMonthCmbBx.getValue()));
-        ObservableList<String> endDays = Appointment.prepDateComboBoxValues(daysInEndMonth);
-        appEndDayCmbBx.setItems(endDays);
-        appEndDayCmbBx.setValue(endDays.get(0));
+        createAppointmentEndTimes();
     }
 
     @FXML
     void onActionAppStartMonth(ActionEvent event)
     {
-        int daysInMonth = utility.getDaysInMonth(Integer.valueOf(appStartYearCmbBox.getValue()),
-                                                   Integer.valueOf(appStartMonthComboBx.getValue()));
-        ObservableList<String> startDays = Appointment.prepDateComboBoxValues(daysInMonth);
-        appStartDayCmbBox.setItems(startDays);
-        appStartDayCmbBox.setValue(startDays.get(0));
+        
     }
 
     @FXML
@@ -210,5 +194,24 @@ public class AddAppointmentController implements Initializable {
         ObservableList<String> startDays = Appointment.prepDateComboBoxValues(daysInMonth);
         appStartDayCmbBox.setItems(startDays);
         appStartDayCmbBox.setValue(startDays.get(0));
+    }
+    
+    private void createAppointmentEndTimes()
+    {
+        ObservableList<String> startAppTimes = Appointment.createAppointmentTimes(9, 15);
+        apptStartTimeComboBox.setItems(startAppTimes);
+        apptStartTimeComboBox.setValue(startAppTimes.get(0));
+        
+        String [] endTimeMinArray = ((apptStartTimeComboBox.getSelectionModel().getSelectedItem()).split(":", 2));
+        String endTimeHourTemp = endTimeMinArray[0];
+        String endTimeMinTemp = endTimeMinArray[1];
+        int endTimeInHours = Integer.valueOf(endTimeHourTemp);
+        int endTimeInMin = Integer.valueOf(endTimeMinTemp);
+        System.out.println(endTimeInMin);
+        
+        ObservableList<String> endAppTimes = Appointment.createAppointmentTimes(endTimeInHours, 15);
+        endAppTimes.remove(0);
+        apptEndTimeComboBx.setItems(endAppTimes);
+        apptEndTimeComboBx.setValue(endAppTimes.get(0));
     }
 }
