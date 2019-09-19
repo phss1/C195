@@ -46,6 +46,15 @@ public class Appointment
         this.end = end;
     }
     
+    public static ObservableList<String> createNewObsList(int itemIndex, ObservableList<String> itemList)
+    {
+        ObservableList<String> tempList = FXCollections.observableArrayList(itemList);
+        
+        tempList.remove(0, itemIndex);
+        System.out.println(tempList.get(0));
+        return tempList;
+    }
+    
     public static ObservableList<String> createAppointmentTimes(int startHour, int minInterval)
     {
         int startOfDay = startHour;

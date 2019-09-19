@@ -111,7 +111,7 @@ public class AddAppointmentController implements Initializable {
         appStartYearCmbBox.setItems(startYear);
         appStartYearCmbBox.setValue(startYear.get(0));
         
-        createAppointmentStartDays();
+        createAppointmentDays();
         
         ObservableList<String> endMonth = Appointment.prepDateComboBoxValues(12);
         appEndMonthCmbBx.setItems(endMonth);
@@ -123,7 +123,7 @@ public class AddAppointmentController implements Initializable {
         appEndYearCmbBox.setItems(endYear);
         appEndYearCmbBox.setValue(endYear.get(0));
         
-        createAppointmentEndDays();
+        createAppointmentDays();
         
         ObservableList<String> startAppTimes = Appointment.createAppointmentTimes(9, 15);
         apptStartTimeComboBox.setItems(startAppTimes);
@@ -171,42 +171,103 @@ public class AddAppointmentController implements Initializable {
     @FXML
     void onActionAppEndMonth(ActionEvent event)
     {
-        createAppointmentEndDays();
+        //createAppointmentEndDays();
     }
 
     @FXML
     void onActionAppEndYear(ActionEvent event)
     {
-        createAppointmentEndDays();
+        //createAppointmentEndDays();
     }
 
     @FXML
     void onActionAppStartMonth(ActionEvent event)
     {
-        createAppointmentStartDays();
+        try
+        {
+            String selectedStartDay = appStartMonthComboBx.getSelectionModel().getSelectedItem();
+            int selectedStartDayIndex = appStartMonthComboBx.getSelectionModel().getSelectedIndex();
+            ObservableList<String> allapptStartDays = appStartMonthComboBx.getItems();
+
+            ObservableList<String> newAppEndTimes = FXCollections.observableArrayList(Appointment.createNewObsList(selectedStartDayIndex, allapptStartDays));
+            appEndMonthCmbBx.setItems(newAppEndTimes);
+            appEndMonthCmbBx.setValue(newAppEndTimes.get(0));
+
+            createAppointmentDays();
+            
+            if(appStartMonthComboBx.getSelectionModel().getSelectedItem() == "1")
+            {
+                resetEndDateDays();
+            }
+        }
+        catch(Exception e)
+        {
+            
+        }
     }
 
     @FXML
     void onActionAppStartYear(ActionEvent event)
     {
-        createAppointmentStartDays();
+        String selectedStartDay = appStartYearCmbBox.getSelectionModel().getSelectedItem();
+        System.out.println(selectedStartDay);
+        int selectedStartDayIndex = appStartYearCmbBox.getSelectionModel().getSelectedIndex();
+        System.out.println(selectedStartDayIndex);
+        ObservableList<String> allapptStartDays = appStartYearCmbBox.getItems();
+
+        ObservableList<String> newAppEndTimes = FXCollections.observableArrayList(Appointment.createNewObsList(selectedStartDayIndex, allapptStartDays));
+        appEndYearCmbBox.setItems(newAppEndTimes);
+        appEndYearCmbBox.setValue(newAppEndTimes.get(0));
+        
+        createAppointmentDays();
     }
     
-    private void createAppointmentStartDays()
+    @FXML
+    void onActionAppStartTime(ActionEvent event)
+    {
+        String selectedStartTime = apptStartTimeComboBox.getSelectionModel().getSelectedItem();
+        int selectedStartTimeIndex = apptStartTimeComboBox.getSelectionModel().getSelectedIndex();
+        ObservableList<String> allapptStartTimes = apptStartTimeComboBox.getItems();
+        
+        ObservableList<String> newAppEndTimes = FXCollections.observableArrayList(Appointment.createNewObsList(selectedStartTimeIndex, allapptStartTimes));
+        newAppEndTimes.remove(0);
+        apptEndTimeComboBx.setItems(newAppEndTimes);
+        apptEndTimeComboBx.setValue(newAppEndTimes.get(0));
+    }
+    
+    @FXML
+    void onActionAppStartDayCmbBox(ActionEvent event)
+    {
+        String selectedStartDay = appStartDayCmbBox.getSelectionModel().getSelectedItem();
+        System.out.println(selectedStartDay);
+        int selectedStartDayIndex = appStartDayCmbBox.getSelectionModel().getSelectedIndex();
+        System.out.println(selectedStartDayIndex);
+        ObservableList<String> allapptStartDays = appStartDayCmbBox.getItems();
+        
+        ObservableList<String> newAppEndTimes = FXCollections.observableArrayList();
+        newAppEndTimes.add(selectedStartDay);
+        appEndDayCmbBx.setItems(newAppEndTimes);
+        appEndDayCmbBx.setValue(newAppEndTimes.get(0));
+    }
+    
+    private void createAppointmentDays()
     {
         int daysInStartMonth = utility.getDaysInMonth(Integer.valueOf(appStartYearCmbBox.getValue()),
                                                    Integer.valueOf(appStartMonthComboBx.getValue()));
         ObservableList<String> startDays = Appointment.prepDateComboBoxValues(daysInStartMonth);
         appStartDayCmbBox.setItems(startDays);
         appStartDayCmbBox.setValue(startDays.get(0));
+        
+        ObservableList<String> endDay = FXCollections.observableArrayList();
+        endDay.add(startDays.get(0));
+        appEndDayCmbBx.setItems(endDay);
+        appEndDayCmbBx.setValue(endDay.get(0));
     }
     
-    private void createAppointmentEndDays()
+    private void resetEndDateDays(ObservableList<String> list)
     {
-        int daysInEndMonth = utility.getDaysInMonth(Integer.valueOf(appEndYearCmbBox.getValue()),
-                                                   Integer.valueOf(appEndMonthCmbBx.getValue()));
-        ObservableList<String> endDays = Appointment.prepDateComboBoxValues(daysInEndMonth);
-        appEndDayCmbBx.setItems(endDays);
-        appEndDayCmbBx.setValue(endDays.get(0));
+        ObservableList<String> endDay = FXCollections.observableArrayList(list);
+        appEndDayCmbBx.setItems(endDay);
+        appEndDayCmbBx.setValue(endDay.get(0));
     }
 }
