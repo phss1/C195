@@ -6,7 +6,9 @@
 package Model;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -25,13 +27,22 @@ public class Appointment
     private String contact;
     private String type;
     private String url;
-    private Date start;
-    private Date end;
+    private String start;
+    private String end;
+//    private String startMonth;
+//    private String startDay;
+//    private String startYear;
+//    private String startTime;
+//    private String endMonth;
+//    private String endDay;
+//    private String endYear;
+//    private String endTime;
     private static ObservableList<Customer> refCustToAppointment = FXCollections.observableArrayList();
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
 
     public Appointment(int appointmentId, int customerId, int userId, String title, String description, String location, 
-                            String contact, String type, String url, Date start, Date end)
+                            String contact, String type, String url, String start, String end) /*String startMonth, String startDay, String startYear,
+                            String startTime, String endMonth, String endDay, String endYear, String endTime)*/
     {
         this.appointmentId = appointmentId;
         this.customerId = customerId;
@@ -44,6 +55,13 @@ public class Appointment
         this.url = url;
         this.start = start;
         this.end = end;
+//        this.startMonth = startMonth;
+//        this.startDay = startDay;
+//        this.startYear = startYear;
+//        this.endMonth = endMonth;
+//        this.endDay = endDay;
+//        this.endYear = endYear;
+//        this.endTime = endTime;
     }
     
     public static ObservableList<String> createNewObsList(int itemIndex, ObservableList<String> itemList)
@@ -51,7 +69,6 @@ public class Appointment
         ObservableList<String> tempList = FXCollections.observableArrayList(itemList);
         
         tempList.remove(0, itemIndex);
-        System.out.println(tempList.get(0));
         return tempList;
     }
     
@@ -218,24 +235,104 @@ public class Appointment
     {
         this.url = url;
     }
-
-    public Date getStart()
+    
+    public String getStart()
     {
         return start;
     }
 
-    public void setStart(Date start)
+    public void setStart(String start)
     {
         this.start = start;
     }
 
-    public Date getEnd()
+    public String getEnd()
     {
         return end;
     }
 
-    public void setEnd(Date end)
+    public void setEnd(String end)
     {
         this.end = end;
     }
+    /*
+    public String getStartMonth()
+    {
+        return startMonth;
+    }
+
+    public void setStartMonth(String startMonth)
+    {
+        this.startMonth = startMonth;
+    }
+
+    public String getStartDay()
+    {
+        return startDay;
+    }
+
+    public void setStartDay(String startDay)
+    {
+        this.startDay = startDay;
+    }
+
+    public String getStartYear()
+    {
+        return startYear;
+    }
+
+    public void setStartYear(String startYear)
+    {
+        this.startYear = startYear;
+    }
+
+    public String getStartTime()
+    {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime)
+    {
+        this.startTime = startTime;
+    }
+
+    public String getEndMonth()
+    {
+        return endMonth;
+    }
+
+    public void setEndMonth(String endMonth)
+    {
+        this.endMonth = endMonth;
+    }
+
+    public String getEndDay()
+    {
+        return endDay;
+    }
+
+    public void setEndDay(String endDay)
+    {
+        this.endDay = endDay;
+    }
+
+    public String getEndYear()
+    {
+        return endYear;
+    }
+
+    public void setEndYear(String endYear)
+    {
+        this.endYear = endYear;
+    }
+
+    public String getEndTime()
+    {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime)
+    {
+        this.endTime = endTime;
+    }*/
 }

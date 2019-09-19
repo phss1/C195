@@ -29,7 +29,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import Model.*;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.YearMonth;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -41,6 +43,16 @@ public class UtilityMethods
     Parent scene;
     private static int currentUserId;
     private static int selectedRowIndex;
+    
+    
+    
+    public String getCurrentDateTime()
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-d HH:mm");	
+	Calendar calendar = new GregorianCalendar();
+        
+        return sdf.format(calendar.getTime());
+    }
     
     public int getDaysInMonth(int year, int month)
     {
@@ -84,9 +96,8 @@ public class UtilityMethods
             String contact = results.getString("contact");
             String type = results.getString("type");
             String url = results.getString("url");
-            Date start = results.getDate("start");
-            Date end = results.getDate("end");
-            
+            String start = results.getString("start");
+            String end = results.getString("end");
             Appointment appointment = new Appointment(appointmentId, customerId, userId, title, description, location,
                                         contact, type, url, start, end);
             
