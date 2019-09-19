@@ -64,19 +64,19 @@
                   <Font size="10.0" />
                </font>
             </Label>
-            <ComboBox fx:id="appEndMonthCmbBx" layoutX="83.0" layoutY="371.0" prefHeight="25.0" prefWidth="61.0" />
+            <ComboBox fx:id="appEndMonthCmbBx" disable="true" layoutX="83.0" layoutY="371.0" prefHeight="25.0" prefWidth="61.0" />
             <Label layoutX="3.0" layoutY="407.0" text="Appt. End Day">
                <font>
                   <Font size="10.0" />
                </font>
             </Label>
-            <ComboBox fx:id="appEndDayCmbBx" layoutX="84.0" layoutY="403.0" prefHeight="25.0" prefWidth="61.0" />
+            <ComboBox fx:id="appEndDayCmbBx" disable="true" layoutX="84.0" layoutY="403.0" prefHeight="25.0" prefWidth="61.0" />
             <Label layoutX="3.0" layoutY="440.0" text="Appt. End Year">
                <font>
                   <Font size="10.0" />
                </font>
             </Label>
-            <ComboBox fx:id="appEndYearCmbBox" layoutX="84.0" layoutY="436.0" prefHeight="25.0" prefWidth="87.0" />
+            <ComboBox fx:id="appEndYearCmbBox" disable="true" layoutX="84.0" layoutY="436.0" prefHeight="25.0" prefWidth="87.0" />
          </children>
       </AnchorPane>
       <Button fx:id="saveBtn" layoutX="143.0" layoutY="534.0" mnemonicParsing="false" onAction="#onActionSaveBtn" text="Save" />

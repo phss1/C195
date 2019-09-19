@@ -7,38 +7,82 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="407.0" prefWidth="285.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ModifyAppointmentController">
+<AnchorPane id="AnchorPane" prefHeight="596.0" prefWidth="285.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AddAppointmentController">
    <children>
       <Label layoutX="10.0" layoutY="10.0" text="Modify Appointment" textFill="#100861">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <AnchorPane layoutX="14.0" layoutY="30.0" prefHeight="341.0" prefWidth="256.0">
+      <AnchorPane layoutX="14.0" layoutY="30.0" prefHeight="529.0" prefWidth="256.0">
          <children>
             <Label layoutX="33.0" layoutY="14.0" text="Cust_ID" />
             <TextField fx:id="custIdTxtFld" disable="true" editable="false" layoutX="83.0" layoutY="10.0" />
-            <Label layoutX="32.0" layoutY="46.0" text="Appt_Id" />
-            <TextField fx:id="apptIdTxtFld" disable="true" editable="false" layoutX="84.0" layoutY="42.0" />
-            <Label layoutX="50.0" layoutY="79.0" text="Title" />
-            <TextField fx:id="titleTxtFld" layoutX="83.0" layoutY="75.0" />
-            <Label layoutX="13.0" layoutY="112.0" text="Description" />
-            <TextField fx:id="descriptionTxtFld" layoutX="83.0" layoutY="108.0" />
-            <Label layoutX="28.0" layoutY="144.0" text="Location" />
-            <Label layoutX="28.0" layoutY="175.0" text="Contact" />
-            <TextField fx:id="contactTxtFld" layoutX="83.0" layoutY="171.0" />
-            <Label layoutX="47.0" layoutY="210.0" text="Type" />
-            <Label layoutX="51.0" layoutY="244.0" text="URL" />
-            <TextField fx:id="urlTxtFld" layoutX="83.0" layoutY="240.0" />
-            <Label layoutX="22.0" layoutY="310.0" text="Appt. End" />
-            <TextField fx:id="apptEndTxtFld" layoutX="83.0" layoutY="306.0" />
-            <Label layoutX="17.0" layoutY="276.0" text="Appt. Start" />
-            <TextField fx:id="apptStartTxtFld" layoutX="83.0" layoutY="272.0" />
-            <ComboBox fx:id="typeComboBx" layoutX="83.0" layoutY="206.0" prefWidth="150.0" />
-            <ComboBox fx:id="locationComboBox" layoutX="84.0" layoutY="140.0" prefWidth="150.0" />
+            <Label layoutX="50.0" layoutY="75.0" text="Title" />
+            <TextField fx:id="titleTxtFld" layoutX="83.0" layoutY="71.0" />
+            <Label layoutX="13.0" layoutY="108.0" text="Description" />
+            <TextField fx:id="descriptionTxtFld" layoutX="83.0" layoutY="104.0" />
+            <Label layoutX="28.0" layoutY="140.0" text="Location" />
+            <Label layoutX="28.0" layoutY="171.0" text="Contact" />
+            <TextField fx:id="contactTxtFld" layoutX="83.0" layoutY="167.0" />
+            <Label layoutX="47.0" layoutY="206.0" text="Type" />
+            <Label layoutX="51.0" layoutY="240.0" text="URL" />
+            <TextField fx:id="urlTxtFld" layoutX="83.0" layoutY="236.0" />
+            <Label layoutX="2.0" layoutY="272.0" text="Appt. Start Month">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="typeComboBx" layoutX="83.0" layoutY="202.0" prefWidth="150.0" />
+            <ComboBox fx:id="locationComboBox" layoutX="84.0" layoutY="136.0" prefWidth="150.0" />
+            <Label layoutX="10.0" layoutY="500.0" text="Appt. End Time">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <Label layoutX="7.0" layoutY="368.0" text="Appt. Start Time">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="apptStartTimeComboBox" layoutX="84.0" layoutY="365.0" onAction="#onActionAppStartTime" prefHeight="25.0" prefWidth="103.0" />
+            <ComboBox fx:id="apptEndTimeComboBx" layoutX="84.0" layoutY="494.0" prefHeight="25.0" prefWidth="103.0" />
+            <ComboBox fx:id="appStartMonthComboBx" layoutX="83.0" layoutY="268.0" onAction="#onActionAppStartMonth" prefHeight="25.0" prefWidth="61.0" />
+            <Label layoutX="3.0" layoutY="304.0" text="Appt. Start Day">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="appStartDayCmbBox" layoutX="84.0" layoutY="300.0" onAction="#onActionAppStartDayCmbBox" prefHeight="25.0" prefWidth="61.0" />
+            <Label layoutX="3.0" layoutY="337.0" text="Appt. Start Year">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="appStartYearCmbBox" layoutX="84.0" layoutY="333.0" onAction="#onActionAppStartYear" prefHeight="25.0" prefWidth="87.0" />
+            <Label layoutX="2.0" layoutY="401.0" text="Appt. End Month">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="appEndMonthCmbBx" layoutX="83.0" layoutY="397.0" prefHeight="25.0" prefWidth="61.0" />
+            <Label layoutX="3.0" layoutY="433.0" text="Appt. End Day">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="appEndDayCmbBx" layoutX="84.0" layoutY="429.0" prefHeight="25.0" prefWidth="61.0" />
+            <Label layoutX="3.0" layoutY="466.0" text="Appt. End Year">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="appEndYearCmbBox" layoutX="84.0" layoutY="462.0" prefHeight="25.0" prefWidth="87.0" />
+            <Label layoutX="33.0" layoutY="44.0" text="Appt_ID" />
+            <TextField fx:id="appIdTxtFld" disable="true" editable="false" layoutX="83.0" layoutY="40.0" />
          </children>
       </AnchorPane>
-      <Button fx:id="saveBtn" layoutX="142.0" layoutY="371.0" mnemonicParsing="false" onAction="#onActionSaveBtn" text="Save" />
-      <Button fx:id="cancelBtn" layoutX="193.0" layoutY="371.0" mnemonicParsing="false" onAction="#onActionCancelBtn" text="Cancel" />
+      <Button fx:id="saveBtn" layoutX="143.0" layoutY="566.0" mnemonicParsing="false" onAction="#onActionSaveBtn" text="Save" />
+      <Button fx:id="cancelBtn" layoutX="194.0" layoutY="566.0" mnemonicParsing="false" onAction="#onActionCancelBtn" text="Cancel" />
    </children>
 </AnchorPane>

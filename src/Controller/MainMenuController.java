@@ -173,6 +173,7 @@ public class MainMenuController implements Initializable
     {
         Appointment.getRefCustToAppointment().clear();
         Appointment.addRefCustToAppointment(customerTbl.getSelectionModel().getSelectedItem());
+        appointmentTbl.getItems().clear();
         
         utility.changeGuiScreen(event, "AddAppointment");
     }

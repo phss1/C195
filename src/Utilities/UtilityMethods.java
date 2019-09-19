@@ -151,11 +151,16 @@ public class UtilityMethods
         UtilityMethods.currentUserId = currentUserId;
     }
     
-    public int createNewId(String tableName) throws SQLException
+    public int createNewId(String columnName, String tableName) throws SQLException
     {
-        ResultSet result = runSqlQuery("Select * from " + tableName + "Id");
+        ResultSet result = runSqlQuery("Select " + columnName + "from " + tableName);
+        int lastResultId = 0;
+        while(result.next())
+        {
+            lastResultId = result.getInt(columnName) + 1;
+        }
         
-        return 1;
+        return lastResultId;
     }
     
     public int getSqlTableRowCount(ResultSet resultSet) throws SQLException

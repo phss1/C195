@@ -86,15 +86,16 @@ public class AddAppointmentController implements Initializable {
     private Button cancelBtn;
     
     UtilityMethods utility = new UtilityMethods();
+    @FXML
+    private TextField appIdTxtFld;
     
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
         String currentDateTime = utility.getCurrentDateTime();
         String[] dateTimeSplit = currentDateTime.split(" ");
-        //2019-9-19
-        
-        System.out.println(dateTimeSplit[0]);
+        String[] dateSplit = dateTimeSplit[0].split("-");
+        String[] timeSplit = dateTimeSplit[1].split(":");
         
         ObservableList<String> location = FXCollections.observableArrayList();
         location.add("Office");
@@ -109,30 +110,32 @@ public class AddAppointmentController implements Initializable {
         custIdTxtFld.setText(String.valueOf((Appointment.getRefCustToAppointment().get(0)).getCustomerId()));
         
         ObservableList<String> startMonth = Appointment.prepDateComboBoxValues(12);
-        appStartMonthComboBx.setItems(startMonth);
-        appStartMonthComboBx.setValue(startMonth.get(0));
+        //put something here to set up correct start month
+        int currentStartMonthIndex = startMonth.indexOf(dateSplit[1]);
+        ObservableList<String> newStartMonths = FXCollections.observableArrayList(Appointment.createNewObsList(currentStartMonthIndex, startMonth));//.get(0));
+        
+        appStartMonthComboBx.setItems(newStartMonths);
+        appStartMonthComboBx.setValue(newStartMonths.get(0));
+        appEndMonthCmbBx.setValue(newStartMonths.get(0));
         
         ObservableList<String> startYear = FXCollections.observableArrayList();
+        //put something here to set up correct start year
         startYear.add("2019");
-        startYear.add("2020");
+        //startYear.add("2020");
         appStartYearCmbBox.setItems(startYear);
         appStartYearCmbBox.setValue(startYear.get(0));
         
-        createAppointmentDays();
-        
-        ObservableList<String> endMonth = Appointment.prepDateComboBoxValues(12);
-        appEndMonthCmbBx.setItems(endMonth);
-        appEndMonthCmbBx.setValue(endMonth.get(0));
-        
         ObservableList<String> endYear = FXCollections.observableArrayList();
         endYear.add("2019");
-        endYear.add("2020");
+        //endYear.add("2020");
         appEndYearCmbBox.setItems(endYear);
         appEndYearCmbBox.setValue(endYear.get(0));
         
         createAppointmentDays();
         
+        //something here to send current hour only
         ObservableList<String> startAppTimes = Appointment.createAppointmentTimes(9, 15);
+        //put something here to set up correct start times
         apptStartTimeComboBox.setItems(startAppTimes);
         apptStartTimeComboBox.setValue(startAppTimes.get(0));
         
@@ -142,15 +145,30 @@ public class AddAppointmentController implements Initializable {
         int endTimeInHours = Integer.valueOf(endTimeHourTemp);
         
         ObservableList<String> endAppTimes = Appointment.createAppointmentTimes(endTimeInHours, 15);
+        //put something here to set up correct end times
         endAppTimes.remove(0);
         apptEndTimeComboBx.setItems(endAppTimes);
         apptEndTimeComboBx.setValue(endAppTimes.get(0));
     }
     
+    private void createAppointmentDays()
+    {
+        int daysInStartMonth = utility.getDaysInMonth(Integer.valueOf(appStartYearCmbBox.getValue()),
+                                                   Integer.valueOf(appStartMonthComboBx.getValue()));
+        ObservableList<String> startDays = Appointment.prepDateComboBoxValues(daysInStartMonth);
+        appStartDayCmbBox.setItems(startDays);
+        appStartDayCmbBox.setValue(startDays.get(0));
+        
+        ObservableList<String> endDay = FXCollections.observableArrayList();
+        endDay.add(startDays.get(0));
+        appEndDayCmbBx.setItems(endDay);
+        appEndDayCmbBx.setValue(endDay.get(0));
+    }
+    
     @FXML
     void onActionCancelBtn(ActionEvent event) throws IOException
     {
-        boolean result = utility.displayLocaleError("CONFIRMATION", "Cancel", "Close Window", "Are you sure you want to exit adding a new customer?");
+        boolean result = utility.displayLocaleError("CONFIRMATION", "Cancel", "Close Window", "Are you sure you want to exit adding a new appointment?");
         if(result)
         {
             utility.changeGuiScreen(event, "MainMenu");
@@ -161,8 +179,7 @@ public class AddAppointmentController implements Initializable {
     void onActionSaveBtn(ActionEvent event) throws IOException, SQLException
     {
         int customerId = Integer.valueOf(custIdTxtFld.getText());
-        ResultSet appointmentResults = utility.runSqlQuery("select * from appointment");
-        int newAppointmentId =  utility.getSqlTableRowCount(appointmentResults);
+        int appointmentId = utility.createNewId("appointmentId", "account");
         int userId = UtilityMethods.getCurrentUserId();
         String title = titleTxtFld.getText();
         String description = descriptionTxtFld.getText();
@@ -170,12 +187,6 @@ public class AddAppointmentController implements Initializable {
         String contact = contactTxtFld.getText();
         String type = typeComboBx.getSelectionModel().getSelectedItem();
         String url = urlTxtFld.getText();
-        
-        String sqlQuery = "insert into appointment(customerId, userId, title, description, location, contact, type, "
-                + "url, start, end, createDate, createdBy, lastUpdate, lastUpdateBy)"    
-                + "values(" + customerId + ", " + UtilityMethods.getCurrentUserId() + ", \"" + title + "\", \"" 
-                + description + "\", \"" + location + "\", \"" + contact + "\", \"" + type + "\", \"" + url + "\", "
-                + utility.buildSqlQueryEnding();
         
         String startMonth = appStartMonthComboBx.getSelectionModel().getSelectedItem();
         String startDay = appStartDayCmbBox.getSelectionModel().getSelectedItem();
@@ -185,10 +196,17 @@ public class AddAppointmentController implements Initializable {
         String endDay = appEndDayCmbBx.getSelectionModel().getSelectedItem();
         String endYear = appEndYearCmbBox.getSelectionModel().getSelectedItem();
         String endTime = apptEndTimeComboBx.getSelectionModel().getSelectedItem();
-        
-        //2019-09-13 17:46:46.0
         String startDateTime = startYear + "-" + startMonth + "-" + startDay + " " + startTime + ":00.0";
         String endDateTime = endYear + "-" + endMonth + "-" + endDay + " " + endTime + ":00.0";
+        
+        String sqlQuery = "insert into appointment(customerId, userId, title, description, location, contact, type, "
+                + "url, start, end, createDate, createdBy, lastUpdate, lastUpdateBy)"    
+                + "values(" + customerId + ", " + userId + ", \"" + title + "\", \""  + description + "\", \"" 
+                + location + "\", \"" + contact + "\", \"" + type + "\", \"" + url + "\", " + utility.buildSqlQueryEnding();
+        utility.runUpdateSqlQuery(sqlQuery);
+        Appointment newAppointment = new Appointment(appointmentId, customerId, userId, title, description, location, contact, type,  url, startDateTime, endDateTime);
+        
+        utility.changeGuiScreen(event, "MainMenu");
     }
 
     @FXML
@@ -222,7 +240,7 @@ public class AddAppointmentController implements Initializable {
     @FXML
     void onActionAppStartYear(ActionEvent event)
     {
-        String selectedStartDay = appStartYearCmbBox.getSelectionModel().getSelectedItem();
+        
         int selectedStartDayIndex = appStartYearCmbBox.getSelectionModel().getSelectedIndex();
         ObservableList<String> allapptStartDays = appStartYearCmbBox.getItems();
 
@@ -250,7 +268,6 @@ public class AddAppointmentController implements Initializable {
     void onActionAppStartDayCmbBox(ActionEvent event)
     {
         String selectedStartDay = appStartDayCmbBox.getSelectionModel().getSelectedItem();
-        int selectedStartDayIndex = appStartDayCmbBox.getSelectionModel().getSelectedIndex();
         ObservableList<String> allapptStartDays = appStartDayCmbBox.getItems();
         
         ObservableList<String> newAppEndTimes = FXCollections.observableArrayList();
@@ -259,18 +276,11 @@ public class AddAppointmentController implements Initializable {
         appEndDayCmbBx.setValue(newAppEndTimes.get(0));
     }
     
-    private void createAppointmentDays()
+    private void resetStartMonths(ObservableList<String> list)
     {
-        int daysInStartMonth = utility.getDaysInMonth(Integer.valueOf(appStartYearCmbBox.getValue()),
-                                                   Integer.valueOf(appStartMonthComboBx.getValue()));
-        ObservableList<String> startDays = Appointment.prepDateComboBoxValues(daysInStartMonth);
-        appStartDayCmbBox.setItems(startDays);
-        appStartDayCmbBox.setValue(startDays.get(0));
-        
-        ObservableList<String> endDay = FXCollections.observableArrayList();
-        endDay.add(startDays.get(0));
-        appEndDayCmbBx.setItems(endDay);
-        appEndDayCmbBx.setValue(endDay.get(0));
+        ObservableList<String> endDay = FXCollections.observableArrayList(list);
+        appStartMonthComboBx.setItems(endDay);
+        appStartMonthComboBx.setValue(endDay.get(0));
     }
     
     private void resetEndDateDays(ObservableList<String> list)

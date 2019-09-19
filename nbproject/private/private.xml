@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/39ds03d/Documents/WGU/C195/C195_Proj/src/Controller/ModifyCustomerController.java</file>
             <file>file:/C:/Users/39ds03d/Documents/WGU/C195/C195_Proj/src/Model/Appointment.java</file>
-            <file>file:/C:/Users/39ds03d/Documents/WGU/C195/C195_Proj/src/Controller/MainMenuController.java</file>
             <file>file:/C:/Users/39ds03d/Documents/WGU/C195/C195_Proj/src/Controller/AddAppointmentController.java</file>
-            <file>file:/C:/Users/39ds03d/Documents/WGU/C195/C195_Proj/src/Model/Customer.java</file>
-            <file>file:/C:/Users/39ds03d/Documents/WGU/C195/C195_Proj/src/Controller/AddCustomerController.java</file>
+            <file>file:/C:/Users/39ds03d/Documents/WGU/C195/C195_Proj/src/Utilities/UtilityMethods.java</file>
         </group>
     </open-files>
 </project-private>
