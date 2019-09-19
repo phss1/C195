@@ -32,7 +32,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
  *
  * @author 39ds03d
  */
-public class AddAppointmentController implements Initializable {
+public class ModifyAppointmentController implements Initializable {
 
     @FXML
     private TextField custIdTxtFld;
