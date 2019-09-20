@@ -145,7 +145,8 @@ public class MainMenuController implements Initializable
         appLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
         appIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         
-        //https://stackoverflow.com/questions/26424769/javafx8-how-to-create-listener-for-selection-of-row-in-tableview
+        //using lamba expression here because it's a listener for populating the appointment table when 
+        //an item is selected in the customer table
         customerTbl.getSelectionModel().selectedItemProperty().addListener
             (
                 (obs, oldSelection, newSelection) ->
@@ -230,9 +231,24 @@ public class MainMenuController implements Initializable
     }
 
     @FXML
-    void onActionModAppBtn(ActionEvent event) throws IOException
+    void onActionModAppBtn(ActionEvent event) throws IOException, SQLException
     {
+        Appointment.getRefCustToAppointment().clear();
+        Appointment.addRefCustToAppointment(customerTbl.getSelectionModel().getSelectedItem());
+        utility.setSelectedRowIndex(appointmentTbl.getSelectionModel().getFocusedIndex());
         
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/View/ModifyAppointment.fxml"));
+        loader.load();
+
+        ModifyAppointmentController MPSController = loader.getController();
+        MPSController.sendInfo(appointmentTbl.getSelectionModel().getSelectedItem());
+        appointmentTbl.getItems().clear();
+
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        Parent scene = loader.getRoot();
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
     @FXML

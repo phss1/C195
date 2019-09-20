@@ -10,13 +10,8 @@ import Model.Customer;
 import Utilities.UtilityMethods;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.util.Calendar;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,7 +20,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * FXML Controller class
@@ -92,8 +86,8 @@ public class ModifyAppointmentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        String currentDateTime = utility.getCurrentDateTime();
-        String[] dateTimeSplit = currentDateTime.split(" ");
+        String appStartDateTime = ((Appointment.getAppointmentToModify()).get(0)).getStart();
+        String[] dateTimeSplit = appStartDateTime.split(" ");
         String[] dateSplit = dateTimeSplit[0].split("-");
         String[] timeSplit = dateTimeSplit[1].split(":");
         
@@ -110,32 +104,26 @@ public class ModifyAppointmentController implements Initializable {
         custIdTxtFld.setText(String.valueOf((Appointment.getRefCustToAppointment().get(0)).getCustomerId()));
         
         ObservableList<String> startMonth = Appointment.prepDateComboBoxValues(12);
-        //put something here to set up correct start month
         int currentStartMonthIndex = startMonth.indexOf(dateSplit[1]);
-        ObservableList<String> newStartMonths = FXCollections.observableArrayList(Appointment.createNewObsList(currentStartMonthIndex, startMonth));//.get(0));
+        ObservableList<String> newStartMonths = FXCollections.observableArrayList(Appointment.createNewObsList(currentStartMonthIndex, startMonth));
         
         appStartMonthComboBx.setItems(newStartMonths);
         appStartMonthComboBx.setValue(newStartMonths.get(0));
         appEndMonthCmbBx.setValue(newStartMonths.get(0));
         
         ObservableList<String> startYear = FXCollections.observableArrayList();
-        //put something here to set up correct start year
         startYear.add("2019");
-        //startYear.add("2020");
         appStartYearCmbBox.setItems(startYear);
         appStartYearCmbBox.setValue(startYear.get(0));
         
         ObservableList<String> endYear = FXCollections.observableArrayList();
         endYear.add("2019");
-        //endYear.add("2020");
         appEndYearCmbBox.setItems(endYear);
         appEndYearCmbBox.setValue(endYear.get(0));
         
         createAppointmentDays(dateSplit[1]);
         
-        //something here to send current hour only
         ObservableList<String> startAppTimes = Appointment.createAppointmentTimes(9, 15);
-        //put something here to set up correct start times
         apptStartTimeComboBox.setItems(startAppTimes);
         apptStartTimeComboBox.setValue(startAppTimes.get(0));
         
@@ -145,14 +133,22 @@ public class ModifyAppointmentController implements Initializable {
         int endTimeInHours = Integer.valueOf(endTimeHourTemp);
         
         ObservableList<String> endAppTimes = Appointment.createAppointmentTimes(endTimeInHours, 15);
-        //put something here to set up correct end times
         endAppTimes.remove(0);
         apptEndTimeComboBx.setItems(endAppTimes);
         apptEndTimeComboBx.setValue(endAppTimes.get(0));
         
         int currentStartDay = startMonth.indexOf(dateSplit[2]);
         ObservableList<String> newStartDays = FXCollections.observableArrayList(Appointment.createNewObsList(currentStartDay, startMonth));
-        
+    }
+    
+    public void sendInfo(Appointment appointment) throws SQLException
+    {
+        custIdTxtFld.setText(String.valueOf(appointment.getCustomerId()));
+        appIdTxtFld.setText(String.valueOf(appointment.getAppointmentId()));
+        titleTxtFld.setText(appointment.getTitle());
+        descriptionTxtFld.setText(appointment.getDescription());
+        contactTxtFld.setText(appointment.getContact());
+        urlTxtFld.setText(appointment.getUrl());
     }
     
     private void createAppointmentDays(String currentDay)
@@ -162,7 +158,7 @@ public class ModifyAppointmentController implements Initializable {
         ObservableList<String> startDays = Appointment.prepDateComboBoxValues(daysInStartMonth);
         
         int currentStartDayIndex = startDays.indexOf(currentDay);
-        ObservableList<String> newStartMonths = FXCollections.observableArrayList(Appointment.createNewObsList(currentStartDayIndex, startDays));//.get(0));
+        ObservableList<String> newStartMonths = FXCollections.observableArrayList(Appointment.createNewObsList(currentStartDayIndex, startDays));
         
         
         appStartDayCmbBox.setItems(startDays);
@@ -214,7 +210,6 @@ public class ModifyAppointmentController implements Initializable {
                 + "\"" + endDateTime + "\"" + ", " + utility.buildSqlQueryEnding();
         System.out.println(sqlQuery);
         utility.runUpdateSqlQuery(sqlQuery);
-        //Appointment newAppointment = new Appointment(appointmentId, customerId, userId, title, description, location, contact, type,  url, startDateTime, endDateTime);
         
         utility.changeGuiScreen(event, "MainMenu");
     }
@@ -288,9 +283,9 @@ public class ModifyAppointmentController implements Initializable {
     
     private void resetStartMonths(ObservableList<String> list)
     {
-        ObservableList<String> endDay = FXCollections.observableArrayList(list);
-        appStartMonthComboBx.setItems(endDay);
-        appStartMonthComboBx.setValue(endDay.get(0));
+        ObservableList<String> startDay = FXCollections.observableArrayList(list);
+        appStartMonthComboBx.setItems(startDay);
+        appStartMonthComboBx.setValue(startDay.get(0));
     }
     
     private void resetEndDateDays(ObservableList<String> list)

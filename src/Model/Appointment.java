@@ -38,6 +38,7 @@ public class Appointment
 //    private String endYear;
 //    private String endTime;
     private static ObservableList<Customer> refCustToAppointment = FXCollections.observableArrayList();
+    private static ObservableList<Appointment> appointmentToModify = FXCollections.observableArrayList();
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
 
     public Appointment(int appointmentId, int customerId, int userId, String title, String description, String location, 
@@ -124,6 +125,21 @@ public class Appointment
                 break;
             }
         }
+    }
+    
+    public static void addItemAppToModify(Appointment appointment)
+    {
+         appointmentToModify.add(appointment);
+    }
+    
+     public static ObservableList<Appointment> getAppointmentToModify()
+     {
+        return appointmentToModify;
+    }
+
+    public static void setAppointmentToModify(ObservableList<Appointment> appointmentToModify)
+    {
+        Appointment.appointmentToModify = appointmentToModify;
     }
     
     public static void addItemToAllAppointments(Appointment appointment)
