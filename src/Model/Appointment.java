@@ -72,7 +72,6 @@ public class Appointment
         int appointmentIncrememnt = minInterval;
         int possApptInOneHr = 60 / appointmentIncrememnt;
         int hoursInDay = 18-9;
-        boolean alreadyRanOnce = false;
         ObservableList<String> possAppInOneDay = FXCollections.observableArrayList();
         
         for(int i = 0; i<hoursInDay; i++)

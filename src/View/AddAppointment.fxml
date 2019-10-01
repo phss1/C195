@@ -45,7 +45,7 @@
                </font>
             </Label>
             <ComboBox fx:id="apptStartTimeComboBox" layoutX="84.0" layoutY="339.0" onAction="#onActionAppStartTime" prefHeight="25.0" prefWidth="103.0" />
-            <ComboBox fx:id="apptEndTimeComboBx" layoutX="84.0" layoutY="468.0" prefHeight="25.0" prefWidth="103.0" />
+            <ComboBox fx:id="apptEndTimeComboBx" disable="true" layoutX="84.0" layoutY="468.0" prefHeight="25.0" prefWidth="103.0" />
             <ComboBox fx:id="appStartMonthComboBx" layoutX="83.0" layoutY="242.0" onAction="#onActionAppStartMonth" prefHeight="25.0" prefWidth="61.0" />
             <Label layoutX="3.0" layoutY="278.0" text="Appt. Start Day">
                <font>

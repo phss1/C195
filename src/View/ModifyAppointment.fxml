@@ -46,7 +46,7 @@
                </font>
             </Label>
             <ComboBox fx:id="apptStartTimeComboBox" layoutX="84.0" layoutY="365.0" onAction="#onActionAppStartTime" prefHeight="25.0" prefWidth="103.0" />
-            <ComboBox fx:id="apptEndTimeComboBx" layoutX="84.0" layoutY="494.0" prefHeight="25.0" prefWidth="103.0" />
+            <ComboBox fx:id="apptEndTimeComboBx" disable="true" layoutX="84.0" layoutY="494.0" prefHeight="25.0" prefWidth="103.0" />
             <ComboBox fx:id="appStartMonthComboBx" layoutX="83.0" layoutY="268.0" onAction="#onActionAppStartMonth" prefHeight="25.0" prefWidth="61.0" />
             <Label layoutX="3.0" layoutY="304.0" text="Appt. Start Day">
                <font>
@@ -65,19 +65,19 @@
                   <Font size="10.0" />
                </font>
             </Label>
-            <ComboBox fx:id="appEndMonthCmbBx" layoutX="83.0" layoutY="397.0" prefHeight="25.0" prefWidth="61.0" />
+            <ComboBox fx:id="appEndMonthCmbBx" disable="true" layoutX="83.0" layoutY="397.0" prefHeight="25.0" prefWidth="61.0" />
             <Label layoutX="3.0" layoutY="433.0" text="Appt. End Day">
                <font>
                   <Font size="10.0" />
                </font>
             </Label>
-            <ComboBox fx:id="appEndDayCmbBx" layoutX="84.0" layoutY="429.0" prefHeight="25.0" prefWidth="61.0" />
+            <ComboBox fx:id="appEndDayCmbBx" disable="true" layoutX="84.0" layoutY="429.0" prefHeight="25.0" prefWidth="61.0" />
             <Label layoutX="3.0" layoutY="466.0" text="Appt. End Year">
                <font>
                   <Font size="10.0" />
                </font>
             </Label>
-            <ComboBox fx:id="appEndYearCmbBox" layoutX="84.0" layoutY="462.0" prefHeight="25.0" prefWidth="87.0" />
+            <ComboBox fx:id="appEndYearCmbBox" disable="true" layoutX="84.0" layoutY="462.0" prefHeight="25.0" prefWidth="87.0" />
             <Label layoutX="33.0" layoutY="44.0" text="Appt_ID" />
             <TextField fx:id="appIdTxtFld" disable="true" editable="false" layoutX="83.0" layoutY="40.0" />
          </children>

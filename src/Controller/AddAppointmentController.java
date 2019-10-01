@@ -98,7 +98,6 @@ public class AddAppointmentController implements Initializable {
         locationComboBox.setValue(location.get(0));
         
         ObservableList<String> type = FXCollections.observableArrayList();
-        type.add("Doctor");
         type.add("Chiropractic");
         typeComboBx.setItems(type);
         typeComboBx.setValue(type.get(0));
@@ -115,6 +114,7 @@ public class AddAppointmentController implements Initializable {
         int hourOfDay = tempCal.get(Calendar.HOUR_OF_DAY);
         int minuteOfHour = tempCal.get(Calendar.MINUTE);
         int dayOfMonth = tempCal.get(Calendar.DAY_OF_MONTH);
+        int startMonth = tempCal.get(Calendar.MONTH) + 1;
         
         int startMinuteForAppt = utility.getNextAppMinuteInterval(minuteOfHour);
         int startHourForAppt = minuteOfHour >= 45 ? hourOfDay + 1 : hourOfDay;
@@ -125,55 +125,48 @@ public class AddAppointmentController implements Initializable {
         System.out.println("startMinuteForAppt: "+startMinuteForAppt);
         System.out.println("startHourForAppt: "+startHourForAppt);
         System.out.println("startDayForAppt: "+startDayForAppt);
-        
+        System.out.println("startMonth: "+startMonth);
         
         //int startDay, int startHour, int startMinute)
         if(hourOfDay <= 9)
         {
-            setupDateTimeFields(dayOfMonth, 9, 0);
+            setupDateTimeFields(startMonth, dayOfMonth, 9, 0);
         }
         else if(hourOfDay >= 9 && hourOfDay <= 18)
         {
-            setupDateTimeFields(dayOfMonth, startHourForAppt, startMinuteForAppt);
+            setupDateTimeFields(startMonth, dayOfMonth, startHourForAppt, startMinuteForAppt);
         }
         else if(hourOfDay >= 18)
         {
-            setupDateTimeFields(startDayForAppt, 9, 0);
+            setupDateTimeFields(startMonth, startDayForAppt, 9, 0);
         }
-        
-        String currentDateTime = utility.getCurrentDateTime();
-        String[] dateTimeSplit = currentDateTime.split(" ");
-        String[] dateSplit = dateTimeSplit[0].split("-");
-        String[] timeSplit = dateTimeSplit[1].split(":");
-        
-        //start month and end month
-        ObservableList<String> startMonth = Appointment.prepDateComboBoxValues(12);
-        //field here to change value plus one day
-        int currentStartMonthIndex = startMonth.indexOf(dateSplit[1]);
-        ObservableList<String> newStartMonths = FXCollections.observableArrayList(Appointment.createNewObsList(currentStartMonthIndex, startMonth));//.get(0));
+    }
+    
+    private void setupDateTimeFields(int startMonth, int startDay, int startHour, int startMinute)
+    {
+        ObservableList<String> startMonthTemp = Appointment.prepDateComboBoxValues(12);
+        System.out.println("startMonthTemp[8]: "+startMonthTemp.get(8));
+        int currentStartMonthIndex = startMonthTemp.indexOf(String.valueOf(startMonth));
+        System.out.println("currentStartMonthIndex: "+currentStartMonthIndex);
+        ObservableList<String> newStartMonths = FXCollections.observableArrayList(Appointment.createNewObsList(currentStartMonthIndex, startMonthTemp));//.get(0));
         appStartMonthComboBx.setItems(newStartMonths);
         appStartMonthComboBx.setValue(newStartMonths.get(0));
         appEndMonthCmbBx.setItems(newStartMonths);
         appEndMonthCmbBx.setValue(newStartMonths.get(0));
         
-        //createAppointmentDays(dateSplit[1]);
-        
-        //setting up start times
-        ObservableList<String> startAppTimes = Appointment.createAppointmentTimes(9, 15);
+        ObservableList<String> startAppTimesTemp = Appointment.createAppointmentTimes(startHour, 15);
+        int currentStartTimeIndex = startAppTimesTemp.indexOf(startHour + ":" + startMinute);
+        System.out.println(startHour + ":" + startMinute);
+        System.out.println(currentStartTimeIndex);
+        ObservableList<String> startAppTimes = FXCollections.observableArrayList(Appointment.createNewObsList(currentStartTimeIndex, startAppTimesTemp));//.get(0));
         apptStartTimeComboBox.setItems(startAppTimes);
         apptStartTimeComboBox.setValue(startAppTimes.get(0));
         
-        //setting up end times
-        String [] endTimeMinArray = ((apptStartTimeComboBox.getSelectionModel().getSelectedItem()).split(":", 2));
-        String endTimeHourTemp = endTimeMinArray[0];
-        String endTimeMinTemp = endTimeMinArray[1];
-        int endTimeInHours = Integer.valueOf(endTimeHourTemp);
-        ObservableList<String> endAppTimes = Appointment.createAppointmentTimes(endTimeInHours, 15);
+        ObservableList<String> endAppTimes = FXCollections.observableArrayList(startAppTimes);
         endAppTimes.remove(0);
         apptEndTimeComboBx.setItems(endAppTimes);
         apptEndTimeComboBx.setValue(endAppTimes.get(0));
         
-        //something to change day of month
         Calendar cal = Calendar.getInstance();
         int numberOfDaysInMonth = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
         int currentDayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
@@ -184,11 +177,6 @@ public class AddAppointmentController implements Initializable {
         appStartDayCmbBox.setValue(newStartDays.get(0));
         appEndDayCmbBx.setItems(newStartDays);
         appEndDayCmbBx.setValue(newStartDays.get(0));
-    }
-    
-    private void setupDateTimeFields(int startDay, int startHour, int startMinute)
-    {
-        
     }
     
     @FXML
