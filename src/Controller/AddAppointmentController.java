@@ -98,85 +98,43 @@ public class AddAppointmentController implements Initializable {
         locationComboBox.setValue(location.get(0));
         
         ObservableList<String> type = FXCollections.observableArrayList();
+        type.add("Doctor");
         type.add("Chiropractic");
         typeComboBx.setItems(type);
         typeComboBx.setValue(type.get(0));
         custIdTxtFld.setText(String.valueOf((Appointment.getRefCustToAppointment().get(0)).getCustomerId()));
         
+        ObservableList<String> startMonth = Appointment.prepDateComboBoxValues(12);
+        appStartMonthComboBx.setItems(startMonth);
+        appStartMonthComboBx.setValue(startMonth.get(0));
+        appEndMonthCmbBx.setValue(startMonth.get(0));
+        
         ObservableList<String> startYear = FXCollections.observableArrayList();
         startYear.add("2019");
         appStartYearCmbBox.setItems(startYear);
         appStartYearCmbBox.setValue(startYear.get(0));
-        appEndYearCmbBox.setItems(startYear);
-        appEndYearCmbBox.setValue(startYear.get(0));
+        
+        ObservableList<String> endYear = FXCollections.observableArrayList();
+        endYear.add("2019");
+        appEndYearCmbBox.setItems(endYear);
+        appEndYearCmbBox.setValue(endYear.get(0));
         
         Calendar tempCal = Calendar.getInstance();
-        int hourOfDay = tempCal.get(Calendar.HOUR_OF_DAY);
-        int minuteOfHour = tempCal.get(Calendar.MINUTE);
-        int dayOfMonth = tempCal.get(Calendar.DAY_OF_MONTH);
-        int startMonth = tempCal.get(Calendar.MONTH) + 1;
+        createAppointmentDays(String.valueOf(tempCal.get(Calendar.DAY_OF_MONTH)));
         
-        int startMinuteForAppt = utility.getNextAppMinuteInterval(minuteOfHour);
-        int startHourForAppt = minuteOfHour >= 45 ? hourOfDay + 1 : hourOfDay;
-        int startDayForAppt = hourOfDay >= 18 ? dayOfMonth + 1 : dayOfMonth;
-        System.out.println("hourOfDay: " +hourOfDay);
-        System.out.println("minuteOfHour: "+minuteOfHour);
-        System.out.println("dayOfMonth: "+dayOfMonth);
-        System.out.println("startMinuteForAppt: "+startMinuteForAppt);
-        System.out.println("startHourForAppt: "+startHourForAppt);
-        System.out.println("startDayForAppt: "+startDayForAppt);
-        System.out.println("startMonth: "+startMonth);
-        
-        //int startDay, int startHour, int startMinute)
-        if(hourOfDay <= 9)
-        {
-            setupDateTimeFields(startMonth, dayOfMonth, 9, 0);
-        }
-        else if(hourOfDay >= 9 && hourOfDay <= 18)
-        {
-            setupDateTimeFields(startMonth, dayOfMonth, startHourForAppt, startMinuteForAppt);
-        }
-        else if(hourOfDay >= 18)
-        {
-            setupDateTimeFields(startMonth, startDayForAppt, 9, 0);
-        }
-    }
-    
-    private void setupDateTimeFields(int startMonth, int startDay, int startHour, int startMinute)
-    {
-        ObservableList<String> startMonthTemp = Appointment.prepDateComboBoxValues(12);
-        System.out.println("startMonthTemp[8]: "+startMonthTemp.get(8));
-        int currentStartMonthIndex = startMonthTemp.indexOf(String.valueOf(startMonth));
-        System.out.println("currentStartMonthIndex: "+currentStartMonthIndex);
-        ObservableList<String> newStartMonths = FXCollections.observableArrayList(Appointment.createNewObsList(currentStartMonthIndex, startMonthTemp));//.get(0));
-        appStartMonthComboBx.setItems(newStartMonths);
-        appStartMonthComboBx.setValue(newStartMonths.get(0));
-        appEndMonthCmbBx.setItems(newStartMonths);
-        appEndMonthCmbBx.setValue(newStartMonths.get(0));
-        
-        ObservableList<String> startAppTimesTemp = Appointment.createAppointmentTimes(startHour, 15);
-        int currentStartTimeIndex = startAppTimesTemp.indexOf(startHour + ":" + startMinute);
-        System.out.println(startHour + ":" + startMinute);
-        System.out.println(currentStartTimeIndex);
-        ObservableList<String> startAppTimes = FXCollections.observableArrayList(Appointment.createNewObsList(currentStartTimeIndex, startAppTimesTemp));//.get(0));
+        ObservableList<String> startAppTimes = Appointment.createAppointmentTimes(9, 15);
         apptStartTimeComboBox.setItems(startAppTimes);
         apptStartTimeComboBox.setValue(startAppTimes.get(0));
         
-        ObservableList<String> endAppTimes = FXCollections.observableArrayList(startAppTimes);
+        String [] endTimeMinArray = ((apptStartTimeComboBox.getSelectionModel().getSelectedItem()).split(":", 2));
+        String endTimeHourTemp = endTimeMinArray[0];
+        String endTimeMinTemp = endTimeMinArray[1];
+        int endTimeInHours = Integer.valueOf(endTimeHourTemp);
+        
+        ObservableList<String> endAppTimes = Appointment.createAppointmentTimes(endTimeInHours, 15);
         endAppTimes.remove(0);
         apptEndTimeComboBx.setItems(endAppTimes);
         apptEndTimeComboBx.setValue(endAppTimes.get(0));
-        
-        Calendar cal = Calendar.getInstance();
-        int numberOfDaysInMonth = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
-        int currentDayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
-        ObservableList<String> daysInMonth = Appointment.prepDateComboBoxValues(numberOfDaysInMonth);
-        int dayIndex = daysInMonth.indexOf(String.valueOf(currentDayOfMonth));
-        ObservableList<String> newStartDays = FXCollections.observableArrayList(Appointment.createNewObsList(dayIndex, daysInMonth));
-        appStartDayCmbBox.setItems(newStartDays);
-        appStartDayCmbBox.setValue(newStartDays.get(0));
-        appEndDayCmbBx.setItems(newStartDays);
-        appEndDayCmbBx.setValue(newStartDays.get(0));
     }
     
     @FXML
@@ -189,29 +147,6 @@ public class AddAppointmentController implements Initializable {
         newAppEndTimes.add(selectedStartDay);
         appEndDayCmbBx.setItems(newAppEndTimes);
         appEndDayCmbBx.setValue(newAppEndTimes.get(0));
-        
-        String currentDateTime = utility.getCurrentDateTime();
-        String[] dateTimeSplit = currentDateTime.split(" ");
-        String[] dateSplit = dateTimeSplit[0].split("-");
-        String currentMonth = dateSplit[1];
-        
-        String selectedMonth = appStartMonthComboBx.getSelectionModel().getSelectedItem();
-        
-        if(selectedMonth.equals(currentMonth))
-        {
-            //appStartDayCmbBox.getItems().clear();
-            //appEndDayCmbBx.valueProperty().set(null);
-            Calendar cal = Calendar.getInstance();
-            int numberOfDaysInMonth = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
-            int currentDayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
-            ObservableList<String> daysInMonth = Appointment.prepDateComboBoxValues(numberOfDaysInMonth);
-            int dayIndex = daysInMonth.indexOf(String.valueOf(currentDayOfMonth));
-            ObservableList<String> newStartDays = FXCollections.observableArrayList(Appointment.createNewObsList(dayIndex, daysInMonth));
-            appStartDayCmbBox.setItems(newStartDays);
-            appStartDayCmbBox.setValue(newStartDays.get(0));
-            appEndDayCmbBx.setItems(newStartDays);
-            appEndDayCmbBx.setValue(newStartDays.get(0));
-        }
     }
     
     private void createAppointmentDays(String currentDay)
@@ -222,6 +157,7 @@ public class AddAppointmentController implements Initializable {
         
         int currentStartDayIndex = startDays.indexOf(currentDay);
         ObservableList<String> newStartMonths = FXCollections.observableArrayList(Appointment.createNewObsList(currentStartDayIndex, startDays));//.get(0));
+        
         
         appStartDayCmbBox.setItems(startDays);
         appStartDayCmbBox.setValue(startDays.get(0));
@@ -254,9 +190,35 @@ public class AddAppointmentController implements Initializable {
         String type = typeComboBx.getSelectionModel().getSelectedItem();
         String url = urlTxtFld.getText();
         
+        String enteredMonth = appStartMonthComboBx.getSelectionModel().getSelectedItem();
+        String enteredDay = appStartDayCmbBox.getSelectionModel().getSelectedItem();
+        String [] enteredStartTime = (apptStartTimeComboBox.getSelectionModel().getSelectedItem()).split(":");
+        String enteredHour = enteredStartTime[0];
+        String enteredMinute = enteredStartTime[1];
+        
+        Calendar cal = Calendar.getInstance();
+        int currentMonth = cal.get(Calendar.MONTH) +1;
+        int currentDay = cal.get(Calendar.DAY_OF_MONTH);
+        int currentHour = cal.get(Calendar.HOUR_OF_DAY);
+        int currentMinute = cal.get(Calendar.MINUTE);
+        
         try
         {
-            if(!title.isEmpty() && !description.isEmpty() && !contact.isEmpty() && !url.isEmpty())
+            System.out.println("Integer.valueOf(enteredMonth) >= currentMonth: " + (Integer.valueOf(enteredMonth) >= currentMonth));
+            System.out.println();
+            System.out.println("Integer.valueOf(enteredDay) >= currentDay: "+(Integer.valueOf(enteredDay) >= currentDay));
+            System.out.println();
+            System.out.println("Integer.valueOf(enteredHour) >= currentHour: "+(Integer.valueOf(enteredHour) >= currentHour));
+            System.out.println();
+            System.out.println("(Integer.valueOf(enteredMinute) < currentMinute || (Integer.valueOf(enteredDay) > currentDay)\n" +
+"                    && (Integer.valueOf(enteredMonth) > currentMonth))): "+ (Integer.valueOf(enteredMinute) < currentMinute || (Integer.valueOf(enteredDay) > currentDay)
+                    && (Integer.valueOf(enteredMonth) > currentMonth)));
+            
+            if(!title.isEmpty() && !description.isEmpty() && !contact.isEmpty() && !url.isEmpty()
+                    && Integer.valueOf(enteredMonth) >= currentMonth && Integer.valueOf(enteredDay) >= currentDay 
+                    && Integer.valueOf(enteredHour) >= currentHour
+                    && (Integer.valueOf(enteredMinute) < currentMinute || (Integer.valueOf(enteredDay) > currentDay)
+                    && (Integer.valueOf(enteredMonth) > currentMonth)))
             {
                 String startMonth = appStartMonthComboBx.getSelectionModel().getSelectedItem();
                 String startDay = appStartDayCmbBox.getSelectionModel().getSelectedItem();
@@ -276,9 +238,35 @@ public class AddAppointmentController implements Initializable {
                         + "\"" + endDateTime + "\"" + ", " + utility.buildSqlQueryEnding();
                 System.out.println(sqlQuery);
                 utility.runUpdateSqlQuery(sqlQuery);
-                //Appointment newAppointment = new Appointment(appointmentId, customerId, userId, title, description, location, contact, type,  url, startDateTime, endDateTime);
-
+                
                 utility.changeGuiScreen(event, "MainMenu");
+            }
+            else if(!(Integer.valueOf(enteredMonth) >= currentMonth))
+            {
+                utility.displayLocaleError("INFORMATION", "Incorrect Month", "",
+                        "Please make sure you select a month equal to or greater than the current calendar month.\n\n"
+                                + "EnteredMonth compared to currentMonth: "+enteredMonth +" : "+currentMonth);
+            }else if(!(Integer.valueOf(enteredDay) >= currentDay))
+            {
+                utility.displayLocaleError("INFORMATION", "Incorrect Day", "",
+                        "Please make sure you select a day equal or grater than the current calendar day.\n\n"
+                                + "EnteredDay compared to currentDay: "+enteredDay +" : "+currentDay);
+            }
+            else if(!(Integer.valueOf(enteredHour) >= currentHour) && !(Integer.valueOf(enteredDay) >= currentDay)
+                    && !(Integer.valueOf(enteredMonth) >= currentMonth))
+            {
+                utility.displayLocaleError("INFORMATION", "Incorrect Time", "",
+                        "Please make sure you select a start hour that is equal to or greater than the current hour on your PC.\n\n"
+                                + "EnteredHour compared to currentHour: "+enteredHour +" : "+currentHour);
+            }
+            else if((Integer.valueOf(enteredMinute) < currentMinute && !((Integer.valueOf(enteredDay) > currentDay)
+                    && !(Integer.valueOf(enteredMonth) > currentMonth))))
+            {
+                utility.displayLocaleError("INFORMATION", "Incorrect Time", "",
+                        "Please make sure you select a start time where the next 15 minute interval is greater than "
+                                + "the current minute shown on your system clock. This is ok when the date is greater"
+                                + " than the current day on the calendar.\n\n"
+                                + "enteredMinute compared to currentMinute: "+enteredMinute +" : "+currentMinute);
             }
             else
             {
@@ -346,6 +334,8 @@ public class AddAppointmentController implements Initializable {
         apptEndTimeComboBx.setItems(newAppEndTimes);
         apptEndTimeComboBx.setValue(newAppEndTimes.get(0));
     }
+    
+    
     
     private void resetStartMonths(ObservableList<String> list)
     {

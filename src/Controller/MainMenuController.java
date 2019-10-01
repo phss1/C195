@@ -173,7 +173,9 @@ public class MainMenuController implements Initializable
     void onActionAddAppBtn(ActionEvent event) throws IOException
     {
         Appointment.getRefCustToAppointment().clear();
+        Appointment.getAppointmentToModify().clear();
         Appointment.addRefCustToAppointment(customerTbl.getSelectionModel().getSelectedItem());
+        Appointment.addItemAppToModify(appointmentTbl.getSelectionModel().getSelectedItem());
         appointmentTbl.getItems().clear();
         
         utility.changeGuiScreen(event, "AddAppointment");
