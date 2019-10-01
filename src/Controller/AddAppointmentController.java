@@ -92,12 +92,6 @@ public class AddAppointmentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        String currentDateTime = utility.getCurrentDateTime();
-        String[] dateTimeSplit = currentDateTime.split(" ");
-        String[] dateSplit = dateTimeSplit[0].split("-");
-        String[] timeSplit = dateTimeSplit[1].split(":");
-        System.out.println(dateTimeSplit[1]);
-        
         ObservableList<String> location = FXCollections.observableArrayList();
         location.add("Office");
         locationComboBox.setItems(location);
@@ -110,47 +104,76 @@ public class AddAppointmentController implements Initializable {
         typeComboBx.setValue(type.get(0));
         custIdTxtFld.setText(String.valueOf((Appointment.getRefCustToAppointment().get(0)).getCustomerId()));
         
-        ObservableList<String> startMonth = Appointment.prepDateComboBoxValues(12);
-        //put something here to set up correct start month
-        int currentStartMonthIndex = startMonth.indexOf(dateSplit[1]);
-        ObservableList<String> newStartMonths = FXCollections.observableArrayList(Appointment.createNewObsList(currentStartMonthIndex, startMonth));//.get(0));
-        
-        appStartMonthComboBx.setItems(newStartMonths);
-        appStartMonthComboBx.setValue(newStartMonths.get(0));
-        appEndMonthCmbBx.setValue(newStartMonths.get(0));
-        
         ObservableList<String> startYear = FXCollections.observableArrayList();
-        //put something here to set up correct start year
         startYear.add("2019");
-        //startYear.add("2020");
         appStartYearCmbBox.setItems(startYear);
         appStartYearCmbBox.setValue(startYear.get(0));
+        appEndYearCmbBox.setItems(startYear);
+        appEndYearCmbBox.setValue(startYear.get(0));
         
-        ObservableList<String> endYear = FXCollections.observableArrayList();
-        endYear.add("2019");
-        //endYear.add("2020");
-        appEndYearCmbBox.setItems(endYear);
-        appEndYearCmbBox.setValue(endYear.get(0));
+        Calendar tempCal = Calendar.getInstance();
+        int hourOfDay = tempCal.get(Calendar.HOUR_OF_DAY);
+        int minuteOfHour = tempCal.get(Calendar.MINUTE);
+        int dayOfMonth = tempCal.get(Calendar.DAY_OF_MONTH);
         
-        createAppointmentDays(dateSplit[1]);
+        int startMinuteForAppt = utility.getNextAppMinuteInterval(minuteOfHour);
+        int startHourForAppt = minuteOfHour >= 45 ? hourOfDay + 1 : hourOfDay;
+        int startDayForAppt = hourOfDay >= 18 ? dayOfMonth + 1 : dayOfMonth;
+        System.out.println("hourOfDay: " +hourOfDay);
+        System.out.println("minuteOfHour: "+minuteOfHour);
+        System.out.println("dayOfMonth: "+dayOfMonth);
+        System.out.println("startMinuteForAppt: "+startMinuteForAppt);
+        System.out.println("startHourForAppt: "+startHourForAppt);
+        System.out.println("startDayForAppt: "+startDayForAppt);
         
-        //something here to send current hour only
+        
+        //int startDay, int startHour, int startMinute)
+        if(hourOfDay <= 9)
+        {
+            setupDateTimeFields(dayOfMonth, 9, 0);
+        }
+        else if(hourOfDay >= 9 && hourOfDay <= 18)
+        {
+            setupDateTimeFields(dayOfMonth, startHourForAppt, startMinuteForAppt);
+        }
+        else if(hourOfDay >= 18)
+        {
+            setupDateTimeFields(startDayForAppt, 9, 0);
+        }
+        
+        String currentDateTime = utility.getCurrentDateTime();
+        String[] dateTimeSplit = currentDateTime.split(" ");
+        String[] dateSplit = dateTimeSplit[0].split("-");
+        String[] timeSplit = dateTimeSplit[1].split(":");
+        
+        //start month and end month
+        ObservableList<String> startMonth = Appointment.prepDateComboBoxValues(12);
+        //field here to change value plus one day
+        int currentStartMonthIndex = startMonth.indexOf(dateSplit[1]);
+        ObservableList<String> newStartMonths = FXCollections.observableArrayList(Appointment.createNewObsList(currentStartMonthIndex, startMonth));//.get(0));
+        appStartMonthComboBx.setItems(newStartMonths);
+        appStartMonthComboBx.setValue(newStartMonths.get(0));
+        appEndMonthCmbBx.setItems(newStartMonths);
+        appEndMonthCmbBx.setValue(newStartMonths.get(0));
+        
+        //createAppointmentDays(dateSplit[1]);
+        
+        //setting up start times
         ObservableList<String> startAppTimes = Appointment.createAppointmentTimes(9, 15);
-        //put something here to set up correct start times
         apptStartTimeComboBox.setItems(startAppTimes);
         apptStartTimeComboBox.setValue(startAppTimes.get(0));
         
+        //setting up end times
         String [] endTimeMinArray = ((apptStartTimeComboBox.getSelectionModel().getSelectedItem()).split(":", 2));
         String endTimeHourTemp = endTimeMinArray[0];
         String endTimeMinTemp = endTimeMinArray[1];
         int endTimeInHours = Integer.valueOf(endTimeHourTemp);
-        
         ObservableList<String> endAppTimes = Appointment.createAppointmentTimes(endTimeInHours, 15);
-        //put something here to set up correct end times
         endAppTimes.remove(0);
         apptEndTimeComboBx.setItems(endAppTimes);
         apptEndTimeComboBx.setValue(endAppTimes.get(0));
         
+        //something to change day of month
         Calendar cal = Calendar.getInstance();
         int numberOfDaysInMonth = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
         int currentDayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
@@ -161,6 +184,11 @@ public class AddAppointmentController implements Initializable {
         appStartDayCmbBox.setValue(newStartDays.get(0));
         appEndDayCmbBx.setItems(newStartDays);
         appEndDayCmbBx.setValue(newStartDays.get(0));
+    }
+    
+    private void setupDateTimeFields(int startDay, int startHour, int startMinute)
+    {
+        
     }
     
     @FXML
@@ -206,7 +234,6 @@ public class AddAppointmentController implements Initializable {
         
         int currentStartDayIndex = startDays.indexOf(currentDay);
         ObservableList<String> newStartMonths = FXCollections.observableArrayList(Appointment.createNewObsList(currentStartDayIndex, startDays));//.get(0));
-        
         
         appStartDayCmbBox.setItems(startDays);
         appStartDayCmbBox.setValue(startDays.get(0));

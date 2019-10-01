@@ -44,7 +44,33 @@ public class UtilityMethods
     private static int currentUserId;
     private static int selectedRowIndex;
     
-    
+    public int getNextAppMinuteInterval(int currentMinuteOfHour)
+    {
+        int bestMinuteInterval = 0;
+        
+        if(currentMinuteOfHour >= 0 && currentMinuteOfHour <= 15)
+        {
+            bestMinuteInterval = 15;
+            return bestMinuteInterval;
+        }
+        else if(currentMinuteOfHour >= 15 && currentMinuteOfHour <= 30)
+        {
+            bestMinuteInterval = 30;
+            return bestMinuteInterval;
+        }
+        else if(currentMinuteOfHour >= 30 && currentMinuteOfHour <= 45)
+        {
+            bestMinuteInterval = 45;
+            return bestMinuteInterval;
+        }
+        else if(currentMinuteOfHour >= 45 && currentMinuteOfHour <= 59)
+        {
+            bestMinuteInterval = 0;
+            return bestMinuteInterval;
+        }
+        
+        return bestMinuteInterval;
+    }
     
     public String getCurrentDateTime()
     {
