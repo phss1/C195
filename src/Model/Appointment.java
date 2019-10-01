@@ -29,14 +29,6 @@ public class Appointment
     private String url;
     private String start;
     private String end;
-//    private String startMonth;
-//    private String startDay;
-//    private String startYear;
-//    private String startTime;
-//    private String endMonth;
-//    private String endDay;
-//    private String endYear;
-//    private String endTime;
     private static ObservableList<Customer> refCustToAppointment = FXCollections.observableArrayList();
     private static ObservableList<Appointment> appointmentToModify = FXCollections.observableArrayList();
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
@@ -121,6 +113,22 @@ public class Appointment
             if(currentAppointment.getAppointmentId() == appointmentId)
             {
                 customer.getAllCustomerAppointments().remove(index);
+                customer.setAllCustomerAppointments(customer.getAllCustomerAppointments());
+                break;
+            }
+        }
+    }
+    
+    public static void modifyCustomerAppointment(Customer customer, int appointmentId, Appointment appointment)
+    {
+        int index = -1;
+        for(Appointment currentAppointment : customer.getAllCustomerAppointments())
+        {
+            index++;
+            if(currentAppointment.getAppointmentId() == appointmentId)
+            {
+                customer.getAllCustomerAppointments().remove(index);
+                customer.addCustomerAppointment(appointment);
                 customer.setAllCustomerAppointments(customer.getAllCustomerAppointments());
                 break;
             }
@@ -271,84 +279,4 @@ public class Appointment
     {
         this.end = end;
     }
-    /*
-    public String getStartMonth()
-    {
-        return startMonth;
-    }
-
-    public void setStartMonth(String startMonth)
-    {
-        this.startMonth = startMonth;
-    }
-
-    public String getStartDay()
-    {
-        return startDay;
-    }
-
-    public void setStartDay(String startDay)
-    {
-        this.startDay = startDay;
-    }
-
-    public String getStartYear()
-    {
-        return startYear;
-    }
-
-    public void setStartYear(String startYear)
-    {
-        this.startYear = startYear;
-    }
-
-    public String getStartTime()
-    {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime)
-    {
-        this.startTime = startTime;
-    }
-
-    public String getEndMonth()
-    {
-        return endMonth;
-    }
-
-    public void setEndMonth(String endMonth)
-    {
-        this.endMonth = endMonth;
-    }
-
-    public String getEndDay()
-    {
-        return endDay;
-    }
-
-    public void setEndDay(String endDay)
-    {
-        this.endDay = endDay;
-    }
-
-    public String getEndYear()
-    {
-        return endYear;
-    }
-
-    public void setEndYear(String endYear)
-    {
-        this.endYear = endYear;
-    }
-
-    public String getEndTime()
-    {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime)
-    {
-        this.endTime = endTime;
-    }*/
 }

@@ -116,7 +116,7 @@ public class MainMenuController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {        
         weekViewRdBtn.setSelected(true);
-        //customerTbl.getItems().clear();
+        customerTbl.getItems().clear();
         appointmentTbl.getItems().clear();
         
         customerTbl.setItems(Customer.getAllCustomers());
@@ -182,6 +182,7 @@ public class MainMenuController implements Initializable
     @FXML
     void onActionAddCustomerBtn(ActionEvent event) throws IOException
     {
+        appointmentTbl.getItems().clear();
         utility.changeGuiScreen(event, "AddCustomer");
     }
 
@@ -233,9 +234,11 @@ public class MainMenuController implements Initializable
     @FXML
     void onActionModAppBtn(ActionEvent event) throws IOException, SQLException
     {
+        utility.setSelectedRowIndex(customerTbl.getSelectionModel().getSelectedIndex());
         Appointment.getRefCustToAppointment().clear();
+        Appointment.getAppointmentToModify().clear();
         Appointment.addRefCustToAppointment(customerTbl.getSelectionModel().getSelectedItem());
-        utility.setSelectedRowIndex(appointmentTbl.getSelectionModel().getFocusedIndex());
+        Appointment.addItemAppToModify(appointmentTbl.getSelectionModel().getSelectedItem());
         
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/View/ModifyAppointment.fxml"));

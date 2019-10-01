@@ -160,7 +160,6 @@ public class ModifyAppointmentController implements Initializable {
         int currentStartDayIndex = startDays.indexOf(currentDay);
         ObservableList<String> newStartMonths = FXCollections.observableArrayList(Appointment.createNewObsList(currentStartDayIndex, startDays));
         
-        
         appStartDayCmbBox.setItems(startDays);
         appStartDayCmbBox.setValue(startDays.get(0));
         
@@ -182,36 +181,56 @@ public class ModifyAppointmentController implements Initializable {
     @FXML
     void onActionSaveBtn(ActionEvent event) throws IOException, SQLException
     {
-        int customerId = Integer.valueOf(custIdTxtFld.getText());
-        int appointmentId = utility.createNewId("appointmentId", "appointment");
-        int userId = UtilityMethods.getCurrentUserId();
-        String title = titleTxtFld.getText();
-        String description = descriptionTxtFld.getText();
-        String location = locationComboBox.getSelectionModel().getSelectedItem();
-        String contact = contactTxtFld.getText();
-        String type = typeComboBx.getSelectionModel().getSelectedItem();
-        String url = urlTxtFld.getText();
-        
-        String startMonth = appStartMonthComboBx.getSelectionModel().getSelectedItem();
-        String startDay = appStartDayCmbBox.getSelectionModel().getSelectedItem();
-        String startYear = appStartYearCmbBox.getSelectionModel().getSelectedItem();
-        String startTime = apptStartTimeComboBox.getSelectionModel().getSelectedItem();
-        String endMonth = appEndMonthCmbBx.getSelectionModel().getSelectedItem();
-        String endDay = appEndDayCmbBx.getSelectionModel().getSelectedItem();
-        String endYear = appEndYearCmbBox.getSelectionModel().getSelectedItem();
-        String endTime = apptEndTimeComboBx.getSelectionModel().getSelectedItem();
-        String startDateTime = startYear + "-" + startMonth + "-" + startDay + " " + startTime + ":00.0";
-        String endDateTime = endYear + "-" + endMonth + "-" + endDay + " " + endTime + ":00.0";
-        
-        String sqlQuery = "insert into appointment(appointmentId, customerId, userId, title, description, location, contact, type, "
-                + "url, start, end, createDate, createdBy, lastUpdate, lastUpdateBy)"    
-                + "values(" + appointmentId + ", " + customerId + ", " + userId + ", \"" + title + "\", \""  + description + "\", \"" 
-                + location + "\", \"" + contact + "\", \"" + type + "\", \"" + url + "\", " + "\"" + startDateTime + "\"" + ", "
-                + "\"" + endDateTime + "\"" + ", " + utility.buildSqlQueryEnding();
-        System.out.println(sqlQuery);
-        utility.runUpdateSqlQuery(sqlQuery);
-        
-        utility.changeGuiScreen(event, "MainMenu");
+        try
+        {
+            int customerId = Integer.valueOf(custIdTxtFld.getText());
+            int appointmentId = Integer.valueOf(appIdTxtFld.getText());
+            int userId = UtilityMethods.getCurrentUserId();
+            String title = titleTxtFld.getText();
+            String description = descriptionTxtFld.getText();
+            String location = locationComboBox.getSelectionModel().getSelectedItem();
+            String contact = contactTxtFld.getText();
+            String type = typeComboBx.getSelectionModel().getSelectedItem();
+            String url = urlTxtFld.getText();
+            
+            System.out.println("!title.isEmpty() - " +!title.isEmpty());
+            System.out.println("!description.isEmpty() - " +!description.isEmpty());
+            System.out.println("!contact.isEmpty() - " +!contact.isEmpty());
+            System.out.println("!url.isEmpty() - " +!url.isEmpty());
+            
+            if(!title.isEmpty() && !description.isEmpty() && !contact.isEmpty() && !url.isEmpty())
+            {
+
+                String startMonth = appStartMonthComboBx.getSelectionModel().getSelectedItem();
+                String startDay = appStartDayCmbBox.getSelectionModel().getSelectedItem();
+                String startYear = appStartYearCmbBox.getSelectionModel().getSelectedItem();
+                String startTime = apptStartTimeComboBox.getSelectionModel().getSelectedItem();
+                String endMonth = appEndMonthCmbBx.getSelectionModel().getSelectedItem();
+                String endDay = appEndDayCmbBx.getSelectionModel().getSelectedItem();
+                String endYear = appEndYearCmbBox.getSelectionModel().getSelectedItem();
+                String endTime = apptEndTimeComboBx.getSelectionModel().getSelectedItem();
+                String startDateTime = startYear + "-" + startMonth + "-" + startDay + " " + startTime + ":00.0";
+                String endDateTime = endYear + "-" + endMonth + "-" + endDay + " " + endTime + ":00.0";
+
+                String sqlQuery = "update appointment set userId = " + userId + ", title = \"" + title + "\", description = \""
+                        + description + "\", location = \"" + location + "\", contact = \"" + contact + "\", type = \"" + type
+                        + "\", url = \"" + url + "\", start = \"" + startDateTime + "\", end = \"" + endDateTime
+                        + "\", lastUpdate = now(), " + "lastUpdateBy = \"" + utility.getCurLoggedInUserName()
+                        + "\" where appointmentId = " + appointmentId + ";";
+                utility.runUpdateSqlQuery(sqlQuery);
+
+                utility.changeGuiScreen(event, "MainMenu");
+            }
+            else
+            {
+                utility.displayLocaleError("INFORMATION", "Empty Field", "Field Empty",
+                        "Please make sure you don't leave a field with no value entered.");
+            }
+        }
+        catch(Exception e)
+        {
+            
+        }
     }
 
     @FXML

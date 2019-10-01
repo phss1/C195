@@ -153,10 +153,11 @@ public class UtilityMethods
     
     public int createNewId(String columnName, String tableName) throws SQLException
     {
-        ResultSet result = runSqlQuery("Select " + columnName + " from " + tableName);
+        ResultSet result = runSqlQuery("Select " + columnName + " from " + tableName + " order by " + columnName + " asc");
+        System.out.println("Select " + columnName + " from " + tableName + " order by " + columnName + " asc");
         int lastResultId = 0;
         int rowNum = result.getRow();
-        for(int i = 0; i<rowNum;i++)
+        for(int i = 0; i<rowNum; i++)
         {
             result.next();
             if(i<rowNum)

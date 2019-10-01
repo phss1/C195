@@ -146,32 +146,49 @@ public class ModifyCustomerController implements Initializable
     @FXML
     private void onActionSaveBtn(ActionEvent event) throws SQLException, IOException
     {
-        int addressId = Integer.valueOf(addressIdTxtLbl.getText());
-        String address = addressTxtLbl.getText();
-        String address2 = address2TxtLbl.getText();
-        int cityId = utility.getIdFromCityName(cityComboBx.getSelectionModel().getSelectedItem());
-        String postalCode = postalCodeTxtLbl.getText();
-        String phone = phoneTxtLbl.getText();
+        try
+        {
+            String customerName = nameTxtLbl.getText();
+            String address = addressTxtLbl.getText();
+            String address2 = address2TxtLbl.getText();
+            String postalCode = postalCodeTxtLbl.getText();
+            String phone = phoneTxtLbl.getText();
         
-        String sqlAddressUpdateQuery = "update address set address = \"" + address
-                + "\", address2 = \"" + address2 + "\", cityId = \"" + cityId + "\", postalCode = \"" + postalCode 
-                + "\", phone = \"" + phone + "\", lastUpdate = now(), lastUpdateBy = \""
-                + utility.getCurLoggedInUserName().toString() + "\" where addressId = " + addressId + ";";
-        utility.runUpdateSqlQuery(sqlAddressUpdateQuery);
-        
-        int customerId = Integer.valueOf(customerIdTxtFld.getText());
-        String customerName = nameTxtLbl.getText();
-        String tempAddress = address + " " + address2 + " " + cityComboBx.getSelectionModel().getSelectedItem()
-                + " " + countryComboBx.getSelectionModel().getSelectedItem() + " " + postalCode;
-        String sqlCustUpdateQuery = "update customer set customerName = \"" + customerName + 
-                "\" where customerId = " + customerId + ";";
-        
-        Customer tempCustomer = new Customer(customerId, customerName, addressId, tempAddress);
-        Customer.modifyCustomer(tempCustomer, customerId);
-        
-        System.out.println(sqlCustUpdateQuery);
-        utility.runUpdateSqlQuery(sqlCustUpdateQuery);
-        
-        utility.changeGuiScreen(event, "MainMenu");
+            if(!customerName.isEmpty() && !address.isEmpty() && !address2.isEmpty() && !postalCode.isEmpty()
+                    && !phone.isEmpty())
+            {
+                int addressId = Integer.valueOf(addressIdTxtLbl.getText());
+                int cityId = utility.getIdFromCityName(cityComboBx.getSelectionModel().getSelectedItem());
+
+                String sqlAddressUpdateQuery = "update address set address = \"" + address
+                        + "\", address2 = \"" + address2 + "\", cityId = \"" + cityId + "\", postalCode = \"" + postalCode 
+                        + "\", phone = \"" + phone + "\", lastUpdate = now(), lastUpdateBy = \""
+                        + utility.getCurLoggedInUserName().toString() + "\" where addressId = " + addressId + ";";
+                utility.runUpdateSqlQuery(sqlAddressUpdateQuery);
+
+                int customerId = Integer.valueOf(customerIdTxtFld.getText());
+                String tempAddress = address + " " + address2 + " " + cityComboBx.getSelectionModel().getSelectedItem()
+                        + " " + countryComboBx.getSelectionModel().getSelectedItem() + " " + postalCode;
+                String sqlCustUpdateQuery = "update customer set customerName = \"" + customerName + 
+                        "\" where customerId = " + customerId + ";";
+
+                Customer tempCustomer = new Customer(customerId, customerName, addressId, tempAddress);
+                Customer.modifyCustomer(tempCustomer, customerId);
+
+                System.out.println(sqlCustUpdateQuery);
+                utility.runUpdateSqlQuery(sqlCustUpdateQuery);
+
+                utility.changeGuiScreen(event, "MainMenu");
+            }
+            else
+            {
+                utility.displayLocaleError("INFORMATION", "Empty Field", "Field Empty",
+                        "Please make sure you don't leave a field with no value entered.");
+            }
+        }
+        catch(Exception e)
+        {
+            
+        }
     }
 }
