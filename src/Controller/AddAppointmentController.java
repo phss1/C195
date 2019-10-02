@@ -202,22 +202,26 @@ public class AddAppointmentController implements Initializable {
         int currentHour = cal.get(Calendar.HOUR_OF_DAY);
         int currentMinute = cal.get(Calendar.MINUTE);
         
+        String startMonth = appStartMonthComboBx.getSelectionModel().getSelectedItem();
+        String startDay = appStartDayCmbBox.getSelectionModel().getSelectedItem();
+        String startYear = appStartYearCmbBox.getSelectionModel().getSelectedItem();
+        String startTime = apptStartTimeComboBox.getSelectionModel().getSelectedItem();
+        String endMonth = appEndMonthCmbBx.getSelectionModel().getSelectedItem();
+        String endDay = appEndDayCmbBx.getSelectionModel().getSelectedItem();
+        String endYear = appEndYearCmbBox.getSelectionModel().getSelectedItem();
+        String endTime = apptEndTimeComboBx.getSelectionModel().getSelectedItem();
+        String startDateTime = startYear + "-" + startMonth + "-" + startDay + " " + startTime + ":00.0";
+        System.out.println(startDateTime);
+        String endDateTime = endYear + "-" + endMonth + "-" + endDay + " " + endTime + ":00.0";
+        boolean foundExistingApptStartTime = Appointment.checkForOverLapAppt(startDateTime);
+        System.out.println(startDateTime);
+        
         try
         {   
             if(!title.isEmpty() && !description.isEmpty() && !contact.isEmpty() && !url.isEmpty()
-                    && Integer.valueOf(enteredMonth) >= currentMonth && Integer.valueOf(enteredDay) >= currentDay)
+                    //&& Integer.valueOf(enteredMonth) >= currentMonth && Integer.valueOf(enteredDay) >= currentDay
+                    && !foundExistingApptStartTime)
             {
-                String startMonth = appStartMonthComboBx.getSelectionModel().getSelectedItem();
-                String startDay = appStartDayCmbBox.getSelectionModel().getSelectedItem();
-                String startYear = appStartYearCmbBox.getSelectionModel().getSelectedItem();
-                String startTime = apptStartTimeComboBox.getSelectionModel().getSelectedItem();
-                String endMonth = appEndMonthCmbBx.getSelectionModel().getSelectedItem();
-                String endDay = appEndDayCmbBx.getSelectionModel().getSelectedItem();
-                String endYear = appEndYearCmbBox.getSelectionModel().getSelectedItem();
-                String endTime = apptEndTimeComboBx.getSelectionModel().getSelectedItem();
-                String startDateTime = startYear + "-" + startMonth + "-" + startDay + " " + startTime + ":00.0";
-                String endDateTime = endYear + "-" + endMonth + "-" + endDay + " " + endTime + ":00.0";
-
                 String sqlQuery = "insert into appointment(appointmentId, customerId, userId, title, description, location, contact, type, "
                         + "url, start, end, createDate, createdBy, lastUpdate, lastUpdateBy)"    
                         + "values(" + appointmentId + ", " + customerId + ", " + userId + ", \"" + title + "\", \""  + description + "\", \"" 
@@ -227,6 +231,11 @@ public class AddAppointmentController implements Initializable {
                 utility.runUpdateSqlQuery(sqlQuery);
                 
                 utility.changeGuiScreen(event, "MainMenu");
+            }
+            else if(foundExistingApptStartTime)
+            {
+                utility.displayLocaleError("INFORMATION", "Entry Error", "",
+                        "You've entered a start time that already exists. Please select something different.");
             }
             else if(!(Integer.valueOf(enteredMonth) >= currentMonth))
             {
@@ -305,8 +314,6 @@ public class AddAppointmentController implements Initializable {
         apptEndTimeComboBx.setItems(newAppEndTimes);
         apptEndTimeComboBx.setValue(newAppEndTimes.get(0));
     }
-    
-    
     
     private void resetStartMonths(ObservableList<String> list)
     {

@@ -5,7 +5,10 @@
  */
 package Model;
 
+import Utilities.UtilityMethods;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -32,7 +35,7 @@ public class Appointment
     private static ObservableList<Customer> refCustToAppointment = FXCollections.observableArrayList();
     private static ObservableList<Appointment> appointmentToModify = FXCollections.observableArrayList();
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
-
+    
     public Appointment(int appointmentId, int customerId, int userId, String title, String description, String location, 
                             String contact, String type, String url, String start, String end) /*String startMonth, String startDay, String startYear,
                             String startTime, String endMonth, String endDay, String endYear, String endTime)*/
@@ -48,13 +51,25 @@ public class Appointment
         this.url = url;
         this.start = start;
         this.end = end;
-//        this.startMonth = startMonth;
-//        this.startDay = startDay;
-//        this.startYear = startYear;
-//        this.endMonth = endMonth;
-//        this.endDay = endDay;
-//        this.endYear = endYear;
-//        this.endTime = endTime;
+    }
+    
+    public static boolean checkForOverLapAppt(String apptStartTime) throws SQLException
+    {
+        UtilityMethods utility = new UtilityMethods();
+        String apptTimesQuery = "select * from appointment";
+        ResultSet apptTimesQueryResults = utility.runSqlQuery(apptTimesQuery);
+        ObservableList<String> allApptStartTimes = FXCollections.observableArrayList(
+                                                    utility.prepareComboBxStrings(apptTimesQueryResults, "start"));
+        
+        boolean foundExistingApptStart = false;
+        int numberOfApptStartTimes = allApptStartTimes.size();
+        for(int i = 0; i < numberOfApptStartTimes; i++)
+        {
+            foundExistingApptStart = apptStartTime.matches(allApptStartTimes.get(i)) ? true : false;
+            System.out.println("foreach current value: "+allApptStartTimes.get(i));
+            System.out.println("match found? "+foundExistingApptStart);
+        }
+        return foundExistingApptStart;
     }
     
     public static ObservableList<String> createNewObsList(int itemIndex, ObservableList<String> itemList)
@@ -79,7 +94,8 @@ public class Appointment
             appointmentIncrememnt = 0;
             for(int z = 0; z<possApptInOneHr; z++)
             {
-                String appTimeTemp = appointmentIncrememnt == 0 ? (String.valueOf(startOfDay) + ":00") : 
+                String longHour = startOfDay == 9 ? "09" : String.valueOf(startOfDay);
+                String appTimeTemp = appointmentIncrememnt == 0 ? (longHour + ":00") : 
                         (String.valueOf(startOfDay) + ":" + String.valueOf(appointmentIncrememnt));
                 appointmentIncrememnt = appointmentIncrememnt + 15;
                 possAppInOneDay.add(appTimeTemp);
@@ -97,7 +113,14 @@ public class Appointment
         ObservableList<String> values = FXCollections.observableArrayList();
         for(int i = 0; i < maxValues ; i++)
         {
-            values.add(String.valueOf(i + 1));
+            if(i<9)
+            {
+                values.add("0" + String.valueOf(i + 1));
+            }
+            else
+            {
+                values.add(String.valueOf(i + 1));
+            }
         }
         
         return values;
