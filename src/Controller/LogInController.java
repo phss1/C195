@@ -8,29 +8,21 @@ package Controller;
 import Utilities.UtilityMethods;
 import java.net.URL;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
-import Controller.*;
-import JDBC.DBConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import Model.*;
 import java.io.IOException;
-import java.util.logging.Logger;
+import javafx.scene.control.PasswordField;
 
 public class LogInController implements Initializable
 {
@@ -44,7 +36,10 @@ public class LogInController implements Initializable
     private TextField userNameTxtFld;
 
     @FXML
-    private TextField passwordTxtFld;
+    private PasswordField passwordTxtFld;
+
+    @FXML
+    private Button newUserBtn;
 
     @FXML
     private Label userNameLbl;
@@ -61,7 +56,6 @@ public class LogInController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        
         if(!userLocale.toString().contains("en_US"))
         {
             userNameLbl.setText("BenutzerName");
@@ -69,6 +63,12 @@ public class LogInController implements Initializable
             logInBtn.setText("Einloggin");
             cancelBtn.setText("Abbrechen");
         }
+    }
+    
+    @FXML
+    void onActionNewUserBtn(ActionEvent event) throws IOException
+    {
+        utility.changeGuiScreen(event, "CreateNewUser");
     }
     
     @FXML
@@ -88,20 +88,17 @@ public class LogInController implements Initializable
                 String sqlQuery = "update user set lastUpdate = now() where userId = " + result.getInt("userId");
                 utility.setCurrentUserId(result.getInt("userId"));
                 
-                stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-                scene = FXMLLoader.load(getClass().getResource("/View/MainMenu.fxml"));
-                stage.setScene(new Scene(scene));
-                stage.show();
+                utility.changeGuiScreen(event, "MainMenu");
             }
             else
             {
                 if(userLocaleEqualsEng)
                 {
-                    utility.displayLocaleError("error", "", "Entry Error", "Either username/password was incorrect or null.");
+                    utility.displayLocaleError("Error", "", "Entry Error", "Either username/password was incorrect or null.");
                 }
                 else
                 {
-                    utility.displayLocaleError("error", "", "Fehler beim Eintragung", "Entwieder die Bunutzerinformation war Falsch eingetragen order nichts in den Textfelden geschrieben.");
+                    utility.displayLocaleError("Fehler", "", "Fehler beim Eintritt", "Entwieder die Bunutzerinformation war Falsch eingetragen order nichts in den Textfelden geschrieben.");
                 }
             }
         }
