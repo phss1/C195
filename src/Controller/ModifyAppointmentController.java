@@ -140,16 +140,9 @@ public class ModifyAppointmentController implements Initializable {
         apptStartTimeComboBox.setItems(startAppTimesTemp);
         apptStartTimeComboBox.setValue(startAppTimesTemp.get(correctStartTimeIndex));
         
-        String [] endTimeMinArray = ((apptStartTimeComboBox.getSelectionModel().getSelectedItem()).split(":", 2));
-        String endTimeHourTemp = endTimeMinArray[0];
-        String endTimeMinTemp = endTimeMinArray[1];
-        int endTimeInHours = Integer.valueOf(endTimeHourTemp);
-        
-        ObservableList<String> endAppTimes = Appointment.createAppointmentTimes(endTimeInHours, 15);
-        int correctEndTimeIndex = endAppTimes.indexOf(endTimeToSet);
-        endAppTimes.remove(0);
-        apptEndTimeComboBx.setItems(endAppTimes);
-        apptEndTimeComboBx.setValue(endAppTimes.get(correctEndTimeIndex));
+        int correctEndTimeIndex = startAppTimesTemp.indexOf(endTimeToSet);
+        apptEndTimeComboBx.setItems(startAppTimesTemp);
+        apptEndTimeComboBx.setValue(startAppTimesTemp.get(correctEndTimeIndex));
         
         appStartMonthComboBx.getSelectionModel().select(dateSplit[1]);
         appEndMonthCmbBx.getSelectionModel().select(dateSplit[1]);
