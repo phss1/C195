@@ -53,13 +53,38 @@ public class Appointment
         this.end = end;
     }
     
+    public static boolean checkForApptAtLogIn() throws SQLException
+    {
+        ObservableList<String> allApptStartTimes = getApptStartTimes();
+        Calendar tempCal = Calendar.getInstance();
+        int currentHour = tempCal.get(Calendar.HOUR_OF_DAY);
+        int currentMinute = tempCal.get(Calendar.MINUTE);
+        int numberOfApptStartTimes = allApptStartTimes.size();
+        boolean alertOnApptAtLogIn = false;
+        
+        
+        for(int i = 0; i < numberOfApptStartTimes; i++)
+        {
+            String [] dateTimeSplit = (allApptStartTimes.get(i)).split(" ");
+            String [] timeSplit = dateTimeSplit[1].split(":");
+            int nextApptStartHour = Integer.valueOf(timeSplit[0]);
+            int nextApptStartMinute = Integer.valueOf(timeSplit[1]) == 0 ? 59 : Integer.valueOf(timeSplit[1]);
+            int fifteenMinWindowInMin = nextApptStartMinute == 0 ? 45 : nextApptStartMinute - 15;
+            
+            if(currentHour <= nextApptStartHour 
+                    && (currentMinute < nextApptStartMinute && currentMinute > fifteenMinWindowInMin))
+            {
+                alertOnApptAtLogIn = true;
+                break;
+            }
+        }
+        
+        return alertOnApptAtLogIn;
+    }
+    
     public static boolean checkForOverLapAppt(String apptStartTime) throws SQLException
     {
-        UtilityMethods utility = new UtilityMethods();
-        String apptTimesQuery = "select * from appointment";
-        ResultSet apptTimesQueryResults = utility.runSqlQuery(apptTimesQuery);
-        ObservableList<String> allApptStartTimes = FXCollections.observableArrayList(
-                                                    utility.prepareComboBxStrings(apptTimesQueryResults, "start"));
+        ObservableList<String> allApptStartTimes = getApptStartTimes();
         
         boolean foundExistingApptStart = false;
         int numberOfApptStartTimes = allApptStartTimes.size();
@@ -72,6 +97,17 @@ public class Appointment
             }
         }
         return foundExistingApptStart;
+    }
+    
+    public static ObservableList<String> getApptStartTimes() throws SQLException
+    {
+        UtilityMethods utility = new UtilityMethods();
+        String apptTimesQuery = "select * from appointment";
+        ResultSet apptTimesQueryResults = utility.runSqlQuery(apptTimesQuery);
+        ObservableList<String> allApptStartTimes = FXCollections.observableArrayList(
+                                                    utility.prepareComboBxStrings(apptTimesQueryResults, "start"));
+        
+        return allApptStartTimes;
     }
     
     public static ObservableList<String> createNewObsList(int itemIndex, ObservableList<String> itemList)

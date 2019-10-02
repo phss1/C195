@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -108,6 +110,30 @@ public class MainMenuController implements Initializable
     @FXML
     private Button deleteAppBtn;
     
+    @FXML
+    private Button logoutBtn;
+    
+    @FXML
+    private TableView<?> apptCalendarTbl;
+
+    @FXML
+    private TableColumn<Integer, ?> acCstomerIdCol;
+
+    @FXML
+    private TableColumn<Integer, ?> acAppointmentIdCol;
+
+    @FXML
+    private TableColumn<String, ?> acApptTypeCol;
+
+    @FXML
+    private TableColumn<String, ?> acApptLocationCol;
+
+    @FXML
+    private TableColumn<String, ?> acApptStartCol;
+
+    @FXML
+    private TableColumn<String, ?> acApptEndCol;
+    
     UtilityMethods utility = new UtilityMethods();
     Stage stage;
     Parent scene;
@@ -167,6 +193,20 @@ public class MainMenuController implements Initializable
                     }
                 }
             );
+        
+        try
+        {
+            boolean checkForApptAtLogIn = Appointment.checkForApptAtLogIn();
+            boolean alertUserOfAppt = checkForApptAtLogIn == true ? utility.displayLocaleError("INFORMATION", "Attention", 
+                "", "You have a new appointment within the next 15 minutes.") : true;
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        String SqlCalApptQuery = "select customerId, appointmentId, type, location, start, end from appointment where start > \"2019-10-01\" and end < \"2019-10-31\"";
+        
     }
     
     @FXML
@@ -255,6 +295,14 @@ public class MainMenuController implements Initializable
         boolean result = utility.displayLocaleError("CONFIRMATION", "Exit", "Exit Program", 
                                                         "Are you sure you want to close the program?");
         String test = result ? utility.closeProgram() : "";
+    }
+    
+    @FXML
+    void onActionLogoutBtn(ActionEvent event) throws Exception
+    {
+        boolean result = utility.displayLocaleError("CONFIRMATION", "Exit", "Exit Program", 
+                                                        "Are you sure you want to logout of the program?");
+        utility.changeGuiScreen(event, "LogIn");
     }
 
     @FXML
