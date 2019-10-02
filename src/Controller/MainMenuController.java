@@ -168,6 +168,30 @@ public class MainMenuController implements Initializable
                 }
             );
     }
+    
+    @FXML
+    void onActionModCustomerBtn(ActionEvent event) throws IOException, SQLException
+    {
+        Appointment.getRefCustToAppointment().clear();
+        Appointment.getAppointmentToModify().clear();
+        Appointment.addRefCustToAppointment(customerTbl.getSelectionModel().getSelectedItem());
+        Appointment.addItemAppToModify(appointmentTbl.getSelectionModel().getSelectedItem());
+        utility.setSelectedRowIndex(customerTbl.getSelectionModel().getFocusedIndex());
+        int rowIndexValue = utility.getSelectedRowIndex();
+        appointmentTbl.getItems().clear();
+        
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/View/ModifyCustomer.fxml"));
+        loader.load();
+
+        ModifyCustomerController MPSController = loader.getController();
+        MPSController.sendInfo(customerTbl.getSelectionModel().getSelectedItem());
+
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        Parent scene = loader.getRoot();
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
 
     @FXML
     void onActionAddAppBtn(ActionEvent event) throws IOException
@@ -249,26 +273,6 @@ public class MainMenuController implements Initializable
         ModifyAppointmentController MPSController = loader.getController();
         MPSController.sendInfo(appointmentTbl.getSelectionModel().getSelectedItem());
         appointmentTbl.getItems().clear();
-
-        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-        Parent scene = loader.getRoot();
-        stage.setScene(new Scene(scene));
-        stage.show();
-    }
-
-    @FXML
-    void onActionModCustomerBtn(ActionEvent event) throws IOException, SQLException
-    {
-        utility.setSelectedRowIndex(customerTbl.getSelectionModel().getFocusedIndex());
-        int rowIndexValue = utility.getSelectedRowIndex();
-        appointmentTbl.getItems().clear();
-        
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/View/ModifyCustomer.fxml"));
-        loader.load();
-
-        ModifyCustomerController MPSController = loader.getController();
-        MPSController.sendInfo(customerTbl.getSelectionModel().getSelectedItem());
 
         stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         Parent scene = loader.getRoot();

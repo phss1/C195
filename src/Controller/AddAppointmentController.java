@@ -203,22 +203,9 @@ public class AddAppointmentController implements Initializable {
         int currentMinute = cal.get(Calendar.MINUTE);
         
         try
-        {
-            System.out.println("Integer.valueOf(enteredMonth) >= currentMonth: " + (Integer.valueOf(enteredMonth) >= currentMonth));
-            System.out.println();
-            System.out.println("Integer.valueOf(enteredDay) >= currentDay: "+(Integer.valueOf(enteredDay) >= currentDay));
-            System.out.println();
-            System.out.println("Integer.valueOf(enteredHour) >= currentHour: "+(Integer.valueOf(enteredHour) >= currentHour));
-            System.out.println();
-            System.out.println("(Integer.valueOf(enteredMinute) < currentMinute || (Integer.valueOf(enteredDay) > currentDay)\n" +
-"                    && (Integer.valueOf(enteredMonth) > currentMonth))): "+ (Integer.valueOf(enteredMinute) < currentMinute || (Integer.valueOf(enteredDay) > currentDay)
-                    && (Integer.valueOf(enteredMonth) > currentMonth)));
-            
+        {   
             if(!title.isEmpty() && !description.isEmpty() && !contact.isEmpty() && !url.isEmpty()
-                    && Integer.valueOf(enteredMonth) >= currentMonth && Integer.valueOf(enteredDay) >= currentDay 
-                    && Integer.valueOf(enteredHour) >= currentHour
-                    && (Integer.valueOf(enteredMinute) < currentMinute || (Integer.valueOf(enteredDay) > currentDay)
-                    && (Integer.valueOf(enteredMonth) > currentMonth)))
+                    && Integer.valueOf(enteredMonth) >= currentMonth && Integer.valueOf(enteredDay) >= currentDay)
             {
                 String startMonth = appStartMonthComboBx.getSelectionModel().getSelectedItem();
                 String startDay = appStartDayCmbBox.getSelectionModel().getSelectedItem();
@@ -251,22 +238,6 @@ public class AddAppointmentController implements Initializable {
                 utility.displayLocaleError("INFORMATION", "Incorrect Day", "",
                         "Please make sure you select a day equal or grater than the current calendar day.\n\n"
                                 + "EnteredDay compared to currentDay: "+enteredDay +" : "+currentDay);
-            }
-            else if(!(Integer.valueOf(enteredHour) >= currentHour) && !(Integer.valueOf(enteredDay) >= currentDay)
-                    && !(Integer.valueOf(enteredMonth) >= currentMonth))
-            {
-                utility.displayLocaleError("INFORMATION", "Incorrect Time", "",
-                        "Please make sure you select a start hour that is equal to or greater than the current hour on your PC.\n\n"
-                                + "EnteredHour compared to currentHour: "+enteredHour +" : "+currentHour);
-            }
-            else if((Integer.valueOf(enteredMinute) < currentMinute && !((Integer.valueOf(enteredDay) > currentDay)
-                    && !(Integer.valueOf(enteredMonth) > currentMonth))))
-            {
-                utility.displayLocaleError("INFORMATION", "Incorrect Time", "",
-                        "Please make sure you select a start time where the next 15 minute interval is greater than "
-                                + "the current minute shown on your system clock. This is ok when the date is greater"
-                                + " than the current day on the calendar.\n\n"
-                                + "enteredMinute compared to currentMinute: "+enteredMinute +" : "+currentMinute);
             }
             else
             {

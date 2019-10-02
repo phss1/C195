@@ -122,10 +122,9 @@ public class ModifyAppointmentController implements Initializable {
         appEndYearCmbBox.setItems(endYear);
         appEndYearCmbBox.setValue(endYear.get(0));
         
-        //createAppointmentDays(dateSplit[1]);
+        createAppointmentDays(dateSplit[1]);
         
         ObservableList<String> startAppTimesTemp = Appointment.createAppointmentTimes(9, 15);
-        //utility.
         apptStartTimeComboBox.setItems(startAppTimesTemp);
         apptStartTimeComboBox.setValue(startAppTimesTemp.get(0));
         
@@ -139,8 +138,16 @@ public class ModifyAppointmentController implements Initializable {
         apptEndTimeComboBx.setItems(endAppTimes);
         apptEndTimeComboBx.setValue(endAppTimes.get(0));
         
-        int currentStartDay = startMonth.indexOf(dateSplit[2]);
-        ObservableList<String> newStartDays = FXCollections.observableArrayList(Appointment.createNewObsList(currentStartDay, startMonth));
+        appStartMonthComboBx.getSelectionModel().select(dateSplit[1]);
+        appEndMonthCmbBx.getSelectionModel().select(dateSplit[1]);
+        appStartDayCmbBox.getSelectionModel().select(dateSplit[2]);
+        appEndDayCmbBx.getSelectionModel().select(dateSplit[2]);
+        
+        /*ObservableList<String> newStartDays = FXCollections.observableArrayList(Appointment.createNewObsList(currentStartDay, startMonth));
+        appStartDayCmbBox.setItems(newStartDays);
+        int startDayToMofIndex = newStartDays.indexOf(currentStartDay);
+        appStartDayCmbBox.setItems(newStartDays);
+        appStartDayCmbBox.setValue(newStartDays.get(startDayToMofIndex));*/
     }
     
     public void sendInfo(Appointment appointment) throws SQLException
@@ -207,14 +214,8 @@ public class ModifyAppointmentController implements Initializable {
             String type = typeComboBx.getSelectionModel().getSelectedItem();
             String url = urlTxtFld.getText();
             
-            System.out.println("!title.isEmpty() - " +!title.isEmpty());
-            System.out.println("!description.isEmpty() - " +!description.isEmpty());
-            System.out.println("!contact.isEmpty() - " +!contact.isEmpty());
-            System.out.println("!url.isEmpty() - " +!url.isEmpty());
-            
             if(!title.isEmpty() && !description.isEmpty() && !contact.isEmpty() && !url.isEmpty()
-                    && Integer.valueOf(enteredMonth) >= currentMonth && Integer.valueOf(enteredDay) >= currentDay 
-                    && Integer.valueOf(enteredHour) >= currentHour && currentMinute <= Integer.valueOf(enteredMinute))
+                    && Integer.valueOf(enteredMonth) >= currentMonth && Integer.valueOf(enteredDay) >= currentDay)
             {
                 String startMonth = appStartMonthComboBx.getSelectionModel().getSelectedItem();
                 String startDay = appStartDayCmbBox.getSelectionModel().getSelectedItem();
@@ -246,19 +247,6 @@ public class ModifyAppointmentController implements Initializable {
                 utility.displayLocaleError("INFORMATION", "Incorrect Day", "",
                         "Please make sure you select a day equal or grater than the current calendar day.\n\n"
                                 + "EnteredDay compared to currentDay: "+enteredDay +" : "+currentDay);
-            }
-            else if(!(Integer.valueOf(enteredHour) >= currentHour))
-            {
-                utility.displayLocaleError("INFORMATION", "Incorrect Time", "",
-                        "Please make sure you select a start hour that is equal to or greater than the current hour on your PC.\n\n"
-                                + "EnteredHour compared to currentHour: "+enteredHour +" : "+currentHour);
-            }
-            else if(!(currentMinute <= Integer.valueOf(enteredMinute)))
-            {
-                utility.displayLocaleError("INFORMATION", "Incorrect Time", "",
-                        "Please make sure you select a start time where the next 15 minute interval is greater than "
-                                + "the current minute shown on your system clock.\n\n"
-                                + "enteredMinute compared to currentMinute: "+enteredMinute +" : "+currentMinute);
             }
             else
             {
