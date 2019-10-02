@@ -9,10 +9,14 @@ import Utilities.UtilityMethods;
 import Model.*;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -66,30 +70,6 @@ public class MainMenuController implements Initializable
     private RadioButton weekViewRdBtn;
 
     @FXML
-    private TableView<?> appMonthCal;
-
-    @FXML
-    private TableColumn<?, ?> monthMonCol;
-
-    @FXML
-    private TableColumn<?, ?> monthTueCol;
-
-    @FXML
-    private TableColumn<?, ?> monthWedCol;
-
-    @FXML
-    private TableColumn<?, ?> monthThuCol;
-
-    @FXML
-    private TableColumn<?, ?> monthFriCol;
-
-    @FXML
-    private TableColumn<?, ?> monthSatCol;
-
-    @FXML
-    private TableColumn<?, ?> monthSunCol;
-
-    @FXML
     private Button exitBtn;
 
     @FXML
@@ -114,25 +94,37 @@ public class MainMenuController implements Initializable
     private Button logoutBtn;
     
     @FXML
-    private TableView<?> apptCalendarTbl;
+    private TableView<Appointment> apptCalendarTbl;
 
     @FXML
-    private TableColumn<Integer, ?> acCstomerIdCol;
+    private TableColumn<Integer, Appointment> acCstomerIdCol;
 
     @FXML
-    private TableColumn<Integer, ?> acAppointmentIdCol;
+    private TableColumn<Integer, Appointment> acAppointmentIdCol;
 
     @FXML
-    private TableColumn<String, ?> acApptTypeCol;
+    private TableColumn<String, Appointment> acApptTypeCol;
 
     @FXML
-    private TableColumn<String, ?> acApptLocationCol;
+    private TableColumn<String, Appointment> acApptLocationCol;
 
     @FXML
-    private TableColumn<String, ?> acApptStartCol;
+    private TableColumn<String, Appointment> acApptStartCol;
 
     @FXML
-    private TableColumn<String, ?> acApptEndCol;
+    private TableColumn<String, Appointment> acApptEndCol;
+    
+    @FXML
+    private RadioButton apptTypeMonthRdBtn;
+
+    @FXML
+    private RadioButton consultantScheduleRdBtn;
+
+    @FXML
+    private RadioButton apptTypeSevenDaysRdBtn;
+
+    @FXML
+    private Button genereateReportBtn;
     
     UtilityMethods utility = new UtilityMethods();
     Stage stage;
@@ -140,8 +132,8 @@ public class MainMenuController implements Initializable
     
     @Override
     public void initialize(URL url, ResourceBundle rb)
-    {        
-        weekViewRdBtn.setSelected(true);
+    {
+        monthViewRdBtn.setSelected(true);
         customerTbl.getItems().clear();
         appointmentTbl.getItems().clear();
         
@@ -149,7 +141,6 @@ public class MainMenuController implements Initializable
         customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         customerAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
-        
         
         int rowIndexValue = utility.getSelectedRowIndex();
         if(rowIndexValue == 0)
@@ -205,8 +196,15 @@ public class MainMenuController implements Initializable
             Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        String SqlCalApptQuery = "select customerId, appointmentId, type, location, start, end from appointment where start > \"2019-10-01\" and end < \"2019-10-31\"";
-        
+        Calendar tempCal = Calendar.getInstance();
+        populateApptCalTblView(tempCal.get(Calendar.MONTH), 1,
+                Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
+    }
+    
+    @FXML
+    void onActionGenReportBtn(ActionEvent event)
+    {
+
     }
     
     @FXML
@@ -332,11 +330,49 @@ public class MainMenuController implements Initializable
     void onActionMonthViewRdBtn(ActionEvent event)
     {
         weekViewRdBtn.setSelected(false);
+        Calendar tempCal = Calendar.getInstance();
+        populateApptCalTblView(tempCal.get(Calendar.MONTH), 1,
+                Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
     }
 
     @FXML
     void onActionWeekViewRdBtn(ActionEvent event)
     {
         monthViewRdBtn.setSelected(false);
+        Calendar tempCal = Calendar.getInstance();
+        populateApptCalTblView(tempCal.get(Calendar.MONTH), 1,
+                (tempCal.get(Calendar.DAY_OF_MONTH) + 7));
+    }
+    
+    private void populateApptCalTblView(int month, int startDay, int endDay)
+    {
+        try
+        {
+            String SqlCalApptQuery = "select customerId, appointmentId, type, location, start, end from appointment "
+                    + "where start > \"2019-" + (month + 1) + "-" + startDay + " 00:00:00\" and "
+                    + "end < \"2019-" + (month + 1) + "-" + endDay + " 23:59:00\"";
+            ResultSet results = utility.runSqlQuery(SqlCalApptQuery);
+            
+            ObservableList<Appointment> calAppointments = FXCollections.observableArrayList();
+            while(results.next())
+            {
+                Appointment temp = new Appointment(results.getInt("appointmentId"), results.getInt("customerId"), 0,"",
+                        "",results.getString("location"),"",results.getString("type"), "",results.getString("start"),
+                        results.getString("end"));
+                calAppointments.add(temp);
+            }
+            
+            apptCalendarTbl.setItems(calAppointments);
+            acCstomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+            acAppointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+            acApptTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+            acApptLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+            acApptStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+            acApptEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        }
+        catch(SQLException ex)
+        {
+            
+        }
     }
 }

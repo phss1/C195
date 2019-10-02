@@ -37,8 +37,7 @@ public class Appointment
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
     
     public Appointment(int appointmentId, int customerId, int userId, String title, String description, String location, 
-                            String contact, String type, String url, String start, String end) /*String startMonth, String startDay, String startYear,
-                            String startTime, String endMonth, String endDay, String endYear, String endTime)*/
+                            String contact, String type, String url, String start, String end)
     {
         this.appointmentId = appointmentId;
         this.customerId = customerId;
@@ -61,7 +60,6 @@ public class Appointment
         int currentMinute = tempCal.get(Calendar.MINUTE);
         int numberOfApptStartTimes = allApptStartTimes.size();
         boolean alertOnApptAtLogIn = false;
-        
         
         for(int i = 0; i < numberOfApptStartTimes; i++)
         {
