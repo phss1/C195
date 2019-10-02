@@ -68,7 +68,10 @@ public class LogInController implements Initializable
     @FXML
     void onActionNewUserBtn(ActionEvent event) throws IOException
     {
-        utility.changeGuiScreen(event, "CreateNewUser");
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        scene = FXMLLoader.load(getClass().getResource("/View/CreateNewUser.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
     
     @FXML
@@ -90,16 +93,24 @@ public class LogInController implements Initializable
                 
                 utility.changeGuiScreen(event, "MainMenu");
             }
+        }
+        
+        try
+        {
+            if(utility.getCurLoggedInUserName().isEmpty())
+            {
+
+            }
+        }
+        catch(NullPointerException e)
+        {
+            if(userLocaleEqualsEng)
+            {
+                utility.displayLocaleError("Error", "", "Entry Error", "Either username/password was incorrect or null.");
+            }
             else
             {
-                if(userLocaleEqualsEng)
-                {
-                    utility.displayLocaleError("Error", "", "Entry Error", "Either username/password was incorrect or null.");
-                }
-                else
-                {
-                    utility.displayLocaleError("Fehler", "", "Fehler beim Eintritt", "Entwieder die Bunutzerinformation war Falsch eingetragen order nichts in den Textfelden geschrieben.");
-                }
+                utility.displayLocaleError("Fehler", "", "Fehler beim Eintritt", "Entwieder die Bunutzerinformation war Falsch eingetragen order nichts in den Textfelden geschrieben.");
             }
         }
     }

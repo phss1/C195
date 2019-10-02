@@ -7,16 +7,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="187.0" prefWidth="283.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreateNewUserController">
+<AnchorPane id="AnchorPane" prefHeight="187.0" prefWidth="323.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreateNewUserController">
    <children>
-      <Button fx:id="createBtn" layoutX="148.0" layoutY="143.0" mnemonicParsing="false" onAction="#onActionCreateBtn" text="Create" />
-      <Button fx:id="cancelBtn" layoutX="209.0" layoutY="143.0" mnemonicParsing="false" onAction="#onActionCancelBtn" text="Cancel" />
-      <PasswordField fx:id="password2PwdFld" layoutX="113.0" layoutY="108.0" />
-      <PasswordField fx:id="password1PwdFld" layoutX="113.0" layoutY="71.0" />
-      <TextField fx:id="newUserNameTxtFld" layoutX="113.0" layoutY="34.0" />
-      <Label layoutX="54.0" layoutY="76.0" text="Password" />
-      <Label layoutX="44.0" layoutY="38.0" text="User Name" />
-      <Label layoutX="8.0" layoutY="112.0" text="Confirm Password" />
+      <TextField fx:id="newUserNameTxtFld" layoutX="127.0" layoutY="34.0" />
+      <PasswordField fx:id="password1PwdFld" layoutX="127.0" layoutY="71.0" />
+      <PasswordField fx:id="password2PwdFld" layoutX="127.0" layoutY="108.0" />
+      <Button fx:id="createBtn" layoutX="129.0" layoutY="143.0" mnemonicParsing="false" onAction="#onActionCreateBtn" text="Create" />
+      <Button fx:id="cancelBtn" layoutX="223.0" layoutY="143.0" mnemonicParsing="false" onAction="#onActionCancelBtn" text="Cancel" />
+      <Label fx:id="password1Lbl" layoutX="10.0" layoutY="76.0" text="Password" />
+      <Label fx:id="userNameLbl" layoutX="11.0" layoutY="38.0" text="User Name" />
+      <Label fx:id="password2Lbl" layoutX="8.0" layoutY="112.0" text="Confirm Password" />
       <Label fx:id="newUserLabel" layoutX="10.0" layoutY="10.0" text="Create New User" textFill="#100861">
          <font>
             <Font name="System Bold" size="12.0" />

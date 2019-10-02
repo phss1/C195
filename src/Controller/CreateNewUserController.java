@@ -33,6 +33,12 @@ public class CreateNewUserController implements Initializable {
     private TextField newUserNameTxtFld;
     @FXML
     private Label newUserLabel;
+    @FXML
+    private Label password1Lbl;
+    @FXML
+    private Label userNameLbl;
+    @FXML
+    private Label password2Lbl;
 
     UtilityMethods utility = new UtilityMethods();
     Locale userLocale = Locale.getDefault();
@@ -41,12 +47,12 @@ public class CreateNewUserController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        if(userLocale.toString().contains("en_US"))
+        if(!userLocale.toString().contains("en_US"))
         {
-            newUserNameTxtFld.setText("Neuer BenutzerName");
-            password1PwdFld.setText("Neues Passwort");
-            password1PwdFld.setText("Passwort Bestaetigen");
             newUserLabel.setText("Neues Benutzer Erstellen");
+            userNameLbl.setText("Neuer BenutzerName");
+            password1Lbl.setText("Neues Passwort");
+            password2Lbl.setText("Passwort Bestaetigen");
             createBtn.setText("Erstellen");
             cancelBtn.setText("Abbrechen");
         }
@@ -62,15 +68,16 @@ public class CreateNewUserController implements Initializable {
         if(!userName.isEmpty() && !password1.isEmpty() && !password2.isEmpty() && password1.matches(password2))
         {
             String newUserQuery = "insert into user(userName, password, active, createDate, createdBy, lastUpdate, "
-                    + "lastUpdatedBy) values(\"" + userName + "\", " + password1 + "\", 1, now(), createUserScreen, now(),"
-                    + " createUserScreen)";
-            utility.runSqlQuery(newUserQuery);
+                    + "lastUpdateBy) values(\"" + userName + "\", \"" + password1 + "\", 1, now(), \"createUserScreen\", now(),"
+                    + " \"createUserScreen\")";
             
+            System.out.println(newUserQuery);
+            utility.runUpdateSqlQuery(newUserQuery);
             utility.changeGuiScreen(event, "LogIn");
         }
         else
         {
-            if(!userLocaleEqualsEng)
+            if(userLocaleEqualsEng)
                 {
                     utility.displayLocaleError("Error", "", "Entry Error", "Either the the password did not match or you left a field blank.");
                 }
