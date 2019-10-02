@@ -65,9 +65,11 @@ public class Appointment
         int numberOfApptStartTimes = allApptStartTimes.size();
         for(int i = 0; i < numberOfApptStartTimes; i++)
         {
-            foundExistingApptStart = apptStartTime.matches(allApptStartTimes.get(i)) ? true : false;
-            System.out.println("foreach current value: "+allApptStartTimes.get(i));
-            System.out.println("match found? "+foundExistingApptStart);
+            if(apptStartTime.matches(allApptStartTimes.get(i)))
+            {
+                foundExistingApptStart = true;
+                break;
+            }
         }
         return foundExistingApptStart;
     }
@@ -92,11 +94,11 @@ public class Appointment
         for(int i = 0; i<hoursInDay; i++)
         {
             appointmentIncrememnt = 0;
+            String longHour = startOfDay == 9 ? "09" : String.valueOf(startOfDay);
             for(int z = 0; z<possApptInOneHr; z++)
             {
-                String longHour = startOfDay == 9 ? "09" : String.valueOf(startOfDay);
                 String appTimeTemp = appointmentIncrememnt == 0 ? (longHour + ":00") : 
-                        (String.valueOf(startOfDay) + ":" + String.valueOf(appointmentIncrememnt));
+                        (longHour + ":" + String.valueOf(appointmentIncrememnt));
                 appointmentIncrememnt = appointmentIncrememnt + 15;
                 possAppInOneDay.add(appTimeTemp);
             }

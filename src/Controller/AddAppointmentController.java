@@ -6,17 +6,12 @@
 package Controller;
 
 import Model.Appointment;
-import Model.Customer;
 import Utilities.UtilityMethods;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.Calendar;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,7 +20,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * FXML Controller class
@@ -214,7 +208,6 @@ public class AddAppointmentController implements Initializable {
         System.out.println(startDateTime);
         String endDateTime = endYear + "-" + endMonth + "-" + endDay + " " + endTime + ":00.0";
         boolean foundExistingApptStartTime = Appointment.checkForOverLapAppt(startDateTime);
-        System.out.println(startDateTime);
         
         try
         {   
@@ -235,9 +228,9 @@ public class AddAppointmentController implements Initializable {
             else if(foundExistingApptStartTime)
             {
                 utility.displayLocaleError("INFORMATION", "Entry Error", "",
-                        "You've entered a start time that already exists. Please select something different.");
+                        "The start time ***" + startDateTime + "*** already exists. Please select something different.");
             }
-            else if(!(Integer.valueOf(enteredMonth) >= currentMonth))
+            /*else if(!(Integer.valueOf(enteredMonth) >= currentMonth))
             {
                 utility.displayLocaleError("INFORMATION", "Incorrect Month", "",
                         "Please make sure you select a month equal to or greater than the current calendar month.\n\n"
@@ -247,7 +240,7 @@ public class AddAppointmentController implements Initializable {
                 utility.displayLocaleError("INFORMATION", "Incorrect Day", "",
                         "Please make sure you select a day equal or grater than the current calendar day.\n\n"
                                 + "EnteredDay compared to currentDay: "+enteredDay +" : "+currentDay);
-            }
+            }*/
             else
             {
                 utility.displayLocaleError("INFORMATION", "Empty Field", "Field Empty",
