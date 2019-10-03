@@ -44,6 +44,11 @@ public class UtilityMethods
     private static int currentUserId;
     private static int selectedRowIndex;
     
+    public void generateReportSheet()
+    {
+        
+    }
+    
     public int getNextAppMinuteInterval(int currentMinuteOfHour)
     {
         int bestMinuteInterval = 0;

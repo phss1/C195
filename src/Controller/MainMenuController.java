@@ -201,30 +201,15 @@ public class MainMenuController implements Initializable
         }
         
         Calendar tempCal = Calendar.getInstance();
-        populateApptCalTblView(tempCal.get(Calendar.MONTH), 1,
+        setupCalendarViewQuery(tempCal.get(Calendar.MONTH), 1,
                 Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
-    }
-    
-    @FXML
-    void onActionGenReportBtn(ActionEvent event)
-    {
-        if(apptTypeMonthRdBtn.isSelected())
-        {
-            String query;
-        }
-        else if(consultantScheduleRdBtn.isSelected())
-        {
-            
-        }
-        else if(apptTypeSevenDaysRdBtn.isSelected())
-        {
-            
-        }
     }
     
     @FXML
     void onActionApptTypeMonthRdBtn(ActionEvent event)
     {
+        monthViewRdBtn.setSelected(false);
+        weekViewRdBtn.setSelected(false);
         consultantScheduleRdBtn.setSelected(false);
         apptTypeSevenDaysRdBtn.setSelected(false);
     }
@@ -232,6 +217,8 @@ public class MainMenuController implements Initializable
     @FXML
     void onActionApptTypeSevenDaysRdBtn(ActionEvent event)
     {
+        monthViewRdBtn.setSelected(false);
+        weekViewRdBtn.setSelected(false);
         apptTypeMonthRdBtn.setSelected(false);
         consultantScheduleRdBtn.setSelected(false);
     }
@@ -239,6 +226,8 @@ public class MainMenuController implements Initializable
     @FXML
     void onActionConsultantScheduleRdBtn(ActionEvent event)
     {
+        monthViewRdBtn.setSelected(false);
+        weekViewRdBtn.setSelected(false);
         apptTypeMonthRdBtn.setSelected(false);
         apptTypeSevenDaysRdBtn.setSelected(false);
     }
@@ -366,8 +355,11 @@ public class MainMenuController implements Initializable
     void onActionMonthViewRdBtn(ActionEvent event)
     {
         weekViewRdBtn.setSelected(false);
+        apptTypeMonthRdBtn.setSelected(false);
+        consultantScheduleRdBtn.setSelected(false);
+        apptTypeSevenDaysRdBtn.setSelected(false);
         Calendar tempCal = Calendar.getInstance();
-        populateApptCalTblView(tempCal.get(Calendar.MONTH), 1,
+        setupCalendarViewQuery(tempCal.get(Calendar.MONTH), 1,
                 Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
     }
 
@@ -375,12 +367,15 @@ public class MainMenuController implements Initializable
     void onActionWeekViewRdBtn(ActionEvent event)
     {
         monthViewRdBtn.setSelected(false);
+        apptTypeMonthRdBtn.setSelected(false);
+        consultantScheduleRdBtn.setSelected(false);
+        apptTypeSevenDaysRdBtn.setSelected(false);
         Calendar tempCal = Calendar.getInstance();
-        populateApptCalTblView(tempCal.get(Calendar.MONTH), 1,
+        setupCalendarViewQuery(tempCal.get(Calendar.MONTH), 1,
                 (tempCal.get(Calendar.DAY_OF_MONTH) + 7));
     }
     
-    private void populateApptCalTblView(int month, int startDay, int endDay)
+    private void setupCalendarViewQuery(int month, int startDay, int endDay)
     {
         try
         {
@@ -389,7 +384,17 @@ public class MainMenuController implements Initializable
                     + "end < \"2019-" + (month + 1) + "-" + endDay + " 23:59:00\"";
             ResultSet results = utility.runSqlQuery(SqlCalApptQuery);
             
-            ObservableList<Appointment> calAppointments = FXCollections.observableArrayList();
+            populateReportIntoTblVw(results);
+        }
+        catch(SQLException ex)
+        {
+            
+        }
+    }
+    
+    private void populateReportIntoTblVw(ResultSet results) throws SQLException
+    {
+        ObservableList<Appointment> calAppointments = FXCollections.observableArrayList();
             while(results.next())
             {
                 Appointment temp = new Appointment(results.getInt("appointmentId"), results.getInt("customerId"), 0,"",
@@ -405,10 +410,5 @@ public class MainMenuController implements Initializable
             acApptLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
             acApptStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
             acApptEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
-        }
-        catch(SQLException ex)
-        {
-            
-        }
     }
 }
