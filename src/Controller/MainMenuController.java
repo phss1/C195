@@ -133,6 +133,10 @@ public class MainMenuController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        apptTypeMonthRdBtn.setSelected(true);
+        consultantScheduleRdBtn.setSelected(false);
+        apptTypeSevenDaysRdBtn.setSelected(false);
+        
         monthViewRdBtn.setSelected(true);
         customerTbl.getItems().clear();
         appointmentTbl.getItems().clear();
@@ -204,7 +208,39 @@ public class MainMenuController implements Initializable
     @FXML
     void onActionGenReportBtn(ActionEvent event)
     {
+        if(apptTypeMonthRdBtn.isSelected())
+        {
+            String query;
+        }
+        else if(consultantScheduleRdBtn.isSelected())
+        {
+            
+        }
+        else if(apptTypeSevenDaysRdBtn.isSelected())
+        {
+            
+        }
+    }
+    
+    @FXML
+    void onActionApptTypeMonthRdBtn(ActionEvent event)
+    {
+        consultantScheduleRdBtn.setSelected(false);
+        apptTypeSevenDaysRdBtn.setSelected(false);
+    }
 
+    @FXML
+    void onActionApptTypeSevenDaysRdBtn(ActionEvent event)
+    {
+        apptTypeMonthRdBtn.setSelected(false);
+        consultantScheduleRdBtn.setSelected(false);
+    }
+
+    @FXML
+    void onActionConsultantScheduleRdBtn(ActionEvent event)
+    {
+        apptTypeMonthRdBtn.setSelected(false);
+        apptTypeSevenDaysRdBtn.setSelected(false);
     }
     
     @FXML
