@@ -322,3 +322,5 @@
 2019-10-03 13:00:52.881 : User ***test*** logged into the application.
 2019-10-03 13:03:36.017 : User ***test2*** logged into the application.
 2019-10-03 13:08:23.532 : User ***test*** logged into the application.
+2019-10-03 13:44:47.253 : User ***test2*** logged into the application.
+2019-10-03 13:53:21.035 : User ***test2*** logged into the application.

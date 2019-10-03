@@ -56,6 +56,7 @@ public class Appointment
     {
         ObservableList<String> allApptStartTimes = getApptStartTimes();
         Calendar tempCal = Calendar.getInstance();
+        int currentDayOfMonth = tempCal.get(Calendar.DAY_OF_MONTH);
         int currentHour = tempCal.get(Calendar.HOUR_OF_DAY);
         int currentMinute = tempCal.get(Calendar.MINUTE);
         int numberOfApptStartTimes = allApptStartTimes.size();
@@ -65,15 +66,15 @@ public class Appointment
         {
             String [] dateTimeSplit = (allApptStartTimes.get(i)).split(" ");
             String [] timeSplit = dateTimeSplit[1].split(":");
+            int apptDayOfMonth = Integer.valueOf(((dateTimeSplit[0]).split("-"))[2]);
             int nextApptStartHour = Integer.valueOf(timeSplit[0]);
             int [] windowTimes = new int[2];
+            
             windowTimes = createExpectedNotifWindow(Integer.valueOf(timeSplit[1]));
-            //int nextApptStartMinute = Integer.valueOf(timeSplit[1]) == 0 ? 59 : Integer.valueOf(timeSplit[1]);
-            //int fifteenMinWindowInMin = nextApptStartMinute == 0 ? 45 : nextApptStartMinute - 15;
             int windowStart = windowTimes[0];
             int windowEnd = windowTimes[1];
             
-            if(currentHour <= nextApptStartHour 
+            if(apptDayOfMonth == currentDayOfMonth && currentHour <= nextApptStartHour 
                     && (currentMinute < windowEnd && currentMinute > windowStart))
             {
                 alertOnApptAtLogIn = true;
