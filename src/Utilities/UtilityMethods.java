@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.time.YearMonth;
 import java.util.GregorianCalendar;
 
+
 /**
  *
  * @author 39ds03d
@@ -43,11 +44,6 @@ public class UtilityMethods
     Parent scene;
     private static int currentUserId;
     private static int selectedRowIndex;
-    
-    public void generateReportSheet()
-    {
-        
-    }
     
     public int getNextAppMinuteInterval(int currentMinuteOfHour)
     {

@@ -66,11 +66,15 @@ public class Appointment
             String [] dateTimeSplit = (allApptStartTimes.get(i)).split(" ");
             String [] timeSplit = dateTimeSplit[1].split(":");
             int nextApptStartHour = Integer.valueOf(timeSplit[0]);
-            int nextApptStartMinute = Integer.valueOf(timeSplit[1]) == 0 ? 59 : Integer.valueOf(timeSplit[1]);
-            int fifteenMinWindowInMin = nextApptStartMinute == 0 ? 45 : nextApptStartMinute - 15;
+            int [] windowTimes = new int[2];
+            windowTimes = createExpectedNotifWindow(Integer.valueOf(timeSplit[1]));
+            //int nextApptStartMinute = Integer.valueOf(timeSplit[1]) == 0 ? 59 : Integer.valueOf(timeSplit[1]);
+            //int fifteenMinWindowInMin = nextApptStartMinute == 0 ? 45 : nextApptStartMinute - 15;
+            int windowStart = windowTimes[0];
+            int windowEnd = windowTimes[1];
             
             if(currentHour <= nextApptStartHour 
-                    && (currentMinute < nextApptStartMinute && currentMinute > fifteenMinWindowInMin))
+                    && (currentMinute < windowEnd && currentMinute > windowStart))
             {
                 alertOnApptAtLogIn = true;
                 break;
@@ -78,6 +82,21 @@ public class Appointment
         }
         
         return alertOnApptAtLogIn;
+    }
+    
+    private static int [] createExpectedNotifWindow(int startMinute)
+    {
+        int windowStart = -1;
+        int windowEnd = -1;
+        switch(startMinute)
+        {
+            case 0 : windowStart = 45; windowEnd = 59; break;
+            case 15 : windowStart = 0; windowEnd = 15; break;
+            case 30 : windowStart = 15; windowEnd = 30; break;
+            case 45 : windowStart = 30; windowEnd = 45; break;
+        }
+        int [] windowTimes = {windowStart, windowEnd};
+        return windowTimes;
     }
     
     public static boolean checkForOverLapAppt(String apptStartTime) throws SQLException

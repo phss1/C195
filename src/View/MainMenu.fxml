@@ -58,7 +58,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <Label layoutX="10.0" layoutY="10.0" text="Scheduling Tool" textFill="#100861">
+      <Label layoutX="29.0" layoutY="10.0" text="Scheduling Tool" textFill="#100861">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

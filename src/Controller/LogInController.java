@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.Appointment;
 import Utilities.UtilityMethods;
 import java.net.URL;
 import java.util.Locale;
@@ -22,6 +23,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.PasswordField;
 
 public class LogInController implements Initializable
@@ -62,6 +65,17 @@ public class LogInController implements Initializable
             passwordLbl.setText("Benutzer Passwort");
             logInBtn.setText("Einloggin");
             cancelBtn.setText("Abbrechen");
+        }
+        
+        try
+        {
+            boolean checkForApptAtLogIn = Appointment.checkForApptAtLogIn();
+            boolean alertUserOfAppt = checkForApptAtLogIn == true ? utility.displayLocaleError("INFORMATION", "Attention", 
+                "", "You have a new appointment within the next 15 minutes.") : true;
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

@@ -132,11 +132,7 @@ public class MainMenuController implements Initializable
     
     @Override
     public void initialize(URL url, ResourceBundle rb)
-    {
-        apptTypeMonthRdBtn.setSelected(true);
-        consultantScheduleRdBtn.setSelected(false);
-        apptTypeSevenDaysRdBtn.setSelected(false);
-        
+    {   
         monthViewRdBtn.setSelected(true);
         customerTbl.getItems().clear();
         appointmentTbl.getItems().clear();
@@ -175,6 +171,7 @@ public class MainMenuController implements Initializable
                     if (newSelection != null)
                     {
                         appointmentTbl.getItems().clear();
+                        utility.setSelectedRowIndex(customerTbl.getSelectionModel().getFocusedIndex());
                         customerTbl.setItems(Customer.getAllCustomers());
                         Customer customer = customerTbl.getSelectionModel().getSelectedItem();
                         utility.setApptTableViewItems(customer);
@@ -188,21 +185,30 @@ public class MainMenuController implements Initializable
                     }
                 }
             );
-        
-        try
-        {
-            boolean checkForApptAtLogIn = Appointment.checkForApptAtLogIn();
-            boolean alertUserOfAppt = checkForApptAtLogIn == true ? utility.displayLocaleError("INFORMATION", "Attention", 
-                "", "You have a new appointment within the next 15 minutes.") : true;
-        }
-        catch (SQLException ex)
-        {
-            Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+    }
+    
+    @FXML
+    void onActionMonthViewRdBtn(ActionEvent event)
+    {
+        weekViewRdBtn.setSelected(false);
+        apptTypeMonthRdBtn.setSelected(false);
+        consultantScheduleRdBtn.setSelected(false);
+        apptTypeSevenDaysRdBtn.setSelected(false);
         Calendar tempCal = Calendar.getInstance();
         setupCalendarViewQuery(tempCal.get(Calendar.MONTH), 1,
                 Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
+    }
+
+    @FXML
+    void onActionWeekViewRdBtn(ActionEvent event)
+    {
+        monthViewRdBtn.setSelected(false);
+        apptTypeMonthRdBtn.setSelected(false);
+        consultantScheduleRdBtn.setSelected(false);
+        apptTypeSevenDaysRdBtn.setSelected(false);
+        Calendar tempCal = Calendar.getInstance();
+        setupCalendarViewQuery(tempCal.get(Calendar.MONTH), 1,
+                (tempCal.get(Calendar.DAY_OF_MONTH) + 7));
     }
     
     @FXML
@@ -239,8 +245,6 @@ public class MainMenuController implements Initializable
         Appointment.getAppointmentToModify().clear();
         Appointment.addRefCustToAppointment(customerTbl.getSelectionModel().getSelectedItem());
         Appointment.addItemAppToModify(appointmentTbl.getSelectionModel().getSelectedItem());
-        utility.setSelectedRowIndex(customerTbl.getSelectionModel().getFocusedIndex());
-        int rowIndexValue = utility.getSelectedRowIndex();
         appointmentTbl.getItems().clear();
         
         FXMLLoader loader = new FXMLLoader();
@@ -351,30 +355,6 @@ public class MainMenuController implements Initializable
         stage.show();
     }
 
-    @FXML
-    void onActionMonthViewRdBtn(ActionEvent event)
-    {
-        weekViewRdBtn.setSelected(false);
-        apptTypeMonthRdBtn.setSelected(false);
-        consultantScheduleRdBtn.setSelected(false);
-        apptTypeSevenDaysRdBtn.setSelected(false);
-        Calendar tempCal = Calendar.getInstance();
-        setupCalendarViewQuery(tempCal.get(Calendar.MONTH), 1,
-                Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
-    }
-
-    @FXML
-    void onActionWeekViewRdBtn(ActionEvent event)
-    {
-        monthViewRdBtn.setSelected(false);
-        apptTypeMonthRdBtn.setSelected(false);
-        consultantScheduleRdBtn.setSelected(false);
-        apptTypeSevenDaysRdBtn.setSelected(false);
-        Calendar tempCal = Calendar.getInstance();
-        setupCalendarViewQuery(tempCal.get(Calendar.MONTH), 1,
-                (tempCal.get(Calendar.DAY_OF_MONTH) + 7));
-    }
-    
     private void setupCalendarViewQuery(int month, int startDay, int endDay)
     {
         try
