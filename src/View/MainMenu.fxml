@@ -56,6 +56,12 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
+            <TableView fx:id="apptTypeByMonthTbl" layoutX="16.0" layoutY="250.0" prefHeight="215.0" prefWidth="568.0">
+               <columns>
+                  <TableColumn fx:id="apptTypeByMonthCol" minWidth="20.0" prefWidth="283.0" text="Appt_Type" />
+                  <TableColumn fx:id="numOfTypeCol" minWidth="20.0" prefWidth="283.0" text="# of Type" />
+               </columns>
+            </TableView>
          </children>
       </AnchorPane>
       <Label layoutX="29.0" layoutY="10.0" text="Scheduling Tool" textFill="#100861">

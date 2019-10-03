@@ -126,6 +126,15 @@ public class MainMenuController implements Initializable
     @FXML
     private Button genereateReportBtn;
     
+    @FXML
+    private TableView<?> apptTypeByMonthTbl;
+
+    @FXML
+    private TableColumn<String, ?> apptTypeByMonthCol;
+
+    @FXML
+    private TableColumn<Integer, ?> numOfTypeCol;
+    
     UtilityMethods utility = new UtilityMethods();
     Stage stage;
     Parent scene;
@@ -201,6 +210,8 @@ public class MainMenuController implements Initializable
     @FXML
     void onActionMonthViewRdBtn(ActionEvent event)
     {
+        apptCalendarTbl.setVisible(true);
+        apptTypeByMonthTbl.setVisible(false);
         weekViewRdBtn.setSelected(false);
         apptTypeMonthRdBtn.setSelected(false);
         consultantScheduleRdBtn.setSelected(false);
@@ -213,6 +224,8 @@ public class MainMenuController implements Initializable
     @FXML
     void onActionWeekViewRdBtn(ActionEvent event)
     {
+        apptCalendarTbl.setVisible(true);
+        apptTypeByMonthTbl.setVisible(false);
         monthViewRdBtn.setSelected(false);
         apptTypeMonthRdBtn.setSelected(false);
         consultantScheduleRdBtn.setSelected(false);
@@ -223,17 +236,33 @@ public class MainMenuController implements Initializable
     }
     
     @FXML
-    void onActionApptTypeMonthRdBtn(ActionEvent event)
+    void onActionApptTypeMonthRdBtn(ActionEvent event) throws SQLException
     {
         monthViewRdBtn.setSelected(false);
         weekViewRdBtn.setSelected(false);
         consultantScheduleRdBtn.setSelected(false);
         apptTypeSevenDaysRdBtn.setSelected(false);
+        apptCalendarTbl.setVisible(false);
+        apptTypeByMonthTbl.setVisible(true);
+        
+        int[] dateValues = utility.getCurrentDateValues();
+        String sqlQuery = "select type as 'Type', count(*) as '# of Type' from appointment "
+                + "where MONTH(start) = " + dateValues[1] + " AND YEAR(start) = " + dateValues[3] 
+                + " group by type asc";
+        ResultSet results = utility.runSqlQuery(sqlQuery);
+        while(results.next())
+        {
+            
+        }
+        
+        //apptTypeByMonthTbl
     }
 
     @FXML
     void onActionApptTypeSevenDaysRdBtn(ActionEvent event)
     {
+        apptCalendarTbl.setVisible(false);
+        apptTypeByMonthTbl.setVisible(true);
         monthViewRdBtn.setSelected(false);
         weekViewRdBtn.setSelected(false);
         apptTypeMonthRdBtn.setSelected(false);

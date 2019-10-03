@@ -45,6 +45,18 @@ public class UtilityMethods
     private static int currentUserId;
     private static int selectedRowIndex;
     
+    public int [] getCurrentDateValues()
+    {
+        Calendar tempCal = Calendar.getInstance();
+        int day = tempCal.get(Calendar.DAY_OF_MONTH);
+        int month = tempCal.get(Calendar.MONTH);
+        int year = tempCal.get(Calendar.YEAR);
+        int lastDayOfMonth = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
+        
+        int[] intArray = {day, month, year, lastDayOfMonth};
+        return intArray;
+    }
+    
     public int getNextAppMinuteInterval(int currentMinuteOfHour)
     {
         int bestMinuteInterval = 0;

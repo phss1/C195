@@ -66,17 +66,6 @@ public class LogInController implements Initializable
             logInBtn.setText("Einloggin");
             cancelBtn.setText("Abbrechen");
         }
-        
-        try
-        {
-            boolean checkForApptAtLogIn = Appointment.checkForApptAtLogIn();
-            boolean alertUserOfAppt = checkForApptAtLogIn == true ? utility.displayLocaleError("INFORMATION", "Attention", 
-                "", "You have a new appointment within the next 15 minutes.") : true;
-        }
-        catch (SQLException ex)
-        {
-            Logger.getLogger(MainMenuController.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     @FXML
