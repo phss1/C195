@@ -93,6 +93,7 @@ public class LogInController implements Initializable
                 
                 String sqlQuery = "update user set lastUpdate = now() where userId = " + result.getInt("userId");
                 utility.setCurrentUserId(result.getInt("userId"));
+                utility.setCurrentUserName(result.getString("userName"));
                 
                 utility.changeGuiScreen(event, "MainMenu");
             }

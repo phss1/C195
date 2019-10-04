@@ -132,6 +132,30 @@ public class MainMenuController implements Initializable
     @FXML
     private TableColumn<Integer, Report> countCol;
     
+    @FXML
+    private TableView<Report> report2Tbl;
+
+    @FXML
+    private TableColumn<String, Report> userNameCol;
+
+    @FXML
+    private TableColumn<Integer, Report> report2CustIdCol;
+
+    @FXML
+    private TableColumn<Integer, Report> report2AppIdCol;
+
+    @FXML
+    private TableColumn<String, Report> report2AppTitleCol;
+
+    @FXML
+    private TableColumn<String, Report> report2AppTypeCol;
+
+    @FXML
+    private TableColumn<String, Report> report2LocationCol;
+    
+    @FXML
+    private TableColumn<String, Report> report2StartDateCol;
+    
     UtilityMethods utility = new UtilityMethods();
     Stage stage;
     Parent scene;
@@ -209,6 +233,7 @@ public class MainMenuController implements Initializable
     {
         apptCalendarTbl.setVisible(true);
         report1Tbl.setVisible(false);
+        report2Tbl.setVisible(false);
         weekViewRdBtn.setSelected(false);
         apptTypeMonthRdBtn.setSelected(false);
         consultantScheduleRdBtn.setSelected(false);
@@ -223,6 +248,7 @@ public class MainMenuController implements Initializable
     {
         apptCalendarTbl.setVisible(true);
         report1Tbl.setVisible(false);
+        report2Tbl.setVisible(false);
         monthViewRdBtn.setSelected(false);
         apptTypeMonthRdBtn.setSelected(false);
         consultantScheduleRdBtn.setSelected(false);
@@ -240,13 +266,13 @@ public class MainMenuController implements Initializable
         consultantScheduleRdBtn.setSelected(false);
         apptTypeSevenDaysRdBtn.setSelected(false);
         apptCalendarTbl.setVisible(false);
+        report2Tbl.setVisible(false);
         report1Tbl.setVisible(true);
         
         int[] dateValues = utility.getCurrentDateValues();
         String sqlQuery = "select type as 'type', count(*) as 'typeCount' from appointment "
                 + "where MONTH(start) = " + dateValues[1] + " AND YEAR(start) = " + dateValues[2] 
                 + " group by type asc";
-        
         setupReportOneTable(sqlQuery);
     }
 
@@ -254,6 +280,7 @@ public class MainMenuController implements Initializable
     void onActionApptTypeSevenDaysRdBtn(ActionEvent event) throws SQLException
     {
         apptCalendarTbl.setVisible(false);
+        report2Tbl.setVisible(false);
         report1Tbl.setVisible(true);
         monthViewRdBtn.setSelected(false);
         weekViewRdBtn.setSelected(false);
@@ -264,7 +291,6 @@ public class MainMenuController implements Initializable
         String sqlQuery = "select type as 'type', count(*) as 'typeCount' from appointment "
                 + "where MONTH(start) = " + dateValues[1] + " AND DAY(start) > " + dateValues[0] 
                 + " AND DAY(start) < " + (dateValues[0] + 7) + " group by type asc";
-        
         setupReportOneTable(sqlQuery);
     }
     
@@ -275,7 +301,7 @@ public class MainMenuController implements Initializable
         ObservableList<Report> tempReports = FXCollections.observableArrayList();
         while(results.next())
         {
-            Report temp = new Report(results.getString("type"), results.getInt("typeCount"),"",0,0,0, "");
+            Report temp = new Report(results.getString("type"), results.getInt("typeCount"),"",0,0,"","", "");
             tempReports.add(temp);
         }
         
@@ -285,12 +311,51 @@ public class MainMenuController implements Initializable
     }
 
     @FXML
-    void onActionConsultantScheduleRdBtn(ActionEvent event)
+    void onActionConsultantScheduleRdBtn(ActionEvent event) throws SQLException
     {
         monthViewRdBtn.setSelected(false);
         weekViewRdBtn.setSelected(false);
         apptTypeMonthRdBtn.setSelected(false);
         apptTypeSevenDaysRdBtn.setSelected(false);
+        apptCalendarTbl.setVisible(false);
+        report1Tbl.setVisible(false);
+        report2Tbl.setVisible(true);
+        
+        int[] dateValues = utility.getCurrentDateValues();
+        String sqlQuery = "select customerId, appointmentId, title, type, location, start from appointment "
+                + "where MONTH(start) = " + dateValues[1] + " AND YEAR(start) = " + dateValues[2]
+                + " AND DAY(start) = " + dateValues[0] + " and userId = " + UtilityMethods.getCurrentUserId()
+                +" group by type asc";
+        
+        System.out.println(sqlQuery);
+        ResultSet results = utility.runSqlQuery(sqlQuery);
+        
+        ObservableList<Report> tempReports = FXCollections.observableArrayList();
+        while(results.next())
+        {
+            Report temp = new Report(results.getString("type"), 0, UtilityMethods.getCurrentUserName(),
+                    results.getInt("customerId"),results.getInt("appointmentId"),results.getString("title"),
+                    results.getString("location"), results.getString("start"));
+            System.out.println(results.getString("type"));
+            System.out.println(UtilityMethods.getCurrentUserName());
+            System.out.println(results.getInt("customerId"));
+            System.out.println(results.getInt("appointmentId"));
+            System.out.println(results.getString("title"));
+            System.out.println(results.getString("location"));
+            System.out.println(results.getString("start"));
+            System.out.println();
+            
+            tempReports.add(temp);
+        }
+        
+        report2Tbl.setItems(tempReports);
+        report2AppTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        userNameCol.setCellValueFactory(new PropertyValueFactory<>("userName"));
+        report2CustIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        report2AppIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        report2AppTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        report2LocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+        report2StartDateCol.setCellValueFactory(new PropertyValueFactory<>("start"));
     }
     
     @FXML
@@ -384,6 +449,7 @@ public class MainMenuController implements Initializable
     {
         boolean result = utility.displayLocaleError("CONFIRMATION", "Exit", "Exit Program", 
                                                         "Are you sure you want to logout of the program?");
+        appointmentTbl.getItems().clear();
         utility.changeGuiScreen(event, "LogIn");
     }
 

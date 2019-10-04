@@ -12,12 +12,12 @@ public class Report
     private String user;
     private int customerId;
     private int appointmentId;
-    private int appointmentTitle;
-    private String apptType;
+    private String appointmentTitle;
     private String apptLocation;
+    private String startDate;
     
-    public Report(String Type, int typeCount, String user, int customerId, int appointmentId, int appointmentTitle,
-            String apptLocation)
+    public Report(String Type, int typeCount, String user, int customerId, int appointmentId, String appointmentTitle,
+            String apptLocation, String startDate)
     {
         this.type = Type;
         this.typeCount = typeCount;
@@ -25,7 +25,8 @@ public class Report
         this.customerId = customerId;
         this.appointmentId = appointmentId;
         this.appointmentTitle = appointmentTitle;
-        this.apptLocation = apptType;
+        this.apptLocation = apptLocation;
+        this.startDate = startDate;
     }
     
     public String getType()
@@ -78,24 +79,14 @@ public class Report
         this.appointmentId = appointmentId;
     }
 
-    public int getAppointmentTitle()
+    public String getAppointmentTitle()
     {
         return appointmentTitle;
     }
 
-    public void setAppointmentTitle(int appointmentTitle)
+    public void setAppointmentTitle(String appointmentTitle)
     {
         this.appointmentTitle = appointmentTitle;
-    }
-
-    public String getApptType()
-    {
-        return apptType;
-    }
-
-    public void setApptType(String apptType)
-    {
-        this.apptType = apptType;
     }
 
     public String getApptLocation()
@@ -106,5 +97,15 @@ public class Report
     public void setApptLocation(String apptLocation)
     {
         this.apptLocation = apptLocation;
+    }
+    
+    public String getStartDate()
+    {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate)
+    {
+        this.startDate = startDate;
     }
 }

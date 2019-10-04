@@ -28,7 +28,6 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import Model.*;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.YearMonth;
 import java.util.GregorianCalendar;
@@ -43,6 +42,7 @@ public class UtilityMethods
     Stage stage;
     Parent scene;
     private static int currentUserId;
+    private static String currentUserName;
     private static int selectedRowIndex;
     
     public int [] getCurrentDateValues()
@@ -315,5 +315,15 @@ public class UtilityMethods
     public void setSelectedRowIndex(int selectedRowIndex)
     {
         this.selectedRowIndex = selectedRowIndex;
+    }
+    
+    public static String getCurrentUserName()
+    {
+        return currentUserName;
+    }
+
+    public static void setCurrentUserName(String currentUserName)
+    {
+        UtilityMethods.currentUserName = currentUserName;
     }
 }
