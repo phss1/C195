@@ -322,40 +322,30 @@ public class MainMenuController implements Initializable
         report2Tbl.setVisible(true);
         
         int[] dateValues = utility.getCurrentDateValues();
-        String sqlQuery = "select customerId, appointmentId, title, type, location, start from appointment "
+        String sqlQuery = "select type, customerId, appointmentId, title, location, start from appointment "
                 + "where MONTH(start) = " + dateValues[1] + " AND YEAR(start) = " + dateValues[2]
                 + " AND DAY(start) = " + dateValues[0] + " and userId = " + UtilityMethods.getCurrentUserId()
                 +" group by type asc";
-        
-        System.out.println(sqlQuery);
         ResultSet results = utility.runSqlQuery(sqlQuery);
         
         ObservableList<Report> tempReports = FXCollections.observableArrayList();
         while(results.next())
         {
             Report temp = new Report(results.getString("type"), 0, UtilityMethods.getCurrentUserName(),
-                    results.getInt("customerId"),results.getInt("appointmentId"),results.getString("title"),
+                    results.getInt("customerId"),results.getInt("appointmentId"), results.getString("title"),
                     results.getString("location"), results.getString("start"));
-            System.out.println(results.getString("type"));
-            System.out.println(UtilityMethods.getCurrentUserName());
-            System.out.println(results.getInt("customerId"));
-            System.out.println(results.getInt("appointmentId"));
-            System.out.println(results.getString("title"));
-            System.out.println(results.getString("location"));
-            System.out.println(results.getString("start"));
-            System.out.println();
             
             tempReports.add(temp);
         }
         
         report2Tbl.setItems(tempReports);
         report2AppTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-        userNameCol.setCellValueFactory(new PropertyValueFactory<>("userName"));
+        userNameCol.setCellValueFactory(new PropertyValueFactory<>("user"));
         report2CustIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         report2AppIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
-        report2AppTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
-        report2LocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
-        report2StartDateCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        report2AppTitleCol.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
+        report2LocationCol.setCellValueFactory(new PropertyValueFactory<>("apptLocation"));
+        report2StartDateCol.setCellValueFactory(new PropertyValueFactory<>("startDate"));
     }
     
     @FXML
