@@ -26,7 +26,8 @@ import javafx.scene.control.TextField;
  *
  * @author 39ds03d
  */
-public class AddAppointmentController implements Initializable {
+public class AddAppointmentController implements Initializable
+{
 
     @FXML
     private TextField custIdTxtFld;

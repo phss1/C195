@@ -29,7 +29,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import Model.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.YearMonth;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.GregorianCalendar;
 
 public class UtilityMethods
@@ -40,8 +45,29 @@ public class UtilityMethods
     private static String currentUserName;
     private static int selectedRowIndex;
     
+    public String convertTimeToUTC(String timeToConvert)
+    {
+        DateTimeFormatter utcFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                                        .withZone(ZoneId.of("UTC"));
+        DateTimeFormatter sysDefaultZoneFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                .withZone(ZoneId.systemDefault());
+        LocalDateTime dateTime = LocalDateTime.parse(timeToConvert, sysDefaultZoneFormatter);
+        ZonedDateTime timeInLocalTime = dateTime.atZone(ZoneId.systemDefault());
+        
+        return timeInLocalTime.format(utcFormatter);
+    }
     
-    
+    public String convertTimeToLocal(String timeToConvert)
+    {
+        DateTimeFormatter sysDefaultZoneFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                .withZone(ZoneId.systemDefault());
+        DateTimeFormatter utcFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                                        .withZone(ZoneId.of("UTC"));
+        LocalDateTime dateTime = LocalDateTime.parse(timeToConvert, utcFormatter);
+        ZonedDateTime timeInLocalTime = dateTime.atZone(ZoneId.of("UTC"));
+        
+        return timeInLocalTime.format(sysDefaultZoneFormatter);
+    }
     
     public int [] getCurrentDateValues()
     {

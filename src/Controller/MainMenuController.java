@@ -5,7 +5,7 @@
  */
 package Controller;
 
-import Utilities.UtilityMethods;
+import Utilities.*;
 import Model.*;
 import java.io.IOException;
 import java.net.URL;
@@ -29,8 +29,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import Utilities.LamdaExpression1;
-import Utilities.LamdaExpression2;
 
 public class MainMenuController implements Initializable
 {
@@ -165,7 +163,6 @@ public class MainMenuController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        
         customerTbl.getItems().clear();
         appointmentTbl.getItems().clear();
         
