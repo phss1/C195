@@ -32,11 +32,6 @@ import java.text.SimpleDateFormat;
 import java.time.YearMonth;
 import java.util.GregorianCalendar;
 
-
-/**
- *
- * @author 39ds03d
- */
 public class UtilityMethods
 {
     Stage stage;
@@ -44,6 +39,9 @@ public class UtilityMethods
     private static int currentUserId;
     private static String currentUserName;
     private static int selectedRowIndex;
+    
+    
+    
     
     public int [] getCurrentDateValues()
     {

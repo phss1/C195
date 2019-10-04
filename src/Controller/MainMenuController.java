@@ -29,6 +29,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import Utilities.LamdaExpression1;
 
 public class MainMenuController implements Initializable
 {
@@ -246,6 +247,9 @@ public class MainMenuController implements Initializable
     @FXML
     void onActionWeekViewRdBtn(ActionEvent event)
     {
+        //this helps make code easier to read and prevent reuse of existing code
+        LamdaExpression1 calcDay = m -> m + 1;
+        
         apptCalendarTbl.setVisible(true);
         report1Tbl.setVisible(false);
         report2Tbl.setVisible(false);
@@ -470,9 +474,14 @@ public class MainMenuController implements Initializable
     {
         try
         {
+            //this helps make code easier to read and prevent reuse of existing code
+            LamdaExpression1 calcMonth = m -> m + 1;
+            
+            //calcMonth.calculateCorrectMonth(month)
+            
             String SqlCalApptQuery = "select customerId, appointmentId, type, location, start, end from appointment "
-                    + "where start > \"2019-" + (month + 1) + "-" + startDay + " 00:00:00\" and "
-                    + "end < \"2019-" + (month + 1) + "-" + endDay + " 23:59:00\"";
+                    + "where start > \"2019-" + (calcMonth.calculateCorrectMonth(month)) + "-" + startDay + " 00:00:00\" and "
+                    + "end < \"2019-" + (calcMonth.calculateCorrectMonth(month)) + "-" + endDay + " 23:59:00\"";
             ResultSet results = utility.runSqlQuery(SqlCalApptQuery);
             
             populateReportIntoTblVw(results);
