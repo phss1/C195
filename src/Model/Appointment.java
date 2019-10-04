@@ -108,9 +108,6 @@ public class Appointment
         int numberOfApptStartTimes = allApptStartTimes.size();
         for(int i = 0; i < numberOfApptStartTimes; i++)
         {
-            //System.out.println(apptStartTime);
-            //System.out.println(allApptStartTimes.get(i));
-            //System.out.println();
             if(apptStartTime.matches(allApptStartTimes.get(i)))
             {
                 foundExistingApptStart = true;
