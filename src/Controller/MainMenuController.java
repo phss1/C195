@@ -291,8 +291,9 @@ public class MainMenuController implements Initializable
         
         int[] dateValues = utility.getCurrentDateValues();
         String sqlQuery = "select type as 'type', count(*) as 'typeCount' from appointment "
-                + "where MONTH(start) = " + dateValues[1] + " AND DAY(start) > " + dateValues[0] 
-                + " AND DAY(start) < " + (dateValues[0] + 7) + " group by type asc";
+                + "where MONTH(start) = " + dateValues[1] + " AND DAY(start) >= " + dateValues[0] 
+                + " AND DAY(start) <= " + (dateValues[0] + 7) + " group by type asc";
+        System.out.println(sqlQuery);
         setupReportOneTable(sqlQuery);
     }
     

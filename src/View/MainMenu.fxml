@@ -61,7 +61,7 @@
                   <TableColumn fx:id="countCol" minWidth="20.0" prefWidth="283.0" text="Count" />
                </columns>
             </TableView>
-            <RadioButton fx:id="consultantScheduleRdBtn" layoutX="600.0" layoutY="398.0" mnemonicParsing="false" onAction="#onActionConsultantScheduleRdBtn" text="Consultant Schedule" />
+            <RadioButton fx:id="consultantScheduleRdBtn" layoutX="600.0" layoutY="398.0" mnemonicParsing="false" onAction="#onActionConsultantScheduleRdBtn" text="Consultant Day Schedule" />
          </children>
       </AnchorPane>
       <Label layoutX="29.0" layoutY="10.0" text="Scheduling Tool" textFill="#100861">

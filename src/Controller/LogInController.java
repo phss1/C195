@@ -66,34 +66,12 @@ public class LogInController implements Initializable
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
-    {
-        /*DateTimeFormatter utcFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-                                        .withZone(ZoneId.of("UTC"));
- 
-        LocalDateTime date = LocalDateTime.parse("2019-05-29 21:15:00", utcFormatter);
-
-        DateTimeFormatter sysDefaultZoneFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-                .withZone(ZoneId.systemDefault());
-        LocalDateTime dateTime = LocalDateTime.parse("2019-05-29 21:15:30", sysDefaultZoneFormatter);
-        ZonedDateTime utc = dateTime.atZone(ZoneId.of("UTC"));
-        ZonedDateTime timeInLocalTime = dateTime.atZone(ZoneId.systemDefault());
-        
-        System.out.println(dateTime.format(sysDefaultZoneFormatter));
-        System.out.println(utc);
-        System.out.println(utc.format(sysDefaultZoneFormatter));
-        System.out.println(timeInLocalTime);
-        System.out.println(timeInLocalTime.format(utcFormatter));
-        
-        for(String ID : TimeZone.getAvailableIDs())
-        {
-            System.out.println(ID);
-        }*/
-        
+    {   
         DateTimeFormatter utcFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                                         .withZone(ZoneId.of("UTC"));
         DateTimeFormatter sysDefaultZoneFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                 .withZone(ZoneId.systemDefault());
-        LocalDateTime dateTime2 = LocalDateTime.parse("2019-05-29 01:15:00", sysDefaultZoneFormatter2);
+        LocalDateTime dateTime2 = LocalDateTime.parse("2019-05-29 21:15:00", sysDefaultZoneFormatter2);
         ZonedDateTime timeInLocalTime2 = dateTime2.atZone(ZoneId.systemDefault());
         
         System.out.println(timeInLocalTime2.format(utcFormatter2));

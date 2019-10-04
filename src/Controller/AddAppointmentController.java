@@ -221,7 +221,6 @@ public class AddAppointmentController implements Initializable
                         + "values(" + appointmentId + ", " + customerId + ", " + userId + ", \"" + title + "\", \""  + description + "\", \"" 
                         + location + "\", \"" + contact + "\", \"" + type + "\", \"" + url + "\", " + "\"" + startDateTime + "\"" + ", "
                         + "\"" + endDateTime + "\"" + ", " + utility.buildSqlQueryEnding();
-                System.out.println(sqlQuery);
                 utility.runUpdateSqlQuery(sqlQuery);
                 
                 utility.changeGuiScreen(event, "MainMenu");
