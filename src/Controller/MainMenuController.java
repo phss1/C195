@@ -122,18 +122,15 @@ public class MainMenuController implements Initializable
 
     @FXML
     private RadioButton apptTypeSevenDaysRdBtn;
-
-    @FXML
-    private Button genereateReportBtn;
     
     @FXML
-    private TableView<?> apptTypeByMonthTbl;
+    private TableView<Report> report1Tbl;
 
     @FXML
-    private TableColumn<String, ?> apptTypeByMonthCol;
+    private TableColumn<String, Report> apptTypeByMonthCol;
 
     @FXML
-    private TableColumn<Integer, ?> numOfTypeCol;
+    private TableColumn<Integer, Report> countCol;
     
     UtilityMethods utility = new UtilityMethods();
     Stage stage;
@@ -141,8 +138,8 @@ public class MainMenuController implements Initializable
     
     @Override
     public void initialize(URL url, ResourceBundle rb)
-    {   
-        monthViewRdBtn.setSelected(true);
+    {
+        
         customerTbl.getItems().clear();
         appointmentTbl.getItems().clear();
         
@@ -211,7 +208,7 @@ public class MainMenuController implements Initializable
     void onActionMonthViewRdBtn(ActionEvent event)
     {
         apptCalendarTbl.setVisible(true);
-        apptTypeByMonthTbl.setVisible(false);
+        report1Tbl.setVisible(false);
         weekViewRdBtn.setSelected(false);
         apptTypeMonthRdBtn.setSelected(false);
         consultantScheduleRdBtn.setSelected(false);
@@ -225,7 +222,7 @@ public class MainMenuController implements Initializable
     void onActionWeekViewRdBtn(ActionEvent event)
     {
         apptCalendarTbl.setVisible(true);
-        apptTypeByMonthTbl.setVisible(false);
+        report1Tbl.setVisible(false);
         monthViewRdBtn.setSelected(false);
         apptTypeMonthRdBtn.setSelected(false);
         consultantScheduleRdBtn.setSelected(false);
@@ -243,30 +240,50 @@ public class MainMenuController implements Initializable
         consultantScheduleRdBtn.setSelected(false);
         apptTypeSevenDaysRdBtn.setSelected(false);
         apptCalendarTbl.setVisible(false);
-        apptTypeByMonthTbl.setVisible(true);
+        report1Tbl.setVisible(true);
         
         int[] dateValues = utility.getCurrentDateValues();
-        String sqlQuery = "select type as 'Type', count(*) as '# of Type' from appointment "
-                + "where MONTH(start) = " + dateValues[1] + " AND YEAR(start) = " + dateValues[3] 
+        String sqlQuery = "select type as 'type', count(*) as 'typeCount' from appointment "
+                + "where MONTH(start) = " + dateValues[1] + " AND YEAR(start) = " + dateValues[2] 
                 + " group by type asc";
-        ResultSet results = utility.runSqlQuery(sqlQuery);
-        while(results.next())
-        {
-            
-        }
         
-        //apptTypeByMonthTbl
+        System.out.println(sqlQuery);
+        setupReportOneTable(sqlQuery);
     }
 
     @FXML
     void onActionApptTypeSevenDaysRdBtn(ActionEvent event)
     {
         apptCalendarTbl.setVisible(false);
-        apptTypeByMonthTbl.setVisible(true);
+        report1Tbl.setVisible(true);
         monthViewRdBtn.setSelected(false);
         weekViewRdBtn.setSelected(false);
         apptTypeMonthRdBtn.setSelected(false);
         consultantScheduleRdBtn.setSelected(false);
+        
+        int[] dateValues = utility.getCurrentDateValues();
+        String sqlQuery = "select type as 'type', count(*) as 'typeCount' from appointment "
+                + "where MONTH(start) = " + dateValues[1] + " AND YEAR(start) = " + dateValues[2] 
+                + " group by type asc";
+        
+        System.out.println(sqlQuery);
+    }
+    
+    private void setupReportOneTable(String query) throws SQLException
+    {
+        ResultSet results = utility.runSqlQuery(query);
+        
+        ObservableList<Report> tempReports = FXCollections.observableArrayList();
+        while(results.next())
+        {
+            Report temp = new Report(results.getString("type"), results.getInt("typeCount"),"",0,0,0, "");
+            System.out.println(results.getInt("typeCount"));
+            tempReports.add(temp);
+        }
+        
+        report1Tbl.setItems(tempReports);
+        apptTypeByMonthCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        countCol.setCellValueFactory(new PropertyValueFactory<>("count"));
     }
 
     @FXML

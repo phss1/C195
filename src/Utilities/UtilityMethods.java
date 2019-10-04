@@ -49,7 +49,7 @@ public class UtilityMethods
     {
         Calendar tempCal = Calendar.getInstance();
         int day = tempCal.get(Calendar.DAY_OF_MONTH);
-        int month = tempCal.get(Calendar.MONTH);
+        int month = tempCal.get(Calendar.MONTH) + 1;
         int year = tempCal.get(Calendar.YEAR);
         int lastDayOfMonth = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
         

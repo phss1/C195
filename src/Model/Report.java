@@ -7,7 +7,7 @@ package Model;
 
 public class Report
 {
-    private String Type;
+    private String type;
     private int typeCount;
     private String user;
     private int customerId;
@@ -16,25 +16,26 @@ public class Report
     private String apptType;
     private String apptLocation;
     
-    public Report(String Type, int typeCount, String user, int customerId, int appointmentId, int appointmentTitle, String apptType)
+    public Report(String Type, int typeCount, String user, int customerId, int appointmentId, int appointmentTitle,
+            String apptLocation)
     {
-        this.Type = Type;
+        this.type = Type;
         this.typeCount = typeCount;
         this.user = user;
         this.customerId = customerId;
         this.appointmentId = appointmentId;
         this.appointmentTitle = appointmentTitle;
-        this.apptType = apptType;
+        this.apptLocation = apptType;
     }
     
     public String getType()
     {
-        return Type;
+        return type;
     }
 
-    public void setType(String Type)
+    public void setType(String type)
     {
-        this.Type = Type;
+        this.type = type;
     }
 
     public int getTypeCount()

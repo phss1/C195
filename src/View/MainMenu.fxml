@@ -29,8 +29,8 @@
               </columns>
             </TableView>
             <RadioButton fx:id="monthViewRdBtn" layoutX="597.0" layoutY="292.0" mnemonicParsing="false" onAction="#onActionMonthViewRdBtn" text="App. Month View" />
-            <RadioButton fx:id="weekViewRdBtn" layoutX="599.0" layoutY="317.0" mnemonicParsing="false" onAction="#onActionWeekViewRdBtn" text="App. Week View" />
-            <TableView fx:id="apptCalendarTbl" layoutX="16.0" layoutY="250.0" prefHeight="215.0" prefWidth="568.0">
+            <RadioButton fx:id="weekViewRdBtn" layoutX="597.0" layoutY="317.0" mnemonicParsing="false" onAction="#onActionWeekViewRdBtn" text="App. Week View" />
+            <TableView fx:id="apptCalendarTbl" layoutX="16.0" layoutY="250.0" prefHeight="215.0" prefWidth="568.0" visible="false">
               <columns>
                 <TableColumn fx:id="acCstomerIdCol" minWidth="20.0" prefWidth="47.0" text="Cust_ID" />
                 <TableColumn fx:id="acAppointmentIdCol" minWidth="20.0" prefWidth="60.0" text="Appt_ID" />
@@ -49,17 +49,17 @@
             <Button fx:id="deleteAppBtn" layoutX="529.0" layoutY="215.0" mnemonicParsing="false" onAction="#onActionDeleteAppBtn" text="Delete Appointment" />
             <Button fx:id="logoutBtn" layoutX="435.0" layoutY="471.0" mnemonicParsing="false" onAction="#onActionLogoutBtn" text="Logout" />
             <RadioButton fx:id="apptTypeMonthRdBtn" layoutX="598.0" layoutY="344.0" mnemonicParsing="false" onAction="#onActionApptTypeMonthRdBtn" text="Appt Types By Month" />
-            <RadioButton fx:id="consultantScheduleRdBtn" layoutX="599.0" layoutY="371.0" mnemonicParsing="false" onAction="#onActionConsultantScheduleRdBtn" text="Consultant Schedule" />
+            <RadioButton fx:id="consultantScheduleRdBtn" layoutX="598.0" layoutY="371.0" mnemonicParsing="false" onAction="#onActionConsultantScheduleRdBtn" text="Consultant Schedule" />
             <RadioButton fx:id="apptTypeSevenDaysRdBtn" layoutX="599.0" layoutY="397.0" mnemonicParsing="false" onAction="#onActionApptTypeSevenDaysRdBtn" text="Appt Types - Next 7 Days" />
             <Label layoutX="598.0" layoutY="267.0" text="General Reporting Options" textAlignment="CENTER" textFill="#e10b0b">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TableView fx:id="apptTypeByMonthTbl" layoutX="16.0" layoutY="250.0" prefHeight="215.0" prefWidth="568.0">
+            <TableView fx:id="report1Tbl" layoutX="16.0" layoutY="250.0" prefHeight="215.0" prefWidth="568.0">
                <columns>
                   <TableColumn fx:id="apptTypeByMonthCol" minWidth="20.0" prefWidth="283.0" text="Appt_Type" />
-                  <TableColumn fx:id="numOfTypeCol" minWidth="20.0" prefWidth="283.0" text="# of Type" />
+                  <TableColumn fx:id="countCol" minWidth="20.0" prefWidth="283.0" text="Count" />
                </columns>
             </TableView>
          </children>
