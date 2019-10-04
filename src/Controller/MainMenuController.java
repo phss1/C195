@@ -256,8 +256,8 @@ public class MainMenuController implements Initializable
         consultantScheduleRdBtn.setSelected(false);
         apptTypeSevenDaysRdBtn.setSelected(false);
         Calendar tempCal = Calendar.getInstance();
-        setupCalendarViewQuery(calcDay.calculateFutureDay(tempCal.get(Calendar.MONTH)), 1,
-                (tempCal.get(Calendar.DAY_OF_MONTH) + 7));
+        setupCalendarViewQuery(tempCal.get(Calendar.MONTH), 1,
+                (calcDay.calculateFutureDay(tempCal.get(Calendar.DAY_OF_MONTH))));
     }
     
     @FXML
@@ -293,7 +293,6 @@ public class MainMenuController implements Initializable
         String sqlQuery = "select type as 'type', count(*) as 'typeCount' from appointment "
                 + "where MONTH(start) = " + dateValues[1] + " AND DAY(start) >= " + dateValues[0] 
                 + " AND DAY(start) <= " + (dateValues[0] + 7) + " group by type asc";
-        System.out.println(sqlQuery);
         setupReportOneTable(sqlQuery);
     }
     
@@ -336,7 +335,8 @@ public class MainMenuController implements Initializable
         {
             Report temp = new Report(results.getString("type"), 0, UtilityMethods.getCurrentUserName(),
                     results.getInt("customerId"),results.getInt("appointmentId"), results.getString("title"),
-                    results.getString("location"), results.getString("start"));
+                    results.getString("location"),
+                    utility.convertTimeToLocal(utility.subStringOfDateTime(results.getString("start"))));
             
             tempReports.add(temp);
         }
@@ -495,8 +495,9 @@ public class MainMenuController implements Initializable
             while(results.next())
             {
                 Appointment temp = new Appointment(results.getInt("appointmentId"), results.getInt("customerId"), 0,"",
-                        "",results.getString("location"),"",results.getString("type"), "",results.getString("start"),
-                        results.getString("end"));
+                        "",results.getString("location"),"",results.getString("type"), "",
+                        utility.convertTimeToLocal(utility.subStringOfDateTime(results.getString("start"))),
+                        utility.convertTimeToLocal(utility.subStringOfDateTime(results.getString("end"))));
                 calAppointments.add(temp);
             }
             

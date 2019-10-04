@@ -118,6 +118,7 @@ public class AddAppointmentController implements Initializable
         createAppointmentDays(String.valueOf(tempCal.get(Calendar.DAY_OF_MONTH)));
         
         ObservableList<String> startAppTimes = Appointment.createAppointmentTimes(9, 15);
+        startAppTimes.remove(startAppTimes.indexOf("18:00"));
         apptStartTimeComboBox.setItems(startAppTimes);
         apptStartTimeComboBox.setValue(startAppTimes.get(0));
         
@@ -128,6 +129,7 @@ public class AddAppointmentController implements Initializable
         
         ObservableList<String> endAppTimes = Appointment.createAppointmentTimes(endTimeInHours, 15);
         endAppTimes.remove(0);
+        endAppTimes.add("18:00");
         apptEndTimeComboBx.setItems(endAppTimes);
         apptEndTimeComboBx.setValue(endAppTimes.get(0));
     }
@@ -205,10 +207,14 @@ public class AddAppointmentController implements Initializable
         String endDay = appEndDayCmbBx.getSelectionModel().getSelectedItem();
         String endYear = appEndYearCmbBox.getSelectionModel().getSelectedItem();
         String endTime = apptEndTimeComboBx.getSelectionModel().getSelectedItem();
-        String startDateTime = startYear + "-" + startMonth + "-" + startDay + " " + startTime + ":00.0";
-        System.out.println(startDateTime);
-        String endDateTime = endYear + "-" + endMonth + "-" + endDay + " " + endTime + ":00.0";
-        boolean foundExistingApptStartTime = Appointment.checkForOverLapAppt(startDateTime);
+        String startDateTimeTemp = startYear + "-" + startMonth + "-" + startDay + " " + startTime + ":00.0";
+        System.out.println("local time before utc conversion"+startDateTimeTemp);
+        String endDateTimeTemp = endYear + "-" + endMonth + "-" + endDay + " " + endTime + ":00.0";
+        
+        String startDateTime = utility.convertTimeToUTC(utility.subStringOfDateTime(startDateTimeTemp));
+        System.out.println("after utc conversion"+startDateTime);
+        String endDateTime = utility.convertTimeToUTC(utility.subStringOfDateTime(endDateTimeTemp));
+        boolean foundExistingApptStartTime = Appointment.checkForOverLapAppt(startDateTime + ".0");
         
         try
         {   
@@ -228,7 +234,7 @@ public class AddAppointmentController implements Initializable
             else if(foundExistingApptStartTime)
             {
                 utility.displayLocaleError("INFORMATION", "Entry Error", "",
-                        "The start time ***" + startDateTime + "*** already exists. Please select something different.");
+                        "The start time ***" + startDateTimeTemp + "*** already exists. Please select something different.");
             }
             /*else if(!(Integer.valueOf(enteredMonth) >= currentMonth))
             {
@@ -305,7 +311,15 @@ public class AddAppointmentController implements Initializable
         ObservableList<String> newAppEndTimes = FXCollections.observableArrayList(Appointment.createNewObsList(selectedStartTimeIndex, allapptStartTimes));
         newAppEndTimes.remove(0);
         apptEndTimeComboBx.setItems(newAppEndTimes);
-        apptEndTimeComboBx.setValue(newAppEndTimes.get(0));
+        
+        if(apptStartTimeComboBox.getSelectionModel().getSelectedItem().contains("17:45"))
+        {
+            apptEndTimeComboBx.setValue("18:00");
+        }
+        else
+        {
+            apptEndTimeComboBx.setValue(newAppEndTimes.get(0));
+        }
     }
     
     private void resetStartMonths(ObservableList<String> list)

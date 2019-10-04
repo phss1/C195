@@ -93,7 +93,6 @@ public class AddCustomerController implements Initializable
                 int cityId = utility.getIdFromCityName(cityComboBx.getSelectionModel().getSelectedItem());
                 ResultSet addressResults = utility.runSqlQuery("select * from address");
                 int newAddId =  utility.getSqlTableRowCount(addressResults);
-                System.out.println(newAddId);
                 String sqlNewAddQuery = ("insert into address(addressId, address, address2, cityId, postalCode, phone, "
                                                 + "createDate, createdBy, lastUpdate, lastUpdateBy)"
                                                 + " values(" + newAddId + ", \"" + address + "\", \"" + address2 + "\", " + cityId
@@ -110,7 +109,6 @@ public class AddCustomerController implements Initializable
                                                 + "lastUpdate, lastUpdateBy) values("
                                                 + newCustId + ", \"" + customerName + "\", " + newAddId + ", " + 1 + ", "
                                                 + utility.buildSqlQueryEnding();
-                    System.out.println(sqlNewCustQuery);
                     utility.runUpdateSqlQuery(sqlNewCustQuery);
 
                     String fullCustAddress = address + " " + address2 + " " + cityComboBx.getSelectionModel().getSelectedItem()

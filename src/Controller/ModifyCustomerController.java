@@ -175,7 +175,6 @@ public class ModifyCustomerController implements Initializable
                 Customer tempCustomer = new Customer(customerId, customerName, addressId, tempAddress);
                 Customer.modifyCustomer(tempCustomer, customerId);
 
-                System.out.println(sqlCustUpdateQuery);
                 utility.runUpdateSqlQuery(sqlCustUpdateQuery);
 
                 utility.changeGuiScreen(event, "MainMenu");

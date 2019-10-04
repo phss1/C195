@@ -6,7 +6,6 @@
 package Controller;
 
 import Model.Appointment;
-import Model.Customer;
 import Utilities.UtilityMethods;
 import java.io.IOException;
 import java.net.URL;
@@ -137,6 +136,7 @@ public class ModifyAppointmentController implements Initializable {
         
         ObservableList<String> startAppTimesTemp = Appointment.createAppointmentTimes(9, 15);
         int correctStartTimeIndex = startAppTimesTemp.indexOf(timeToSet);
+        startAppTimesTemp.remove(startAppTimesTemp.indexOf("18:00"));
         apptStartTimeComboBox.setItems(startAppTimesTemp);
         apptStartTimeComboBox.setValue(startAppTimesTemp.get(correctStartTimeIndex));
         
@@ -220,9 +220,14 @@ public class ModifyAppointmentController implements Initializable {
         String endDay = appEndDayCmbBx.getSelectionModel().getSelectedItem();
         String endYear = appEndYearCmbBox.getSelectionModel().getSelectedItem();
         String endTime = apptEndTimeComboBx.getSelectionModel().getSelectedItem();
-        String startDateTime = startYear + "-" + startMonth + "-" + startDay + " " + startTime + ":00.0";
-        String endDateTime = endYear + "-" + endMonth + "-" + endDay + " " + endTime + ":00.0";
-        boolean foundExistingApptStartTime = Appointment.checkForOverLapAppt(startDateTime);
+        String startDateTimeTemp = startYear + "-" + startMonth + "-" + startDay + " " + startTime + ":00.0";
+        System.out.println("local time before utc conversion"+startDateTimeTemp);
+        String endDateTimeTemp = endYear + "-" + endMonth + "-" + endDay + " " + endTime + ":00.0";
+        
+        String startDateTime = utility.convertTimeToUTC(utility.subStringOfDateTime(startDateTimeTemp));
+        System.out.println("after utc conversion"+startDateTime);
+        String endDateTime = utility.convertTimeToUTC(utility.subStringOfDateTime(endDateTimeTemp));
+        boolean foundExistingApptStartTime = Appointment.checkForOverLapAppt(startDateTime + ".0");
         
         try
         {
@@ -236,13 +241,12 @@ public class ModifyAppointmentController implements Initializable {
                         + "\", lastUpdate = now(), " + "lastUpdateBy = \"" + utility.getCurLoggedInUserName()
                         + "\" where appointmentId = " + appointmentId + ";";
                 
-                utility.runUpdateSqlQuery(sqlQuery);
                 utility.changeGuiScreen(event, "MainMenu");
             }
             else if(foundExistingApptStartTime)
             {
                 utility.displayLocaleError("INFORMATION", "Entry Error", "",
-                        "The start time ***" + startDateTime + "*** already exists. Please select something different.");
+                        "The start time ***" + startDateTimeTemp + "*** already exists. Please select something different.");
             }
             /*else if(!(Integer.valueOf(enteredMonth) >= currentMonth))
             {
@@ -319,7 +323,15 @@ public class ModifyAppointmentController implements Initializable {
         ObservableList<String> newAppEndTimes = FXCollections.observableArrayList(Appointment.createNewObsList(selectedStartTimeIndex, allapptStartTimes));
         newAppEndTimes.remove(0);
         apptEndTimeComboBx.setItems(newAppEndTimes);
-        apptEndTimeComboBx.setValue(newAppEndTimes.get(0));
+        
+        if(apptStartTimeComboBox.getSelectionModel().getSelectedItem().contains("17:45"))
+        {
+            apptEndTimeComboBx.setValue("18:00");
+        }
+        else
+        {
+            apptEndTimeComboBx.setValue(newAppEndTimes.get(0));
+        }
     }
     
     @FXML

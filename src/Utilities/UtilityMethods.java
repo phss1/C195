@@ -45,6 +45,14 @@ public class UtilityMethods
     private static String currentUserName;
     private static int selectedRowIndex;
     
+    public String subStringOfDateTime(String string)
+    {
+        int periodIndex = string.indexOf(".");
+        String newStart = string.substring(0, periodIndex);
+        
+        return newStart;
+    }
+    
     public String convertTimeToUTC(String timeToConvert)
     {
         DateTimeFormatter utcFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
@@ -159,8 +167,11 @@ public class UtilityMethods
             String contact = results.getString("contact");
             String type = results.getString("type");
             String url = results.getString("url");
-            String start = results.getString("start");
-            String end = results.getString("end");
+            String startTemp = results.getString("start");
+            String start =  convertTimeToLocal(subStringOfDateTime(startTemp));
+            String endTemp = results.getString("end");
+            String end = convertTimeToLocal(subStringOfDateTime(endTemp));
+            
             Appointment appointment = new Appointment(appointmentId, customerId, userId, title, description, location,
                                         contact, type, url, start, end);
             

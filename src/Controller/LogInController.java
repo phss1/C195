@@ -66,26 +66,7 @@ public class LogInController implements Initializable
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
-    {   
-        DateTimeFormatter utcFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-                                        .withZone(ZoneId.of("UTC"));
-        DateTimeFormatter sysDefaultZoneFormatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-                .withZone(ZoneId.systemDefault());
-        LocalDateTime dateTime2 = LocalDateTime.parse("2019-05-29 21:15:00", sysDefaultZoneFormatter2);
-        ZonedDateTime timeInLocalTime2 = dateTime2.atZone(ZoneId.systemDefault());
-        
-        System.out.println(timeInLocalTime2.format(utcFormatter2));
-        
-        DateTimeFormatter sysDefaultZoneFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-                .withZone(ZoneId.systemDefault());
-        DateTimeFormatter utcFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-                                        .withZone(ZoneId.of("UTC"));
-        LocalDateTime dateTime = LocalDateTime.parse("2019-05-29 04:15:00", utcFormatter);
-        ZonedDateTime timeInLocalTime = dateTime.atZone(ZoneId.of("UTC"));
-        
-        System.out.println(timeInLocalTime.format(sysDefaultZoneFormatter));
-        
-        
+    {        
         if(!userLocale.toString().contains("en_US"))
         {
             userNameLbl.setText("BenutzerName");
