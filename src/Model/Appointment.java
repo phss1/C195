@@ -6,11 +6,9 @@
 package Model;
 
 import Utilities.UtilityMethods;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -69,12 +67,14 @@ public class Appointment
             int apptDayOfMonth = Integer.valueOf(((dateTimeSplit[0]).split("-"))[2]);
             int nextApptStartHour = Integer.valueOf(timeSplit[0]);
             int [] windowTimes = new int[2];
+            int apptHour = Integer.valueOf(dateTimeSplit[1].split(":")[0]);
+            int hourMath = apptHour - currentHour;
             
             windowTimes = createExpectedNotifWindow(Integer.valueOf(timeSplit[1]));
             int windowStart = windowTimes[0];
             int windowEnd = windowTimes[1];
             
-            if(apptDayOfMonth == currentDayOfMonth && currentHour <= nextApptStartHour 
+            if(apptDayOfMonth == currentDayOfMonth && currentHour <= nextApptStartHour && hourMath <= 1
                     && (currentMinute < windowEnd && currentMinute > windowStart))
             {
                 alertOnApptAtLogIn = true;
@@ -120,10 +120,15 @@ public class Appointment
     public static ObservableList<String> getApptStartTimes() throws SQLException
     {
         UtilityMethods utility = new UtilityMethods();
-        String apptTimesQuery = "select * from appointment";
+        String apptTimesQuery = "select start from appointment";
         ResultSet apptTimesQueryResults = utility.runSqlQuery(apptTimesQuery);
-        ObservableList<String> allApptStartTimes = FXCollections.observableArrayList(
-                                                    utility.prepareComboBxStrings(apptTimesQueryResults, "start"));
+        
+        ObservableList<String> allApptStartTimes = FXCollections.observableArrayList();
+        while(apptTimesQueryResults.next())
+        {
+            String item = utility.convertTimeToLocal(utility.subStringOfDateTime(apptTimesQueryResults.getString("start")));
+            allApptStartTimes.add(item);
+        }
         
         return allApptStartTimes;
     }
