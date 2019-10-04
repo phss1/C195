@@ -247,12 +247,11 @@ public class MainMenuController implements Initializable
                 + "where MONTH(start) = " + dateValues[1] + " AND YEAR(start) = " + dateValues[2] 
                 + " group by type asc";
         
-        System.out.println(sqlQuery);
         setupReportOneTable(sqlQuery);
     }
 
     @FXML
-    void onActionApptTypeSevenDaysRdBtn(ActionEvent event)
+    void onActionApptTypeSevenDaysRdBtn(ActionEvent event) throws SQLException
     {
         apptCalendarTbl.setVisible(false);
         report1Tbl.setVisible(true);
@@ -263,10 +262,10 @@ public class MainMenuController implements Initializable
         
         int[] dateValues = utility.getCurrentDateValues();
         String sqlQuery = "select type as 'type', count(*) as 'typeCount' from appointment "
-                + "where MONTH(start) = " + dateValues[1] + " AND YEAR(start) = " + dateValues[2] 
-                + " group by type asc";
+                + "where MONTH(start) = " + dateValues[1] + " AND DAY(start) > " + dateValues[0] 
+                + " AND DAY(start) < " + (dateValues[0] + 7) + " group by type asc";
         
-        System.out.println(sqlQuery);
+        setupReportOneTable(sqlQuery);
     }
     
     private void setupReportOneTable(String query) throws SQLException
@@ -277,13 +276,12 @@ public class MainMenuController implements Initializable
         while(results.next())
         {
             Report temp = new Report(results.getString("type"), results.getInt("typeCount"),"",0,0,0, "");
-            System.out.println(results.getInt("typeCount"));
             tempReports.add(temp);
         }
         
         report1Tbl.setItems(tempReports);
         apptTypeByMonthCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-        countCol.setCellValueFactory(new PropertyValueFactory<>("count"));
+        countCol.setCellValueFactory(new PropertyValueFactory<>("typeCount"));
     }
 
     @FXML
