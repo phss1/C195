@@ -208,18 +208,15 @@ public class AddAppointmentController implements Initializable
         String endYear = appEndYearCmbBox.getSelectionModel().getSelectedItem();
         String endTime = apptEndTimeComboBx.getSelectionModel().getSelectedItem();
         String startDateTimeTemp = startYear + "-" + startMonth + "-" + startDay + " " + startTime + ":00.0";
-        System.out.println("local time before utc conversion"+startDateTimeTemp);
         String endDateTimeTemp = endYear + "-" + endMonth + "-" + endDay + " " + endTime + ":00.0";
         
         String startDateTime = utility.convertTimeToUTC(utility.subStringOfDateTime(startDateTimeTemp));
-        System.out.println("after utc conversion"+startDateTime);
         String endDateTime = utility.convertTimeToUTC(utility.subStringOfDateTime(endDateTimeTemp));
         boolean foundExistingApptStartTime = Appointment.checkForOverLapAppt(startDateTime + ".0");
         
         try
         {   
             if(!title.isEmpty() && !description.isEmpty() && !contact.isEmpty() && !url.isEmpty()
-                    //&& Integer.valueOf(enteredMonth) >= currentMonth && Integer.valueOf(enteredDay) >= currentDay
                     && !foundExistingApptStartTime)
             {
                 String sqlQuery = "insert into appointment(appointmentId, customerId, userId, title, description, location, contact, type, "
@@ -236,17 +233,6 @@ public class AddAppointmentController implements Initializable
                 utility.displayLocaleError("INFORMATION", "Entry Error", "",
                         "The start time ***" + startDateTimeTemp + "*** already exists. Please select something different.");
             }
-            /*else if(!(Integer.valueOf(enteredMonth) >= currentMonth))
-            {
-                utility.displayLocaleError("INFORMATION", "Incorrect Month", "",
-                        "Please make sure you select a month equal to or greater than the current calendar month.\n\n"
-                                + "EnteredMonth compared to currentMonth: "+enteredMonth +" : "+currentMonth);
-            }else if(!(Integer.valueOf(enteredDay) >= currentDay))
-            {
-                utility.displayLocaleError("INFORMATION", "Incorrect Day", "",
-                        "Please make sure you select a day equal or grater than the current calendar day.\n\n"
-                                + "EnteredDay compared to currentDay: "+enteredDay +" : "+currentDay);
-            }*/
             else
             {
                 utility.displayLocaleError("INFORMATION", "Empty Field", "Field Empty",

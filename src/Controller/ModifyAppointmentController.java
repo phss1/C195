@@ -90,17 +90,13 @@ public class ModifyAppointmentController implements Initializable {
         String[] dateTimeSplit = appStartDateTime.split(" ");
         String[] dateSplit = dateTimeSplit[0].split("-");
         String[] timeSplit = dateTimeSplit[1].split(":");
-        System.out.println(dateTimeSplit[1]);
         String timeToSet = (dateTimeSplit[1].split(":"))[0] + ":" + (dateTimeSplit[1].split(":"))[1];
-        System.out.println(timeToSet);
         
         String appEndDateTime = ((Appointment.getAppointmentToModify()).get(0)).getEnd();
         String[] endDateTimeSplit = appEndDateTime.split(" ");
         String[] endDateSplit = endDateTimeSplit[0].split("-");
         String[] endTimeSplit = endDateTimeSplit[1].split(":");
-        System.out.println(endDateTimeSplit[1]);
         String endTimeToSet = (endDateTimeSplit[1].split(":"))[0] + ":" + (endDateTimeSplit[1].split(":"))[1];
-        System.out.println(timeToSet);
         
         ObservableList<String> location = FXCollections.observableArrayList();
         location.add("Office");
@@ -221,18 +217,15 @@ public class ModifyAppointmentController implements Initializable {
         String endYear = appEndYearCmbBox.getSelectionModel().getSelectedItem();
         String endTime = apptEndTimeComboBx.getSelectionModel().getSelectedItem();
         String startDateTimeTemp = startYear + "-" + startMonth + "-" + startDay + " " + startTime + ":00.0";
-        System.out.println("local time before utc conversion"+startDateTimeTemp);
         String endDateTimeTemp = endYear + "-" + endMonth + "-" + endDay + " " + endTime + ":00.0";
         
         String startDateTime = utility.convertTimeToUTC(utility.subStringOfDateTime(startDateTimeTemp));
-        System.out.println("after utc conversion"+startDateTime);
         String endDateTime = utility.convertTimeToUTC(utility.subStringOfDateTime(endDateTimeTemp));
         boolean foundExistingApptStartTime = Appointment.checkForOverLapAppt(startDateTime + ".0");
         
         try
         {
             if(!title.isEmpty() && !description.isEmpty() && !contact.isEmpty() && !url.isEmpty()
-                    //&& Integer.valueOf(enteredMonth) >= currentMonth && Integer.valueOf(enteredDay) >= currentDay)
                     && !foundExistingApptStartTime)
             {
                 String sqlQuery = "update appointment set userId = " + userId + ", title = \"" + title + "\", description = \""
@@ -248,17 +241,6 @@ public class ModifyAppointmentController implements Initializable {
                 utility.displayLocaleError("INFORMATION", "Entry Error", "",
                         "The start time ***" + startDateTimeTemp + "*** already exists. Please select something different.");
             }
-            /*else if(!(Integer.valueOf(enteredMonth) >= currentMonth))
-            {
-                utility.displayLocaleError("INFORMATION", "Incorrect Month", "",
-                        "Please make sure you select a month equal to or greater than the current calendar month.\n\n"
-                                + "EnteredMonth compared to currentMonth: "+enteredMonth +" : "+currentMonth);
-            }else if(!(Integer.valueOf(enteredDay) >= currentDay))
-            {
-                utility.displayLocaleError("INFORMATION", "Incorrect Day", "",
-                        "Please make sure you select a day equal or grater than the current calendar day.\n\n"
-                                + "EnteredDay compared to currentDay: "+enteredDay +" : "+currentDay);
-            }*/
             else
             {
                 utility.displayLocaleError("INFORMATION", "Empty Field", "Field Empty",

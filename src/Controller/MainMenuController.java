@@ -449,24 +449,36 @@ public class MainMenuController implements Initializable
     @FXML
     void onActionModAppBtn(ActionEvent event) throws IOException, SQLException
     {
-        utility.setSelectedRowIndex(customerTbl.getSelectionModel().getSelectedIndex());
-        Appointment.getRefCustToAppointment().clear();
-        Appointment.getAppointmentToModify().clear();
-        Appointment.addRefCustToAppointment(customerTbl.getSelectionModel().getSelectedItem());
-        Appointment.addItemAppToModify(appointmentTbl.getSelectionModel().getSelectedItem());
-        
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/View/ModifyAppointment.fxml"));
-        loader.load();
+        try
+        {
+            utility.setSelectedRowIndex(customerTbl.getSelectionModel().getSelectedIndex());
+            Appointment.getRefCustToAppointment().clear();
+            Appointment.getAppointmentToModify().clear();
+            Appointment.addRefCustToAppointment(customerTbl.getSelectionModel().getSelectedItem());
+            Appointment.addItemAppToModify(appointmentTbl.getSelectionModel().getSelectedItem());
 
-        ModifyAppointmentController MPSController = loader.getController();
-        MPSController.sendInfo(appointmentTbl.getSelectionModel().getSelectedItem());
-        appointmentTbl.getItems().clear();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/View/ModifyAppointment.fxml"));
+            loader.load();
 
-        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-        Parent scene = loader.getRoot();
-        stage.setScene(new Scene(scene));
-        stage.show();
+            ModifyAppointmentController MPSController = loader.getController();
+            MPSController.sendInfo(appointmentTbl.getSelectionModel().getSelectedItem());
+            appointmentTbl.getItems().clear();
+
+            stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+            Parent scene = loader.getRoot();
+            stage.setScene(new Scene(scene));
+            stage.show();
+        }
+        catch(Exception e)
+        {
+            if(e.toString().contains("javafx.fxml.LoadException"))
+            {
+                utility.displayLocaleError("INFORMATION", "Select Error", 
+                "", "Please select an item from the appointments table before clicking the \"Modify Appt.\" button. "
+                        + "Otherwise you won't be able to modify an appointment.");
+            }
+        }
     }
 
     private void setupCalendarViewQuery(int month, int startDay, int endDay)

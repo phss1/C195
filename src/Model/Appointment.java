@@ -126,7 +126,7 @@ public class Appointment
         ObservableList<String> allApptStartTimes = FXCollections.observableArrayList();
         while(apptTimesQueryResults.next())
         {
-            String item = utility.convertTimeToLocal(utility.subStringOfDateTime(apptTimesQueryResults.getString("start")));
+            String item = apptTimesQueryResults.getString("start");
             allApptStartTimes.add(item);
         }
         
