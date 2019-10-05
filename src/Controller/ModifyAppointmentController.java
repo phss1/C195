@@ -234,6 +234,7 @@ public class ModifyAppointmentController implements Initializable {
                         + "\", lastUpdate = now(), " + "lastUpdateBy = \"" + utility.getCurLoggedInUserName()
                         + "\" where appointmentId = " + appointmentId + ";";
                 
+                utility.runUpdateSqlQuery(sqlQuery);
                 utility.changeGuiScreen(event, "MainMenu");
             }
             else if(foundExistingApptStartTime)
