@@ -1,4 +1,4 @@
-package com.example.C196_proj;
+package com.example.c196;
 
 import androidx.appcompat.app.AppCompatActivity;
 
