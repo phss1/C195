@@ -20,6 +20,16 @@ public class MainActivity extends AppCompatActivity
         myHelper.getWritableDatabase();
 
         Toast.makeText(MainActivity.this, myHelper.getDatabaseName(), Toast.LENGTH_SHORT).show();
+
+        myHelper.createTable("customer");
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        myHelper.insertRecord("insert into customer(name, salary, hire_date) values('Mike', 20000.00, '2019-10-05 23:00:00.0')");
     }
 
     @Override
@@ -28,6 +38,6 @@ public class MainActivity extends AppCompatActivity
         super.onPause();
 
         myHelper.close();
-        Toast.makeText(MainActivity.this, myHelper.getDatabaseName() + "closed!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, myHelper.getDatabaseName() + " closed!", Toast.LENGTH_SHORT).show();
     }
 }

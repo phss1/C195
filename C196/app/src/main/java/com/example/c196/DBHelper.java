@@ -26,4 +26,15 @@ public class DBHelper extends SQLiteOpenHelper
     {
 
     }
+
+    public void createTable(String tableName)
+    {
+        this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS " + tableName + "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                " name TEXT, salary DOUBLE, hire_date DATETIME )");
+    }
+
+    public void insertRecord(String sqlStatement)
+    {
+        this.getWritableDatabase().execSQL(sqlStatement);
+    }
 }
