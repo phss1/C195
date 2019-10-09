@@ -8,6 +8,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity
 {
     DBHelper myHelper;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
