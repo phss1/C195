@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
 {
-    DBHelper myHelper;
+    com.example.c196.Utility.DBHelper myHelper;
     private static final String TAG = "MainActivity";
 
     @Override
@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        myHelper = new DBHelper(MainActivity.this);
+        myHelper = new com.example.c196.Utility.DBHelper(MainActivity.this);
 
         myHelper.getWritableDatabase();
 
