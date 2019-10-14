@@ -6,13 +6,52 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/viewTermBtn"
+        android:layout_width="370dp"
+        android:layout_height="54dp"
+        android:text="View Term"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="434dp" />
+
+    <Button
+        android:id="@+id/viewMentorBtn"
+        android:layout_width="370dp"
+        android:layout_height="54dp"
+        android:text="View Mentor"
+        tools:layout_editor_absoluteX="23dp"
+        tools:layout_editor_absoluteY="231dp" />
+
+    <Button
+        android:id="@+id/assessmentsBtn"
+        android:layout_width="370dp"
+        android:layout_height="54dp"
+        android:text="View Assessments"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="298dp" />
+
+    <Button
+        android:id="@+id/viewCourseBtn"
+        android:layout_width="370dp"
+        android:layout_height="54dp"
+        android:text="View Course"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="365dp" />
+
     <TextView
+        android:id="@+id/introTxtVw"
+        android:layout_width="369dp"
+        android:layout_height="57dp"
+        android:text="Please select one of the following options. It's best to being in ascending order if this is the first time running the app."
+        tools:layout_editor_absoluteX="21dp"
+        tools:layout_editor_absoluteY="154dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:srcCompat="@mipmap/ic_launcher"
+        tools:layout_editor_absoluteX="169dp"
+        tools:layout_editor_absoluteY="47dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
