@@ -1,9 +1,9 @@
 package com.example.c196;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -50,14 +50,14 @@ public class MainActivity extends AppCompatActivity
         int rows = myHelper.removeRecord("customer", "id = ?", whereArgs);
         Toast.makeText(MainActivity.this, "Rows deleted!" + rows,
                 Toast.LENGTH_SHORT).show();
-         */
+
 
         //myHelper.updateRecord("update customer set name = 'Teddy', salary = 50000.00 where ID = 3");
         String[] whereArgs = {"4"};
         int rows = myHelper.changeRecord("customer", 16000.00, "id = ?", whereArgs);
         Toast.makeText(MainActivity.this, "Rows deleted!" + rows,
                 Toast.LENGTH_SHORT).show();
-
+        */
     }
 
     @Override
@@ -68,5 +68,10 @@ public class MainActivity extends AppCompatActivity
         myHelper.close();
         Toast.makeText(MainActivity.this, myHelper.getDatabaseName()
                 + " closed!", Toast.LENGTH_SHORT).show();
+    }
+
+    protected void onClickViewMentorBtn()
+    {
+
     }
 }
