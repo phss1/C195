@@ -1,9 +1,13 @@
-package com.example.c196;
+package com.example.c196.Controller;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
-import android.widget.Toolbar;
+
+import com.example.c196.R;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -70,7 +74,23 @@ public class MainActivity extends AppCompatActivity
                 + " closed!", Toast.LENGTH_SHORT).show();
     }
 
-    protected void onClickViewMentorBtn()
+    public void onClickViewMentorBtn(View view)
+    {
+        Intent intent = new Intent(this, ViewMentors.class);
+        startActivity(intent);
+    }
+
+    public void onClickViewTerms(View view)
+    {
+
+    }
+
+    public void onClickViewCourses(View view)
+    {
+
+    }
+
+    public void onClickViewAssessments(View view)
     {
 
     }

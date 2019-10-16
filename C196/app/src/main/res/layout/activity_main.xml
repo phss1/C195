@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Controller.MainActivity">
 
     <Button
         android:id="@+id/assessmentsBtn"
@@ -15,6 +15,7 @@
         android:layout_marginEnd="11dp"
         android:layout_marginRight="11dp"
         android:layout_marginBottom="13dp"
+        android:onClick="onClickViewAssessments"
         android:text="View Assessments"
         app:layout_constraintBottom_toTopOf="@+id/viewCourseBtn"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +32,8 @@
         android:layout_marginEnd="11dp"
         android:layout_marginRight="11dp"
         android:layout_marginBottom="199dp"
-        android:text="View Term"
+        android:onClick="onClickViewTerms"
+        android:text="View Terms"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.452"
@@ -96,7 +98,8 @@
         android:layout_marginEnd="11dp"
         android:layout_marginRight="11dp"
         android:layout_marginBottom="16dp"
-        android:text="View Course"
+        android:onClick="onClickViewCourses"
+        android:text="View Courses"
         app:layout_constraintBottom_toTopOf="@+id/viewTermBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
