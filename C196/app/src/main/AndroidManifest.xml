@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controller.ModifyMentor"></activity>
-        <activity android:name=".Controller.AddMentor" />
-        <activity android:name=".Controller.ViewMentors" />
+        <activity android:name=".Controller.MentorModify"></activity>
+        <activity android:name=".Controller.MentorAdd" />
+        <activity android:name=".Controller.MentorsView" />
         <activity android:name=".Controller.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

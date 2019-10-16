@@ -24,9 +24,11 @@ public class MainActivity extends AppCompatActivity
 
         myHelper.getWritableDatabase();
 
+        myHelper.dropTable();
+
         //Toast.makeText(MainActivity.this, myHelper.getDatabaseName(), Toast.LENGTH_SHORT).show();
 
-        myHelper.createTable("customer");
+        //myHelper.createTables("customer");
     }
 
     @Override
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity
 
     public void onClickViewMentorBtn(View view)
     {
-        Intent intent = new Intent(this, ViewMentors.class);
+        Intent intent = new Intent(this, MentorsView.class);
         startActivity(intent);
     }
 

@@ -16,10 +16,15 @@ public class DBHelper extends SQLiteOpenHelper
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public void createTable(String tableName)
+    public void createTables(String tableName)
     {
         this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS " + tableName + "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " name TEXT, salary DOUBLE, hire_date DATE)");
+    }
+
+    public void dropTable()
+    {
+        this.getWritableDatabase().execSQL("DROP TABLE customer");
     }
 
     //insert sql record methods
