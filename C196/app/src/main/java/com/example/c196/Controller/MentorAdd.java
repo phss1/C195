@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.c196.R;
 
@@ -19,7 +20,7 @@ public class MentorAdd extends AppCompatActivity
 
     public void onClickSaveBtn(View view)
     {
-
+        //String text = (textEmailAddress) fineViewById();
     }
 
     public void onClickCancelBtn(View view)

@@ -18,12 +18,14 @@ public class DBHelper extends SQLiteOpenHelper
 
     public void createTables()
     {
+        /*
         dropTable("mentor");
         dropTable("course");
         dropTable("term");
         dropTable("goal");
         dropTable("assessment");
         dropTable("note");
+        */
 
         this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS mentor(mentor_id INTEGER primary key autoincrement,\n" +
                 "course_id integer(10) not null,\n" +
