@@ -24,11 +24,9 @@ public class MainActivity extends AppCompatActivity
 
         myHelper.getWritableDatabase();
 
-        myHelper.dropTable();
+        myHelper.createTables();
 
-        //Toast.makeText(MainActivity.this, myHelper.getDatabaseName(), Toast.LENGTH_SHORT).show();
-
-        //myHelper.createTables("customer");
+        //Toast.makeText(MainActivity.this, myHelper.getDatabaseName(), Toast.LENGTH_SHORT).show();myHelper.createTables("customer");
     }
 
     @Override

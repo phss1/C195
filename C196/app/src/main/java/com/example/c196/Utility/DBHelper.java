@@ -16,15 +16,59 @@ public class DBHelper extends SQLiteOpenHelper
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public void createTables(String tableName)
+    public void createTables()
     {
-        this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS " + tableName + "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " name TEXT, salary DOUBLE, hire_date DATE)");
+        dropTable("mentor");
+        dropTable("course");
+        dropTable("term");
+        dropTable("goal");
+        dropTable("assessment");
+        dropTable("note");
+
+        this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS mentor(mentor_id INTEGER primary key autoincrement,\n" +
+                "course_id integer(10) not null,\n" +
+                "name varchar(30) not null,\n" +
+                "email varchar(30) not null,\n" +
+                "phone varchar(30) not null);\n");
+
+        this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS course(course_id INTEGER primary key autoincrement, " +
+                "term_id int(10) not null, " +
+                "mentor_id int(10) not null, " +
+                "title varchar(30) not null, " +
+                "status boolean not null, " +
+                "start_date datetime not null, " +
+                "end_date datetime not null, " +
+                "FOREIGN KEY(mentor_id) REFERENCES mentor(mentor_id));");
+
+        this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS term(term_id INTEGER primary key autoincrement,\n" +
+                "course_id integer(10) not null,\n" +
+                "title varchar(30) not null,\n" +
+                "start_date datetime not null,\n" +
+                "end_date datetime not null, " +
+                "FOREIGN KEY(course_id) REFERENCES course(course_id));");
+
+        this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS goal(goal_id INTEGER primary key autoincrement,\n" +
+                "assessment_id int(10) not null,\n" +
+                "goal_description varchar(30) not null,\n" +
+                "goal_date varchar(30) not null, " +
+                "FOREIGN KEY(assessment_id) REFERENCES assessment(assessment_id));");
+
+        this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS assessment(assessment_id INTEGER primary key autoincrement,\n" +
+                "course_id int(10) not null, " +
+                "title varchar(30) not null, " +
+                "date datetime not null, " +
+                "FOREIGN KEY(course_id) REFERENCES course(course_id));");
+
+        this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS note(note_id INTEGER primary key autoincrement,\n" +
+                "course_id int(10) not null,\n" +
+                "note_title varchar(30) not null,\n" +
+                "note_description varchar(30) not null, " +
+                "FOREIGN KEY(course_id) REFERENCES course(course_id));");
     }
 
-    public void dropTable()
+    public void dropTable(String tableName)
     {
-        this.getWritableDatabase().execSQL("DROP TABLE customer");
+        this.getWritableDatabase().execSQL("DROP TABLE " + tableName);
     }
 
     //insert sql record methods
