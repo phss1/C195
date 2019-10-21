@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.c196.R;
+import com.example.c196.Utility.UtilityMethods;
 
 public class MainActivity extends AppCompatActivity
 {
+    UtilityMethods utilities = new UtilityMethods();
+
     com.example.c196.Utility.DBHelper myHelper;
     private static final String TAG = "MainActivity";
 
@@ -68,10 +70,8 @@ public class MainActivity extends AppCompatActivity
     protected void onPause()
     {
         super.onPause();
-
         myHelper.close();
-        Toast.makeText(MainActivity.this, myHelper.getDatabaseName()
-                + " closed!", Toast.LENGTH_SHORT).show();
+        utilities.displayGuiMessage(MainActivity.this, myHelper.getDatabaseName() + " closed!");
     }
 
     public void onClickViewMentorBtn(View view)

@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.c196.R;
+import com.example.c196.*;
 
 public class MentorsView extends AppCompatActivity
 {
