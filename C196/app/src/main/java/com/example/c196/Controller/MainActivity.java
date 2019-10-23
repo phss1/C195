@@ -3,17 +3,19 @@ package com.example.c196.Controller;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.c196.R;
+import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.UtilityMethods;
 
 public class MainActivity extends AppCompatActivity
 {
     UtilityMethods utilities = new UtilityMethods();
 
-    com.example.c196.Utility.DBHelper myHelper;
+    DBConnector myHelper;
     private static final String TAG = "MainActivity";
 
     @Override
@@ -22,13 +24,17 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        myHelper = new com.example.c196.Utility.DBHelper(MainActivity.this);
+        myHelper = new DBConnector(MainActivity.this);
 
         myHelper.getWritableDatabase();
 
         myHelper.createTables();
 
-        //Toast.makeText(MainActivity.this, myHelper.getDatabaseName(), Toast.LENGTH_SHORT).show();myHelper.createTables("customer");
+        Cursor cursor = myHelper.getWritableDatabase().rawQuery("select * from mentor", null);
+         while(cursor.moveToNext())
+        {
+            utilities.displayGuiMessage(MainActivity.this, "test1");
+        }
     }
 
     @Override

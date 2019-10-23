@@ -5,13 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import com.example.c196.*;
+import com.example.c196.R;
+import com.example.c196.Utility.DBDataProvider;
 import com.example.c196.Utility.UtilityMethods;
 
 public class MentorAdd extends AppCompatActivity
 {
     UtilityMethods utilities = new UtilityMethods();
-    com.example.c196.Utility.DBHelper myHelper;
+    DBDataProvider myHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -27,15 +28,23 @@ public class MentorAdd extends AppCompatActivity
         String phone = ((EditText) findViewById(R.id.phoneTxtFld)).getText().toString();
         Boolean valuesNotNull = !name.isEmpty() && !email.isEmpty() && !phone.isEmpty();
 
+        //utilities.displayGuiMessage(MentorAdd.this, "valuesNotNull = " + valuesNotNull);
+
+        String slqQuery = "insert into mentor(mentor_id, name, email, phone) values(1, " + "\'" + name + "\'"
+                + ", \'" + email + "\', \'" + phone + "\');";
+
+        myHelper.insertRecord(slqQuery);
+
+        utilities.displayGuiMessage(MentorAdd.this, slqQuery);
+
         try
         {
-            if(valuesNotNull)
+            if(valuesNotNull.equals(true))
             {
-                String slqQuery = "insert into mentor(name, email, phone) values(" + "\"" + name + "\""
+                String slqQuery2 = "insert into mentor(name, email, phone) values(" + "\"" + name + "\""
                         + ", \"" + email + "\", \"" + phone + "\");";
 
-                myHelper.insertRecord(slqQuery);
-                System.out.println(slqQuery);
+                myHelper.insertRecord(slqQuery2);
 
                 utilities.displayGuiMessage(MentorAdd.this, slqQuery);
             }
