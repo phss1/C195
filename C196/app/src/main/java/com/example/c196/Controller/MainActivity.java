@@ -1,11 +1,11 @@
 package com.example.c196.Controller;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
@@ -14,7 +14,6 @@ import com.example.c196.Utility.UtilityMethods;
 public class MainActivity extends AppCompatActivity
 {
     UtilityMethods utilities = new UtilityMethods();
-
     DBConnector myHelper;
     private static final String TAG = "MainActivity";
 
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity
         myHelper.createTables();
 
         Cursor cursor = myHelper.getWritableDatabase().rawQuery("select * from mentor", null);
-         while(cursor.moveToNext())
+        while (cursor.moveToNext())
         {
             utilities.displayGuiMessage(MainActivity.this, "test1");
         }

@@ -1,6 +1,5 @@
 package com.example.c196.Classes;
 
-public class Course
-{
+public class Course {
 
 }

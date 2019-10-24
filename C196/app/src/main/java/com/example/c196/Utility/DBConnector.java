@@ -5,8 +5,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class DBConnector extends SQLiteOpenHelper
-{
+public class DBConnector extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "C196.DB";
     private static final int DATABASE_VERSION = 1;
 
@@ -18,13 +17,13 @@ public class DBConnector extends SQLiteOpenHelper
 
     public void createTables()
     {
-
+        /*
         dropTable("mentor");
         dropTable("course");
         dropTable("term");
         dropTable("goal");
         dropTable("assessment");
-        dropTable("note");
+        dropTable("note");*/
 
 
         this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS mentor(mentor_id INTEGER primary key autoincrement,\n" +
@@ -65,6 +64,51 @@ public class DBConnector extends SQLiteOpenHelper
                 "note_title varchar(30) not null,\n" +
                 "note_description varchar(30) not null, " +
                 "FOREIGN KEY(course_id) REFERENCES course(course_id));");
+    }
+
+    //insert sql record methods
+    public void insertRecord(String sqlStatement)
+    {
+        this.getWritableDatabase().execSQL(sqlStatement);
+    }
+
+    public long addRecord(String nameKey, String nameValue, String salaryKey, double salaryValue,
+                          String hireDateKey, String hireDateValue)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(nameKey, nameValue);
+        values.put(salaryKey, salaryValue);
+        values.put(hireDateKey, hireDateValue);
+
+        return db.insert("customer", null, values);
+    }
+
+    //delete sql record methods
+    public void deleteRecord(String sqlStatement)
+    {
+        this.getWritableDatabase().execSQL(sqlStatement);
+    }
+
+    public int removeRecord(String tableName, String whereClause, String[] whereArgs)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        return db.delete(tableName, whereClause, whereArgs);
+    }
+
+    //update sql record methods
+    public void updateRecord(String sqlStatement)
+    {
+        this.getWritableDatabase().execSQL(sqlStatement);
+    }
+
+    public int changeRecord(String tableName, Double value, String whereClause, String[] whereArgs) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("Salary", value);
+
+        return db.update(tableName, contentValues, whereClause, whereArgs);
     }
 
     public void dropTable(String tableName)
