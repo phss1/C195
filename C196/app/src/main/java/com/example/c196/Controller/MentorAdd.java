@@ -43,7 +43,8 @@ public class MentorAdd extends AppCompatActivity {
 
                 myHelper.insertRecord(slqQuery);
 
-                utilities.displayGuiMessage(MentorAdd.this, slqQuery);
+                Intent intent = new Intent(this, MentorsView.class);
+                startActivity(intent);
             }
             else
             {

@@ -30,6 +30,11 @@ public class MentorModify extends AppCompatActivity
 
     }
 
+    public void onClickDeleteBtn(View view)
+    {
+
+    }
+
     public void onClickCancelBtn(View view)
     {
         Intent intent = new Intent(this, MentorsView.class);

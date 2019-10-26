@@ -25,7 +25,6 @@ public class DBConnector extends SQLiteOpenHelper {
         dropTable("assessment");
         dropTable("note");*/
 
-
         this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS mentor(mentor_id INTEGER primary key autoincrement,\n" +
                 "name varchar(30) not null,\n" +
                 "email varchar(30) not null,\n" +
