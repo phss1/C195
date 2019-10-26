@@ -1,10 +1,14 @@
 package com.example.c196.Classes;
 
+import com.example.c196.Utility.DataProvider;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Mentor
 {
+    DataProvider dp = new DataProvider();
+
     private int id;
     private String name;
     private String email;
@@ -18,6 +22,16 @@ public class Mentor
         this.name = name;
         this.email = email;
         this.phone = phone;
+    }
+
+    public static void deleteMentor()
+    {
+        DataProvider.getAllMentors().remove(Mentor.getSelectedItemIndex());
+    }
+
+    public static void modifyMentor(Mentor modifiedMentor)
+    {
+        DataProvider.getAllMentors().set(Mentor.getSelectedItemIndex(), modifiedMentor);
     }
 
     public List<Mentor> getMentorToModify()

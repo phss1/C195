@@ -28,25 +28,37 @@ public class MentorModify extends AppCompatActivity
         myHelper = new DBConnector(MentorModify.this);
         myHelper.getWritableDatabase();
 
-        //Mentor mentorToModify = dp.getAllMentors().get(Mentor.getSelectedItemIndex());
-        //utilities.displayGuiMessage(MentorModify.this, "modify mentor index is: " + Mentor.getSelectedItemIndex());
-        //Mentor mentor = dp.getAllMentors().get(0);
-        utilities.displayGuiMessage(MentorModify.this, "number of mentors empty: " + dp.getAllMentors().isEmpty());
-        EditText name = (EditText) findViewById(R.id.nameTxtFld2);
-        EditText email = (EditText) findViewById(R.id.emailTxtFld2);
-        EditText phone = (EditText) findViewById(R.id.phoneTxtFld2);
+        Mentor mentorToModify = dp.getAllMentors().get(Mentor.getSelectedItemIndex());
+        EditText name = findViewById(R.id.nameTxtFld2);
+        EditText email = findViewById(R.id.emailTxtFld2);
+        EditText phone = findViewById(R.id.phoneTxtFld2);
 
-        name.setText("testint 123");
+        name.setText(mentorToModify.getName());
+        email.setText(mentorToModify.getEmail());
+        phone.setText(mentorToModify.getPhone());
     }
 
     public void onClickSaveBtn(View view)
     {
+        EditText name = findViewById(R.id.nameTxtFld2);
+        EditText email = findViewById(R.id.emailTxtFld2);
+        EditText phone = findViewById(R.id.phoneTxtFld2);
 
+        int modifiedMentorId = dp.getAllMentors().get(Mentor.getSelectedItemIndex()).getId();
+        Mentor mentorModified = new Mentor(modifiedMentorId, name.getText().toString(), email.getText().toString(), phone.getText().toString());
+        Mentor.modifyMentor(mentorModified);
+
+        Intent intent = new Intent(this, MentorView.class);
+        startActivity(intent);
     }
 
     public void onClickDeleteBtn(View view)
     {
 
+
+        Mentor.deleteMentor();
+        Intent intent = new Intent(this, MentorView.class);
+        startActivity(intent);
     }
 
     public void onClickCancelBtn(View view)

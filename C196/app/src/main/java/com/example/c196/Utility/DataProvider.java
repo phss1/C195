@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 public class DataProvider
 {
-    private ArrayList<Mentor> allMentors = new ArrayList<>();
+    private static ArrayList<Mentor> allMentors = new ArrayList<>();
 
-    public ArrayList<Mentor> getAllMentors()
+    public static ArrayList<Mentor> getAllMentors()
     {
         return allMentors;
     }
@@ -18,8 +18,8 @@ public class DataProvider
         this.allMentors = allMentors;
     }
 
-    public void addMentor(Mentor newMentor)
+    public static void addMentor(Mentor newMentor)
     {
-        this.allMentors.add(newMentor);
+        DataProvider.allMentors.add(newMentor);
     }
 }
