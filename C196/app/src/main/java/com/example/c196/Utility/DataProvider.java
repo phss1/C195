@@ -20,6 +20,6 @@ public class DataProvider
 
     public void addMentor(Mentor newMentor)
     {
-        this.allMentors = allMentors;
+        this.allMentors.add(newMentor);
     }
 }

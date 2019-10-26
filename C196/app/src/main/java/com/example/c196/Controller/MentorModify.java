@@ -3,6 +3,7 @@ package com.example.c196.Controller;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,9 +28,15 @@ public class MentorModify extends AppCompatActivity
         myHelper = new DBConnector(MentorModify.this);
         myHelper.getWritableDatabase();
 
-        Mentor mentorToMod = dp.getAllMentors().get(Mentor.selectedItemIndex);
+        //Mentor mentorToModify = dp.getAllMentors().get(Mentor.getSelectedItemIndex());
+        //utilities.displayGuiMessage(MentorModify.this, "modify mentor index is: " + Mentor.getSelectedItemIndex());
+        //Mentor mentor = dp.getAllMentors().get(0);
+        utilities.displayGuiMessage(MentorModify.this, "number of mentors empty: " + dp.getAllMentors().isEmpty());
+        EditText name = (EditText) findViewById(R.id.nameTxtFld2);
+        EditText email = (EditText) findViewById(R.id.emailTxtFld2);
+        EditText phone = (EditText) findViewById(R.id.phoneTxtFld2);
 
-
+        name.setText("testint 123");
     }
 
     public void onClickSaveBtn(View view)

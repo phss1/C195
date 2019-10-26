@@ -42,13 +42,13 @@ public class MentorView extends AppCompatActivity
 
         ListView listView = findViewById(R.id.mentorsLstVw);
         listView.setAdapter(mentorsAdapter);
-        ListView tempListView = listView;
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
-                Mentor.selectedItemIndex = i;
+
+                Mentor.setSelectedItemIndex(i);
                 onClickModifyMentor(view);
             }
         });
@@ -68,8 +68,6 @@ public class MentorView extends AppCompatActivity
 
     public void onClickModifyMentor(View view)
     {
-
-
         Intent intent = new Intent(this, MentorModify.class);
         startActivity(intent);
     }
@@ -80,6 +78,7 @@ public class MentorView extends AppCompatActivity
         String query = "SELECT * from mentor";
         Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
 
+        dp.getAllMentors().clear();
         while (cursor.moveToNext())
         {
             Mentor tempMentor = new Mentor(cursor.getInt(0), cursor.getString(1), cursor.getString(2),

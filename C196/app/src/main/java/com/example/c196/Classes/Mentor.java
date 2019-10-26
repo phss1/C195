@@ -10,7 +10,7 @@ public class Mentor
     private String email;
     private String phone;
     private List<Mentor> mentorToModify = new ArrayList<>();
-    public static int selectedItemIndex;
+    private static int selectedItemIndex;
 
     public Mentor(int id, String name, String email, String phone)
     {
@@ -35,14 +35,14 @@ public class Mentor
         this.mentorToModify.add(mentor);
     }
 
-    public int getSelectedItemIndex()
+    public static int getSelectedItemIndex()
     {
         return selectedItemIndex;
     }
 
-    public void setSelectedItemIndex(int selectedItemIndex)
+    public static void setSelectedItemIndex(int selectedItemIndex)
     {
-        this.selectedItemIndex = selectedItemIndex;
+        Mentor.selectedItemIndex = selectedItemIndex;
     }
 
     public int getId()
