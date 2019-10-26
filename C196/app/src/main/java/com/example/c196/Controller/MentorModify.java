@@ -6,14 +6,17 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.c196.Classes.Mentor;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
+import com.example.c196.Utility.DataProvider;
 import com.example.c196.Utility.UtilityMethods;
 
 public class MentorModify extends AppCompatActivity
 {
     DBConnector myHelper;
     UtilityMethods utilities;
+    DataProvider dp = new DataProvider();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -23,6 +26,10 @@ public class MentorModify extends AppCompatActivity
 
         myHelper = new DBConnector(MentorModify.this);
         myHelper.getWritableDatabase();
+
+        Mentor mentorToMod = dp.getAllMentors().get(Mentor.selectedItemIndex);
+
+
     }
 
     public void onClickSaveBtn(View view)
@@ -37,21 +44,7 @@ public class MentorModify extends AppCompatActivity
 
     public void onClickCancelBtn(View view)
     {
-        Intent intent = new Intent(this, MentorsView.class);
+        Intent intent = new Intent(this, MentorView.class);
         startActivity(intent);
-    }
-
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause()
-    {
-        super.onPause();
-        myHelper.close();
-        utilities.displayGuiMessage(MentorModify.this, myHelper.getDatabaseName() + " closed!");
     }
 }

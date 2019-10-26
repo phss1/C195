@@ -1,7 +1,6 @@
 package com.example.c196.Controller;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -12,7 +11,8 @@ import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.UtilityMethods;
 
-public class MentorAdd extends AppCompatActivity {
+public class MentorAdd extends AppCompatActivity
+{
     UtilityMethods utilities = new UtilityMethods();
     DBConnector myHelper;
 
@@ -43,12 +43,12 @@ public class MentorAdd extends AppCompatActivity {
 
                 myHelper.insertRecord(slqQuery);
 
-                Intent intent = new Intent(this, MentorsView.class);
+                Intent intent = new Intent(this, MentorView.class);
                 startActivity(intent);
             }
             else
             {
-
+                //
             }
         } catch (Exception e)
         {
@@ -60,21 +60,7 @@ public class MentorAdd extends AppCompatActivity {
 
     public void onClickCancelBtn(View view)
     {
-        Intent intent = new Intent(this, MentorsView.class);
+        Intent intent = new Intent(this, MentorView.class);
         startActivity(intent);
-    }
-
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause()
-    {
-        super.onPause();
-        myHelper.close();
-        utilities.displayGuiMessage(MentorAdd.this, myHelper.getDatabaseName() + " closed!");
     }
 }

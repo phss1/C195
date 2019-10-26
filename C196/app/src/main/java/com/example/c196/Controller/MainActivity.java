@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity
 
     public void onClickViewMentorBtn(View view)
     {
-        Intent intent = new Intent(this, MentorsView.class);
+        Intent intent = new Intent(this, MentorView.class);
         startActivity(intent);
     }
 

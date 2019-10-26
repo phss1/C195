@@ -9,18 +9,22 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.c196.Classes.Mentor;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
+import com.example.c196.Utility.DataProvider;
 import com.example.c196.Utility.UtilityMethods;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MentorsView extends AppCompatActivity
+public class MentorView extends AppCompatActivity
 {
     DBConnector myHelper;
     UtilityMethods utilities;
+    DataProvider dp = new DataProvider();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -28,40 +32,26 @@ public class MentorsView extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mentors_view);
 
-        myHelper = new DBConnector(MentorsView.this);
+        myHelper = new DBConnector(MentorView.this);
         myHelper.getWritableDatabase();
 
         List<String> mentors = populateListView();
-        Collections.sort(mentors);
-        ArrayAdapter<String> mentorsAdapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> mentorsAdapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_list_item_1, mentors
         );
 
         ListView listView = findViewById(R.id.mentorsLstVw);
         listView.setAdapter(mentorsAdapter);
+        ListView tempListView = listView;
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
-                utilities.displayGuiMessage(MentorsView.this, "Index of selected item is: " + i);
+                Mentor.selectedItemIndex = i;
+                onClickModifyMentor(view);
             }
         });
-
-    }
-
-    @Override
-    protected void onResume()
-    {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause()
-    {
-        super.onPause();
-        myHelper.close();
-        utilities.displayGuiMessage(MentorsView.this, myHelper.getDatabaseName() + " closed!");
     }
 
     public void onActionAddMentor(View view)
@@ -70,26 +60,31 @@ public class MentorsView extends AppCompatActivity
         startActivity(intent);
     }
 
-    public void onClickDeleteMentor(View view)
+    public void onClickHomeBtn(View view)
     {
-
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     public void onClickModifyMentor(View view)
     {
+
+
         Intent intent = new Intent(this, MentorModify.class);
         startActivity(intent);
     }
 
     private List<String> populateListView()
     {
-        //String [] test = {DBHelper.test_code};
-
         List<String> mentorList = new ArrayList<>();
         String query = "SELECT * from mentor";
         Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
+
         while (cursor.moveToNext())
         {
+            Mentor tempMentor = new Mentor(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
+                    cursor.getString(3));
+            dp.addMentor(tempMentor);
             mentorList.add(cursor.getString(1));
         }
 
