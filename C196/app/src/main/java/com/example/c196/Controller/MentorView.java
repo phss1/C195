@@ -42,16 +42,18 @@ public class MentorView extends AppCompatActivity
 
         ListView listView = findViewById(R.id.mentorsLstVw);
         listView.setAdapter(mentorsAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+        listView.setOnItemClickListener(
+            new AdapterView.OnItemClickListener()
             {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+                {
 
-                Mentor.setSelectedItemIndex(i);
-                onClickModifyMentor(view);
+                    Mentor.setSelectedItemIndex(i);
+                    onClickModifyMentor(view);
+                }
             }
-        });
+        );
     }
 
     public void onActionAddMentor(View view)

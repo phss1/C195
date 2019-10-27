@@ -1,6 +1,7 @@
 package com.example.c196.Controller;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -44,9 +45,15 @@ public class MentorModify extends AppCompatActivity
         EditText email = findViewById(R.id.emailTxtFld2);
         EditText phone = findViewById(R.id.phoneTxtFld2);
 
-        int modifiedMentorId = dp.getAllMentors().get(Mentor.getSelectedItemIndex()).getId();
-        Mentor mentorModified = new Mentor(modifiedMentorId, name.getText().toString(), email.getText().toString(), phone.getText().toString());
-        Mentor.modifyMentor(mentorModified);
+        int mentorId = dp.getAllMentors().get(Mentor.getSelectedItemIndex()).getId();
+        String query = "update mentor set name = \"" + name.getText().toString() + "\", email = \"" + email.getText().toString()
+                + "\", phone = \"" + phone.getText().toString() + "\" where mentor_id = " + mentorId + ";";
+
+        myHelper.getWritableDatabase();
+        myHelper.updateRecord(query);
+
+        //Mentor mentorModified = new Mentor(modifiedMentorId, name.getText().toString(), email.getText().toString(), phone.getText().toString());
+        //Mentor.modifyMentor(mentorModified);
 
         Intent intent = new Intent(this, MentorView.class);
         startActivity(intent);
@@ -54,9 +61,11 @@ public class MentorModify extends AppCompatActivity
 
     public void onClickDeleteBtn(View view)
     {
+        int mentorId = dp.getAllMentors().get(Mentor.getSelectedItemIndex()).getId();
+        String query = "delete from mentor where mentor_id = " + mentorId + ";";
+        myHelper.deleteRecord(query);
 
-
-        Mentor.deleteMentor();
+        //Mentor.deleteMentor();
         Intent intent = new Intent(this, MentorView.class);
         startActivity(intent);
     }

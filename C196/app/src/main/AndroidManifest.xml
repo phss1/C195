@@ -12,7 +12,6 @@
         <activity android:name=".Controller.MentorView"></activity>
         <activity android:name=".Controller.MentorModify" />
         <activity android:name=".Controller.MentorAdd" />
-        <activity android:name=".Controller.MentorView" />
         <activity android:name=".Controller.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
