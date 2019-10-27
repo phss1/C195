@@ -1,4 +1,4 @@
-package com.example.c196.Utility;
+package com.example.c196.Controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.example.c196.Classes.Mentor;
-import com.example.c196.Controller.MainActivity;
-import com.example.c196.Controller.MentorModify;
 import com.example.c196.R;
-import com.example.c196.Utility.AssessmentAdd;
+import com.example.c196.Utility.DBConnector;
+import com.example.c196.Utility.DataProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,29 @@ public class AssessmentView extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessment_view);
+
+        myHelper = new DBConnector(AssessmentView.this);
+        myHelper.getWritableDatabase();
+
+        List<String> mentors = populateListView();
+        ArrayAdapter<String> mentorsAdapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_list_item_1, mentors
+        );
+
+        ListView listView = findViewById(R.id.AssessmentLstVw);
+        listView.setAdapter(mentorsAdapter);
+        listView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener()
+                {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+                    {
+
+                        Mentor.setSelectedItemIndex(i);
+                        onClickModifyAssessment(view);
+                    }
+                }
+        );
     }
 
     public void onActionAddAssessment(View view)
@@ -42,7 +67,7 @@ public class AssessmentView extends AppCompatActivity
 
     public void onClickModifyAssessment(View view)
     {
-        Intent intent = new Intent(this, MentorModify.class);
+        Intent intent = new Intent(this, AssessmentModify.class);
         startActivity(intent);
     }
 

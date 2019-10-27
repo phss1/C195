@@ -2,6 +2,7 @@ package com.example.c196.Classes;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Assessment
 {
@@ -12,6 +13,9 @@ public class Assessment
     private Date endDate;
     private ArrayList<Goal> goals;
 
+    private List<Assessment> assessmentToModify = new ArrayList<>();
+    private static int selectedItemIndex;
+
     public Assessment(int id, String title, String description, Date startDate, Date endDate, ArrayList<Goal> goals)
     {
         this.id = id;
@@ -20,6 +24,31 @@ public class Assessment
         this.startDate = startDate;
         this.endDate = endDate;
         this.goals = goals;
+    }
+
+    public List<Assessment> getAssessmentToModify()
+    {
+        return assessmentToModify;
+    }
+
+    public void setAssessmentToModify(List<Assessment> assessment)
+    {
+        this.assessmentToModify = assessment;
+    }
+
+    public void addAssessmentToModify(Assessment assessment)
+    {
+        this.assessmentToModify.add(assessment);
+    }
+
+    public static int getSelectedItemIndex()
+    {
+        return selectedItemIndex;
+    }
+
+    public static void setSelectedItemIndex(int selectedItemIndex)
+    {
+        Assessment.selectedItemIndex = selectedItemIndex;
     }
 
     public int getId()

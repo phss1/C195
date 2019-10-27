@@ -9,8 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Utility.AssessmentAdd"></activity>
-        <activity android:name=".Utility.AssessmentView" />
+        <activity android:name=".Controller.AssessmentModify"></activity>
+        <activity android:name=".Controller.AssessmentAdd" />
+        <activity android:name=".Controller.AssessmentView" />
         <activity android:name=".Controller.CourseView" />
         <activity android:name=".Controller.MentorView" />
         <activity android:name=".Controller.MentorModify" />
