@@ -1,5 +1,7 @@
 package com.example.c196.Controller;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -8,28 +10,28 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.c196.Classes.Mentor;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
+import com.example.c196.Utility.UtilityMethods;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MentorView extends AppCompatActivity
+public class CourseView extends AppCompatActivity
 {
     DBConnector myHelper;
+    UtilityMethods utilities;
     DataProvider dp = new DataProvider();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mentors_view);
+        setContentView(R.layout.activity_course_view);
 
-        myHelper = new DBConnector(MentorView.this);
+        myHelper = new DBConnector(CourseView.this);
         myHelper.getWritableDatabase();
 
         List<String> mentors = populateListView();
@@ -37,23 +39,23 @@ public class MentorView extends AppCompatActivity
                 this, android.R.layout.simple_list_item_1, mentors
         );
 
-        ListView listView = findViewById(R.id.mentorsLstVw);
+        ListView listView = findViewById(R.id.courseLstVw);
         listView.setAdapter(mentorsAdapter);
         listView.setOnItemClickListener(
-            new AdapterView.OnItemClickListener()
-            {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+                new AdapterView.OnItemClickListener()
                 {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+                    {
 
-                    Mentor.setSelectedItemIndex(i);
-                    onClickModifyMentor(view);
+                        Mentor.setSelectedItemIndex(i);
+                        onClickModifyCourse(view);
+                    }
                 }
-            }
         );
     }
 
-    public void onActionAddMentor(View view)
+    public void onActionAddCourse(View view)
     {
         Intent intent = new Intent(this, MentorAdd.class);
         startActivity(intent);
@@ -65,7 +67,7 @@ public class MentorView extends AppCompatActivity
         startActivity(intent);
     }
 
-    public void onClickModifyMentor(View view)
+    public void onClickModifyCourse(View view)
     {
         Intent intent = new Intent(this, MentorModify.class);
         startActivity(intent);
@@ -74,15 +76,14 @@ public class MentorView extends AppCompatActivity
     private List<String> populateListView()
     {
         List<String> mentorList = new ArrayList<>();
-        String query = "SELECT * from mentor";
+        String query = "SELECT * from course";
         Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
 
         dp.getAllMentors().clear();
         while (cursor.moveToNext())
         {
-            Mentor tempMentor = new Mentor(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
-                    cursor.getString(3));
-            dp.addMentor(tempMentor);
+            //Course tempMentor = new Course(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3));
+            //dp.addMentor(tempMentor);
             mentorList.add(cursor.getString(1));
         }
 
