@@ -54,8 +54,6 @@ public class MentorAdd extends AppCompatActivity
         {
 
         }
-
-
     }
 
     public void onClickCancelBtn(View view)

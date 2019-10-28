@@ -7,11 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.c196.Controller.AssessmentView;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
 
-public class AssessmentAdd extends AppCompatActivity
+public class GoalAdd extends AppCompatActivity
 {
     DBConnector myHelper;
     DataProvider dp = new DataProvider();
@@ -20,7 +21,7 @@ public class AssessmentAdd extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_assessment_add);
+        setContentView(R.layout.activity_goal_add);
     }
 
     public void onClickCancelBtn(View view)
@@ -31,18 +32,16 @@ public class AssessmentAdd extends AppCompatActivity
 
     public void onClickSaveBtn(View view)
     {
-        /*
-        String name = ((EditText) findViewById(R.id.nameTxtFld)).getText().toString();
-        String email = ((EditText) findViewById(R.id.emailTxtFld)).getText().toString();
-        String phone = ((EditText) findViewById(R.id.phoneTxtFld)).getText().toString();
-        Boolean valuesNotNull = !name.isEmpty() && !email.isEmpty() && !phone.isEmpty();
+        String description = ((EditText) findViewById(R.id.descriptionTxtFld)).getText().toString();
+        String date = ((EditText) findViewById(R.id.dateTxtFld)).getText().toString();
+        Boolean valuesNotNull = !description.isEmpty() && !date.isEmpty();
 
         try
         {
             if (valuesNotNull.equals(true))
             {
-                String slqQuery = "insert into goal(description, start) values(" + "\"" + name + "\""
-                        + ", \"" + email + "\", \"" + phone + "\");";
+                String slqQuery = "insert into goal(description, date) values(" + "\"" + description + "\""
+                        + ", \"" + date + "\";";
 
                 myHelper.insertRecord(slqQuery);
 
@@ -59,12 +58,6 @@ public class AssessmentAdd extends AppCompatActivity
         }
 
         Intent intent = new Intent(this, AssessmentView.class);
-        startActivity(intent);*/
-    }
-
-    public void onClickAddGoalBtn(View view)
-    {
-        Intent intent = new Intent(this, AssessmentModify.class);
         startActivity(intent);
     }
 }

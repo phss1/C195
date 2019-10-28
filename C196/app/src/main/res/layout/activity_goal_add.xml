@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Controller.GoalAdd">
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="226dp"
+        android:layout_height="53dp"
+        android:text="Assessments"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:typeface="normal"
+        tools:layout_editor_absoluteX="92dp"
+        tools:layout_editor_absoluteY="36dp" />
+
+    <EditText
+        android:id="@+id/descriptionTxtFld"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="goal description"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="98dp"
+        tools:layout_editor_absoluteY="139dp" />
+
+    <EditText
+        android:id="@+id/dateTxtFld"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Date: 01/22/2019"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="98dp"
+        tools:layout_editor_absoluteY="205dp" />
+
+    <Button
+        android:id="@+id/cancelBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickCancelBtn"
+        android:text="Cancel"
+        tools:layout_editor_absoluteX="103dp"
+        tools:layout_editor_absoluteY="267dp" />
+
+    <Button
+        android:id="@+id/saveBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickSaveBtn"
+        android:text="Save"
+        tools:layout_editor_absoluteX="223dp"
+        tools:layout_editor_absoluteY="267dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

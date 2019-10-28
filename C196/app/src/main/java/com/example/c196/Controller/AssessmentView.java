@@ -74,15 +74,14 @@ public class AssessmentView extends AppCompatActivity
     private List<String> populateListView()
     {
         List<String> mentorList = new ArrayList<>();
-        String query = "SELECT * from mentor";
+        String query = "SELECT * from assessment";
         Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
 
         dp.getAllMentors().clear();
         while (cursor.moveToNext())
         {
-            Mentor tempMentor = new Mentor(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
-                    cursor.getString(3));
-            dp.addMentor(tempMentor);
+            //Mentor tempMentor = new Mentor(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+            //dp.addMentor(tempMentor);
             mentorList.add(cursor.getString(1));
         }
 
