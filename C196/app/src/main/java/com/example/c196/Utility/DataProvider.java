@@ -3,6 +3,7 @@ package com.example.c196.Utility;
 import com.example.c196.Classes.Assessment;
 import com.example.c196.Classes.Course;
 import com.example.c196.Classes.Mentor;
+import com.example.c196.Classes.Term;
 
 import java.util.ArrayList;
 
@@ -11,6 +12,7 @@ public class DataProvider
     private static ArrayList<Mentor> allMentors = new ArrayList<>();
     private static ArrayList<Assessment> allAssessments = new ArrayList<>();
     private static ArrayList<Course> allCourses = new ArrayList<>();
+    private static ArrayList<Term> allTerms = new ArrayList<>();
 
     public static ArrayList<Mentor> getAllMentors()
     {
@@ -52,8 +54,23 @@ public class DataProvider
         this.allCourses = allCourses;
     }
 
-    public static void addCourse(Course newCourse)
+    public static void addTerm(Term newTerm)
     {
-        DataProvider.allCourses.add(newCourse);
+        DataProvider.allTerms.add(newTerm);
+    }
+
+    public static ArrayList<Term> getAllTerms()
+    {
+        return allTerms;
+    }
+
+    public void setAllTerms(ArrayList<Term> allTerms)
+    {
+        this.allTerms = allTerms;
+    }
+
+    public static void addCourse(Term newTerm)
+    {
+        DataProvider.allTerms.add(newTerm);
     }
 }

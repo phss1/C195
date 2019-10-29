@@ -11,11 +11,11 @@ public class Course
     private int status;
     private ArrayList<Assessment> assessments;
     private ArrayList<Note> notes;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
 
     public Course(int id, String title, String description, int status, ArrayList<Assessment> assessments,
-                  ArrayList<Note> notes, Date startDate, Date endDate)
+                  ArrayList<Note> notes, String startDate, String endDate)
     {
         this.id = id;
         this.title = title;
@@ -97,22 +97,22 @@ public class Course
         this.notes.add(note);
     }
 
-    public Date getStartDate()
+    public String getStartDate()
     {
         return startDate;
     }
 
-    public void setStartDate(Date startDate)
+    public void setStartDate(String startDate)
     {
         this.startDate = startDate;
     }
 
-    public Date getEndDate()
+    public String getEndDate()
     {
         return endDate;
     }
 
-    public void setEndDate(Date endDate)
+    public void setEndDate(String endDate)
     {
         this.endDate = endDate;
     }

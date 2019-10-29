@@ -24,16 +24,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         myHelper = new DBConnector(MainActivity.this);
-
         myHelper.getWritableDatabase();
-
         myHelper.createTables();
-
-        Cursor cursor = myHelper.getWritableDatabase().rawQuery("select * from mentor", null);
-        while (cursor.moveToNext())
-        {
-            utilities.displayGuiMessage(MainActivity.this, "test1");
-        }
     }
 
     @Override
@@ -87,12 +79,14 @@ public class MainActivity extends AppCompatActivity
 
     public void onClickViewTerms(View view)
     {
-
+        Intent intent = new Intent(this, TermView.class);
+        startActivity(intent);
     }
 
     public void onClickViewCourses(View view)
     {
-
+        Intent intent = new Intent(this, CourseView.class);
+        startActivity(intent);
     }
 
     public void onClickViewAssessments(View view)
