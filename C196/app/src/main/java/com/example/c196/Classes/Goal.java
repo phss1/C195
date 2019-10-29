@@ -5,9 +5,9 @@ import java.util.Date;
 public class Goal
 {
     private String description;
-    private Date date;
+    private String date;
 
-    public Goal(String description, Date date)
+    public Goal(String description, String date)
     {
         this.description = description;
         this.date = date;
@@ -23,12 +23,12 @@ public class Goal
         this.description = description;
     }
 
-    public Date getDate()
+    public String getDate()
     {
         return date;
     }
 
-    public void setDate(Date date)
+    public void setDate(String date)
     {
         this.date = date;
     }

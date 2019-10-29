@@ -31,22 +31,22 @@ public class AssessmentAdd extends AppCompatActivity
 
     public void onClickSaveBtn(View view)
     {
-        /*
-        String name = ((EditText) findViewById(R.id.nameTxtFld)).getText().toString();
-        String email = ((EditText) findViewById(R.id.emailTxtFld)).getText().toString();
-        String phone = ((EditText) findViewById(R.id.phoneTxtFld)).getText().toString();
-        Boolean valuesNotNull = !name.isEmpty() && !email.isEmpty() && !phone.isEmpty();
+        String title = ((EditText) findViewById(R.id.titleTxtFld)).getText().toString();
+        String description = ((EditText) findViewById(R.id.descriptionTxtFld)).getText().toString();
+        String startDate = ((EditText) findViewById(R.id.startDateTxtFld)).getText().toString();
+        String endDate = ((EditText) findViewById(R.id.endDateTxtFld)).getText().toString();
+        Boolean valuesNotNull = !title.isEmpty() && !description.isEmpty() && !startDate.isEmpty() && !endDate.isEmpty();
 
         try
         {
             if (valuesNotNull.equals(true))
             {
-                String slqQuery = "insert into goal(description, start) values(" + "\"" + name + "\""
-                        + ", \"" + email + "\", \"" + phone + "\");";
+                String slqQuery = "insert into assessment(course_id, title, description, ) values(" + "\"" + title + "\""
+                        + ", \"" + description + "\", \"" + startDate + "\");";
 
                 myHelper.insertRecord(slqQuery);
 
-                Intent intent = new Intent(this, MentorView.class);
+                Intent intent = new Intent(this, AssessmentView.class);
                 startActivity(intent);
             }
             else
@@ -55,16 +55,13 @@ public class AssessmentAdd extends AppCompatActivity
             }
         } catch (Exception e)
         {
-
+            //
         }
-
-        Intent intent = new Intent(this, AssessmentView.class);
-        startActivity(intent);*/
     }
 
     public void onClickAddGoalBtn(View view)
     {
-        Intent intent = new Intent(this, AssessmentModify.class);
+        Intent intent = new Intent(this, GoalAdd.class);
         startActivity(intent);
     }
 }

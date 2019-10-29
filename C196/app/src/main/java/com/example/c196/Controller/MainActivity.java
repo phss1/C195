@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity
 
     public void onClickViewAssessments(View view)
     {
-
+        Intent intent = new Intent(this, AssessmentView.class);
+        startActivity(intent);
     }
 }

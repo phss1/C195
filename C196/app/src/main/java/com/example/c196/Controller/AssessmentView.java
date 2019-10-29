@@ -10,6 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.c196.Classes.Assessment;
+import com.example.c196.Classes.Goal;
 import com.example.c196.Classes.Mentor;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
@@ -46,7 +48,7 @@ public class AssessmentView extends AppCompatActivity
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
                     {
 
-                        Mentor.setSelectedItemIndex(i);
+                        Assessment.setSelectedItemIndex(i);
                         onClickModifyAssessment(view);
                     }
                 }
@@ -73,18 +75,28 @@ public class AssessmentView extends AppCompatActivity
 
     private List<String> populateListView()
     {
-        List<String> mentorList = new ArrayList<>();
         String query = "SELECT * from assessment";
         Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
+        String query2 = "SELECT * from goal";
+        Cursor cursor2 = myHelper.getReadableDatabase().rawQuery(query2,null);
 
         dp.getAllMentors().clear();
+        List<String> assessmentList = new ArrayList<>();
+
         while (cursor.moveToNext())
         {
-            //Mentor tempMentor = new Mentor(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
-            //dp.addMentor(tempMentor);
-            mentorList.add(cursor.getString(1));
+            ArrayList<Goal> goals = new ArrayList<>();
+            while(cursor2.moveToNext())
+            {
+                Goal tempGoal = new Goal(cursor2.getString(0), cursor2.getString(1));
+                goals.add(tempGoal);
+            }
+            Assessment tempAssessment = new Assessment(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
+                    cursor.getString(3), cursor.getString(4), goals);
+            dp.addAssessment(tempAssessment);
+            assessmentList.add(cursor.getString(1));
         }
 
-        return mentorList;
+        return assessmentList;
     }
 }

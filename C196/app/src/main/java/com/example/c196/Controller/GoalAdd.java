@@ -40,19 +40,20 @@ public class GoalAdd extends AppCompatActivity
         {
             if (valuesNotNull.equals(true))
             {
-                String slqQuery = "insert into goal(description, date) values(" + "\"" + description + "\""
+                String slqQuery = "insert into goal(assessment_id, description, date) values(-1, " + "\"" + description + "\""
                         + ", \"" + date + "\";";
 
                 myHelper.insertRecord(slqQuery);
 
-                Intent intent = new Intent(this, MentorView.class);
+                Intent intent = new Intent(this, AssessmentView.class);
                 startActivity(intent);
             }
             else
             {
                 //
             }
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
 
         }

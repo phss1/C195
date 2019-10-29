@@ -9,14 +9,14 @@ public class Assessment
     private int id;
     private String title;
     private String description;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
     private ArrayList<Goal> goals;
 
     private List<Assessment> assessmentToModify = new ArrayList<>();
     private static int selectedItemIndex;
 
-    public Assessment(int id, String title, String description, Date startDate, Date endDate, ArrayList<Goal> goals)
+    public Assessment(int id, String title, String description, String startDate, String endDate, ArrayList<Goal> goals)
     {
         this.id = id;
         this.title = title;
@@ -81,22 +81,22 @@ public class Assessment
         this.description = description;
     }
 
-    public Date getStartDate()
+    public String getStartDate()
     {
         return startDate;
     }
 
-    public void setStartDate(Date startDate)
+    public void setStartDate(String startDate)
     {
         this.startDate = startDate;
     }
 
-    public Date getEndDate()
+    public String getEndDate()
     {
         return endDate;
     }
 
-    public void setEndDate(Date endDate)
+    public void setEndDate(String endDate)
     {
         this.endDate = endDate;
     }
