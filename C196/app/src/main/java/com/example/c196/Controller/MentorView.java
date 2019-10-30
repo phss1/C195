@@ -33,24 +33,28 @@ public class MentorView extends AppCompatActivity
         myHelper.getWritableDatabase();
 
         List<String> mentors = populateListView();
-        ArrayAdapter<String> mentorsAdapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_list_item_1, mentors
-        );
+        Boolean isMentorsEmpty = mentors.isEmpty();
+        if(!isMentorsEmpty)
+        {
+            ArrayAdapter<String> mentorsAdapter = new ArrayAdapter<>(
+                    this, android.R.layout.simple_list_item_1, mentors
+            );
 
-        ListView listView = findViewById(R.id.mentorsLstVw);
-        listView.setAdapter(mentorsAdapter);
-        listView.setOnItemClickListener(
-            new AdapterView.OnItemClickListener()
-            {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+            ListView listView = findViewById(R.id.mentorsLstVw);
+            listView.setAdapter(mentorsAdapter);
+            listView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener()
                 {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+                    {
 
-                    Mentor.setSelectedItemIndex(i);
-                    onClickModifyMentor(view);
+                        Mentor.setSelectedItemIndex(i);
+                        onClickModifyMentor(view);
+                    }
                 }
-            }
-        );
+            );
+        }
     }
 
     public void onActionAddMentor(View view)

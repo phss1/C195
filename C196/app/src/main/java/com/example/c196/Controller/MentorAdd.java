@@ -23,7 +23,6 @@ public class MentorAdd extends AppCompatActivity
         setContentView(R.layout.activity_mentor_add);
 
         myHelper = new DBConnector(MentorAdd.this);
-
         myHelper.getWritableDatabase();
     }
 

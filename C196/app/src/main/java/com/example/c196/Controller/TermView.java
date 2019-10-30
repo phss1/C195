@@ -38,24 +38,28 @@ public class TermView extends AppCompatActivity
         myHelper.getWritableDatabase();
 
         List<String> terms = populateListView();
-        ArrayAdapter<String> termsAdapter = new ArrayAdapter<>
-            (
-            this, android.R.layout.simple_list_item_1, terms
-            );
+        Boolean isTermsEmpty = terms.isEmpty();
+        if(!isTermsEmpty)
+        {
+            ArrayAdapter<String> termsAdapter = new ArrayAdapter<>
+                (
+                this, android.R.layout.simple_list_item_1, terms
+                );
 
-        ListView listView = findViewById(R.id.AssessmentLstVw);
-        listView.setAdapter(termsAdapter);
-        listView.setOnItemClickListener(
-            new AdapterView.OnItemClickListener()
-            {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+            ListView listView = findViewById(R.id.termsLstVw);
+            listView.setAdapter(termsAdapter);
+            listView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener()
                 {
-                    Term.setSelectedItemIndex(i);
-                    onClickModifyTerm(view);
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+                    {
+                        Term.setSelectedItemIndex(i);
+                        onClickModifyTerm(view);
+                    }
                 }
-            }
-        );
+            );
+        }
     }
 
     public void onActionAddTerm(View view)
@@ -72,7 +76,7 @@ public class TermView extends AppCompatActivity
 
     public void onClickModifyTerm(View view)
     {
-        Intent intent = new Intent(this, AssessmentModify.class);
+        Intent intent = new Intent(this, TermModify.class);
         startActivity(intent);
     }
 
@@ -80,23 +84,13 @@ public class TermView extends AppCompatActivity
     {
         String query = "SELECT * from term";
         Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
-        String query2 = "SELECT * from course";
-        Cursor cursor2 = myHelper.getReadableDatabase().rawQuery(query2,null);
 
         dp.getAllTerms().clear();
         List<String> termList = new ArrayList<>();
-        ArrayList<Assessment> a = new ArrayList<>();
-        ArrayList<Note> n = new ArrayList<>();
+        ArrayList<Course> courses = new ArrayList<>();
 
         while (cursor.moveToNext())
         {
-            ArrayList<Course> courses = new ArrayList<>();
-            while(cursor2.moveToNext())
-            {
-                Course tempCourse = new Course(cursor2.getInt(0), cursor2.getString(1), cursor2.getString(2),
-                        cursor2.getInt(3), a, n, cursor2.getString(4), cursor2.getString(5));
-                courses.add(tempCourse);
-            }
             Term tempTerm = new Term(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
                     cursor.getString(3), courses);
             dp.addTerm(tempTerm);

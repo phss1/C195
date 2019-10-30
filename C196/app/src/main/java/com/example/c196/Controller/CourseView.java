@@ -34,14 +34,17 @@ public class CourseView extends AppCompatActivity
         myHelper = new DBConnector(CourseView.this);
         myHelper.getWritableDatabase();
 
-        List<String> mentors = populateListView();
-        ArrayAdapter<String> mentorsAdapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_list_item_1, mentors
-        );
-
-        ListView listView = findViewById(R.id.courseLstVw);
-        listView.setAdapter(mentorsAdapter);
-        listView.setOnItemClickListener(
+        List<String> courses = populateListView();
+        boolean isCoursesEmpty = courses.isEmpty();
+        if(!isCoursesEmpty)
+        {
+            ArrayAdapter<String> coursesAdapter = new ArrayAdapter<>
+            (
+            this, android.R.layout.simple_list_item_1, courses
+            );
+            ListView listView = findViewById(R.id.courseLstVw);
+            listView.setAdapter(coursesAdapter);
+            listView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener()
                 {
                     @Override
@@ -52,7 +55,8 @@ public class CourseView extends AppCompatActivity
                         onClickModifyCourse(view);
                     }
                 }
-        );
+            );
+        }
     }
 
     public void onActionAddCourse(View view)

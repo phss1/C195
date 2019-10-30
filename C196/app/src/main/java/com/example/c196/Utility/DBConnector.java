@@ -37,14 +37,15 @@ public class DBConnector extends SQLiteOpenHelper {
                 "status boolean not null, " +
                 "start_date datetime not null, " +
                 "end_date datetime not null, " +
-                "FOREIGN KEY(mentor_id) REFERENCES mentor(mentor_id));");
+                "FOREIGN KEY(mentor_id) REFERENCES mentor(mentor_id), " +
+                "FOREIGN KEY(term_id) REFERENCES term(term_id));");
 
-        this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS term(term_id INTEGER primary key autoincrement,\n" +
-                "course_id integer(10) not null,\n" +
-                "title varchar(30) not null,\n" +
-                "start_date datetime not null,\n" +
-                "end_date datetime not null, " +
-                "FOREIGN KEY(course_id) REFERENCES course(course_id));");
+        this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS term(term_id INTEGER primary key autoincrement, " +
+                //"course_id integer(10) not null,\n" +
+                "title varchar(30) not null, " +
+                "start_date datetime not null, " +
+                "end_date datetime not null);"); //+
+                //"FOREIGN KEY(course_id) REFERENCES course(course_id));");
 
         this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS goal(goal_id INTEGER primary key autoincrement,\n" +
                 "assessment_id int(10) not null,\n" +
