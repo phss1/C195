@@ -11,64 +11,112 @@
         android:id="@+id/termModifyStartDateTxtFld"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="101dp"
+        android:layout_marginLeft="101dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="97dp"
+        android:layout_marginRight="97dp"
         android:ems="10"
         android:hint="StartDate: 01/22/2019"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="101dp"
-        tools:layout_editor_absoluteY="138dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/termModifyTitleTxtFld" />
 
     <EditText
         android:id="@+id/termModifyTitleTxtFld"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="101dp"
+        android:layout_marginLeft="101dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="97dp"
+        android:layout_marginRight="97dp"
         android:ems="10"
         android:hint="title"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="101dp"
-        tools:layout_editor_absoluteY="83dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <EditText
         android:id="@+id/termModifyEndDateTxtFld"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="101dp"
+        android:layout_marginLeft="101dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="97dp"
+        android:layout_marginRight="97dp"
         android:ems="10"
         android:hint="EndDate: 01/23/2019"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="101dp"
-        tools:layout_editor_absoluteY="197dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/termModifyStartDateTxtFld" />
 
     <TextView
         android:id="@+id/textView11"
         android:layout_width="218dp"
         android:layout_height="48dp"
+        android:layout_marginStart="96dp"
+        android:layout_marginLeft="96dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="97dp"
+        android:layout_marginRight="97dp"
         android:text="Modify Term"
         android:textSize="36sp"
         android:textStyle="bold"
         android:typeface="normal"
-        tools:layout_editor_absoluteX="96dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/termModifyCancelBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="61dp"
+        android:layout_marginLeft="61dp"
+        android:layout_marginTop="12dp"
+        android:onClick="onClickCancelBtn"
         android:text="Cancel"
-        tools:layout_editor_absoluteX="61dp"
-        tools:layout_editor_absoluteY="254dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/termModifyEndDateTxtFld" />
 
     <Button
         android:id="@+id/modifyTermModCourseBtn"
         android:layout_width="95dp"
         android:layout_height="54dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginLeft="9dp"
+        android:layout_marginTop="12dp"
+        android:onClick="onClickModCoursesBtn"
         android:text="Modify Courses"
-        tools:layout_editor_absoluteX="158dp"
-        tools:layout_editor_absoluteY="254dp" />
+        app:layout_constraintStart_toEndOf="@+id/termModifyCancelBtn"
+        app:layout_constraintTop_toBottomOf="@+id/termModifyEndDateTxtFld" />
 
     <Button
         android:id="@+id/modifyTermSavebtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="58dp"
+        android:layout_marginRight="58dp"
+        android:onClick="onClickSaveBtn"
         android:text="Save"
-        tools:layout_editor_absoluteX="265dp"
-        tools:layout_editor_absoluteY="254dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/termModifyEndDateTxtFld" />
+
+    <ListView
+        android:layout_width="408dp"
+        android:layout_height="406dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

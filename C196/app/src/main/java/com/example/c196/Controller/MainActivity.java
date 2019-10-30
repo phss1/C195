@@ -34,6 +34,10 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
 
         /*
+        Notes: Design out rest of term modify and create modify course screen as well. Get courses added to test.
+        */
+
+        /*
         myHelper.insertRecord("insert into customer(name, salary, hire_date) " +
                 "values('Mike', 20000.00, '2019-10-05 22:00:00')");
         long result = myHelper.addRecord("name", "Max", "salary",
