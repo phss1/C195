@@ -73,11 +73,23 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/modifyTermModCourseBtn"
+        android:layout_width="122dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="17dp"
+        android:onClick="onClickModCoursesBtn"
+        android:text="Modify/Add Courses"
+        app:layout_constraintBottom_toTopOf="@+id/_dynamic"
+        app:layout_constraintTop_toBottomOf="@+id/termModifyEndDateTxtFld"
+        tools:layout_editor_absoluteX="144dp" />
+
+    <Button
         android:id="@+id/termModifyCancelBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="61dp"
-        android:layout_marginLeft="61dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
         android:layout_marginTop="12dp"
         android:onClick="onClickCancelBtn"
         android:text="Cancel"
@@ -85,24 +97,12 @@
         app:layout_constraintTop_toBottomOf="@+id/termModifyEndDateTxtFld" />
 
     <Button
-        android:id="@+id/modifyTermModCourseBtn"
-        android:layout_width="95dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="9dp"
-        android:layout_marginLeft="9dp"
-        android:layout_marginTop="12dp"
-        android:onClick="onClickModCoursesBtn"
-        android:text="Modify Courses"
-        app:layout_constraintStart_toEndOf="@+id/termModifyCancelBtn"
-        app:layout_constraintTop_toBottomOf="@+id/termModifyEndDateTxtFld" />
-
-    <Button
         android:id="@+id/modifyTermSavebtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="58dp"
-        android:layout_marginRight="58dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
         android:onClick="onClickSaveBtn"
         android:text="Save"
         app:layout_constraintEnd_toEndOf="parent"

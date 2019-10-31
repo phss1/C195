@@ -10,12 +10,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.c196.Classes.Mentor;
+import com.example.c196.Classes.*;
 import com.example.c196.R;
-import com.example.c196.Utility.DBConnector;
-import com.example.c196.Utility.DataProvider;
-import com.example.c196.Utility.UtilityMethods;
-
+import com.example.c196.Utility.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,18 +76,22 @@ public class CourseView extends AppCompatActivity
 
     private List<String> populateListView()
     {
-        List<String> mentorList = new ArrayList<>();
+        List<String> courseList = new ArrayList<>();
         String query = "SELECT * from course";
         Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
 
-        dp.getAllMentors().clear();
+        ArrayList<Assessment> a = new ArrayList<>();
+        ArrayList<Note> n = new ArrayList<>();
+
+        dp.getAllCourses().clear();
         while (cursor.moveToNext())
         {
-            //Course tempMentor = new Course(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3));
-            //dp.addMentor(tempMentor);
-            mentorList.add(cursor.getString(1));
+            Course tempCourse = new Course(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3),
+            a, n, cursor.getString(4), cursor.getString(5));
+            dp.addCourse(tempCourse);
+            courseList.add(cursor.getString(3));
         }
 
-        return mentorList;
+        return courseList;
     }
 }

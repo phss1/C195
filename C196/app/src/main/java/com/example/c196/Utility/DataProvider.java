@@ -54,6 +54,11 @@ public class DataProvider
         this.allCourses = allCourses;
     }
 
+    public void addCourse(Course course)
+    {
+        DataProvider.allCourses.add(course);
+    }
+
     public static void addTerm(Term newTerm)
     {
         DataProvider.allTerms.add(newTerm);

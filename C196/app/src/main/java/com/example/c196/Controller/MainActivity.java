@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity
         myHelper = new DBConnector(MainActivity.this);
         myHelper.getWritableDatabase();
         myHelper.createTables();
+        //myHelper.insertRecord("insert into course(term_id, mentor_id, title, status, start_date, end_date) " +
+        //        "values(-1,-1,\"Course1\",\'true\',\"01/01/2020\",\"12/01/2020\");");
     }
 
     @Override
@@ -72,7 +74,6 @@ public class MainActivity extends AppCompatActivity
     {
         super.onPause();
         myHelper.close();
-        utilities.displayGuiMessage(MainActivity.this, myHelper.getDatabaseName() + " closed!");
     }
 
     public void onClickViewMentorBtn(View view)
