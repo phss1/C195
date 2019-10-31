@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.c196.Classes.Assessment;
@@ -35,6 +36,15 @@ public class TermModify extends AppCompatActivity
 
         myHelper = new DBConnector(TermModify.this);
         myHelper.getWritableDatabase();
+
+        Term term = dp.getAllTerms().get(Term.getSelectedItemIndex());
+        EditText title = findViewById(R.id.termModifyTitleTxtFld);
+        EditText startDate = findViewById(R.id.termModifyStartDateTxtFld);
+        EditText endDate = findViewById(R.id.termModifyEndDateTxtFld);
+
+        title.setText(term.getTitle());
+        startDate.setText(term.getStartDate());
+        endDate.setText(term.getEndDate());
 
         List<String> termCourses = populateListView();
         Boolean isTermCoursesEmpty = termCourses.isEmpty();

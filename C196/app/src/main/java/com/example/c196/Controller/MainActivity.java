@@ -36,7 +36,10 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
 
         /*
-        Notes: Design out rest of term modify and create modify course screen as well. Get courses added to test.
+        Notes:
+        Make selectable list view in term modify for deleting courses from term
+        Add delete course button.
+        Add functionality to term modify course to show any courses with term_id set to -1
         */
 
         /*
