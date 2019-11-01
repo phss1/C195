@@ -5,20 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.example.c196.Classes.Assessment;
-import com.example.c196.Classes.Course;
-import com.example.c196.Classes.Mentor;
-import com.example.c196.Classes.Note;
-import com.example.c196.Classes.Term;
+import com.example.c196.Classes.*;
 import com.example.c196.R;
-import com.example.c196.Utility.DBConnector;
-import com.example.c196.Utility.DataProvider;
+import com.example.c196.Utility.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +69,39 @@ public class TermModify extends AppCompatActivity
 
     public void onCLickModTermDeleteBtn(View view)
     {
-        //
+        try
+        {
+            ListView listView = findViewById(R.id.termModifyLstVw);
+            List<String> termCourses = populateListView();
+            Boolean isTermCoursesEmpty = termCourses.isEmpty();
+            if(!isTermCoursesEmpty)
+            {
+                ArrayAdapter<String> termCoursesAdapter = new ArrayAdapter<>
+                (
+                        this, android.R.layout.simple_list_item_multiple_choice, termCourses
+                );
+
+                listView.setAdapter(termCoursesAdapter);
+                SparseBooleanArray checked = listView.getCheckedItemPositions();
+
+                for (int i = 0; i < listView.getAdapter().getCount(); i++)
+                {
+                    if (checked.get(i))
+                    {
+                        String query = "update course set term_id = -1 where title = \""
+                                + listView.getItemAtPosition(i) + "\";";
+                        myHelper.updateRecord(query);
+
+                        termCoursesAdapter.remove(listView.getItemAtPosition(i).toString());
+                        termCoursesAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        }
+        catch(Exception e)
+        {
+
+        }
     }
 
     public void onClickSaveBtn(View view)

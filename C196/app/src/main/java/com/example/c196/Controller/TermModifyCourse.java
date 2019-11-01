@@ -58,14 +58,12 @@ public class TermModifyCourse extends AppCompatActivity
         {
             ListView listView = findViewById(R.id.addCToTermLstVw);
             SparseBooleanArray checked = listView.getCheckedItemPositions();
-            ArrayList<String> selectedCoursesForTerm = new ArrayList<>();
             int termId = DataProvider.getAllTerms().get(Term.getSelectedItemIndex()).getId();
 
             for (int i = 0; i < listView.getAdapter().getCount(); i++)
             {
                 if(checked.get(i))
                 {
-                    selectedCoursesForTerm.add(String.valueOf(listView.getItemAtPosition(i)));
                     String query = "update course set term_id = " + termId + " where title = \""
                             + listView.getItemAtPosition(i) + "\";";
                     //UtilityMethods.displayGuiMessage(TermModifyCourse.this, query);
