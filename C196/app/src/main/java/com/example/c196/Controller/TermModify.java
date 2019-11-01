@@ -51,23 +51,12 @@ public class TermModify extends AppCompatActivity
         if(!isTermCoursesEmpty)
         {
             ArrayAdapter<String> termCoursesAdapter = new ArrayAdapter<>(
-                    this, android.R.layout.simple_list_item_1, termCourses
+                    this, android.R.layout.simple_list_item_multiple_choice, termCourses
             );
 
-            ListView listView = findViewById(R.id.mentorsLstVw);
+            ListView listView = findViewById(R.id.termModifyLstVw);
             listView.setAdapter(termCoursesAdapter);
-            listView.setOnItemClickListener
-            (
-                new AdapterView.OnItemClickListener()
-                {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
-                    {
-                        Term.setSelectedItemIndex(i);
-                        onClickModifyTermCourses(view);
-                    }
-                }
-            );
+            listView.setChoiceMode(2);
         }
     }
 
@@ -83,15 +72,14 @@ public class TermModify extends AppCompatActivity
         startActivity(intent);
     }
 
+    public void onCLickModTermDeleteBtn(View view)
+    {
+        //
+    }
+
     public void onClickSaveBtn(View view)
     {
         Intent intent = new Intent(this, TermView.class);
-        startActivity(intent);
-    }
-
-    public void onClickModifyTermCourses(View view)
-    {
-        Intent intent = new Intent(this, MentorModify.class);
         startActivity(intent);
     }
 

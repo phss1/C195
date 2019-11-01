@@ -52,9 +52,6 @@ public class MentorModify extends AppCompatActivity
         myHelper.getWritableDatabase();
         myHelper.updateRecord(query);
 
-        //Mentor mentorModified = new Mentor(modifiedMentorId, name.getText().toString(), email.getText().toString(), phone.getText().toString());
-        //Mentor.modifyMentor(mentorModified);
-
         Intent intent = new Intent(this, MentorView.class);
         startActivity(intent);
     }

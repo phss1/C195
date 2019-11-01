@@ -25,8 +25,8 @@
 
     <ListView
         android:id="@+id/addCToTermLstVw"
-        android:layout_width="403dp"
-        android:layout_height="498dp"
+        android:layout_width="416dp"
+        android:layout_height="404dp"
         android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
