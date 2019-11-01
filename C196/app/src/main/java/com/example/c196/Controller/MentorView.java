@@ -92,4 +92,19 @@ public class MentorView extends AppCompatActivity
 
         return mentorList;
     }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        myHelper.close();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        myHelper = new DBConnector(MentorView.this);
+        myHelper.getWritableDatabase();
+    }
 }

@@ -20,5 +20,18 @@ public class AssessmentModify extends AppCompatActivity
         setContentView(R.layout.activity_assessment_modify);
     }
 
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        myHelper.close();
+    }
 
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        myHelper = new DBConnector(AssessmentModify.this);
+        myHelper.getWritableDatabase();
+    }
 }

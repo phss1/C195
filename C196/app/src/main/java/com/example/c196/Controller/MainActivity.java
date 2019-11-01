@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity
         /*
         Notes:
         Make selectable list view in term modify for deleting courses from term
-        Add delete course button.
         Add functionality to term modify course to show any courses with term_id set to -1
         */
 

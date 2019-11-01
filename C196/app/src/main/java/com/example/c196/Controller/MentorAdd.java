@@ -60,4 +60,19 @@ public class MentorAdd extends AppCompatActivity
         Intent intent = new Intent(this, MentorView.class);
         startActivity(intent);
     }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        myHelper.close();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        myHelper = new DBConnector(MentorAdd.this);
+        myHelper.getWritableDatabase();
+    }
 }

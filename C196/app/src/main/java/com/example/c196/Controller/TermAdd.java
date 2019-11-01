@@ -60,4 +60,19 @@ public class TermAdd extends AppCompatActivity
         Intent intent = new Intent(this, TermView.class);
         startActivity(intent);
     }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        myHelper.close();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        myHelper = new DBConnector(TermAdd.this);
+        myHelper.getWritableDatabase();
+    }
 }

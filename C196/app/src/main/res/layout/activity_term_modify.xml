@@ -16,9 +16,11 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="97dp"
         android:layout_marginRight="97dp"
+        android:layout_marginBottom="14dp"
         android:ems="10"
         android:hint="StartDate: 01/22/2019"
         android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/termModifyEndDateTxtFld"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/termModifyTitleTxtFld" />
@@ -64,59 +66,85 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="97dp"
         android:layout_marginRight="97dp"
+        android:layout_marginBottom="19dp"
         android:text="Modify Term"
         android:textSize="36sp"
         android:textStyle="bold"
         android:typeface="normal"
+        app:layout_constraintBottom_toTopOf="@+id/termModifyTitleTxtFld"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/modifyTermModCourseBtn"
-        android:layout_width="122dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="17dp"
+        android:layout_width="111dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
         android:onClick="onClickModCoursesBtn"
         android:text="Modify/Add Courses"
-        app:layout_constraintBottom_toTopOf="@+id/_dynamic"
-        app:layout_constraintTop_toBottomOf="@+id/termModifyEndDateTxtFld"
-        tools:layout_editor_absoluteX="144dp" />
+        app:layout_constraintEnd_toStartOf="@+id/deleteBtn"
+        app:layout_constraintStart_toEndOf="@+id/termModifyCancelBtn"
+        app:layout_constraintTop_toBottomOf="@+id/termModifyEndDateTxtFld" />
 
     <Button
         android:id="@+id/termModifyCancelBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="253dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginRight="13dp"
         android:onClick="onClickCancelBtn"
         android:text="Cancel"
+        app:layout_constraintEnd_toStartOf="@+id/modifyTermModCourseBtn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/termModifyEndDateTxtFld" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/modifyTermSavebtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
+        android:layout_width="65dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="251dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:onClick="onClickSaveBtn"
         android:text="Save"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/termModifyEndDateTxtFld" />
+        app:layout_constraintStart_toEndOf="@+id/deleteBtn"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
+        android:id="@+id/termModifyLstVw"
         android:layout_width="408dp"
         android:layout_height="406dp"
         android:layout_marginStart="2dp"
         android:layout_marginLeft="2dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginRight="2dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginRight="1dp"
         android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/deleteBtn"
+        android:layout_width="79dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Delete"
+        app:layout_constraintEnd_toStartOf="@+id/modifyTermSavebtn"
+        app:layout_constraintStart_toEndOf="@+id/modifyTermModCourseBtn"
+        app:layout_constraintTop_toBottomOf="@+id/termModifyEndDateTxtFld" />
 </androidx.constraintlayout.widget.ConstraintLayout>

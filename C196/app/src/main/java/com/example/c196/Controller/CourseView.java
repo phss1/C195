@@ -94,4 +94,19 @@ public class CourseView extends AppCompatActivity
 
         return courseList;
     }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        myHelper.close();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        myHelper = new DBConnector(CourseView.this);
+        myHelper.getWritableDatabase();
+    }
 }

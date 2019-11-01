@@ -61,4 +61,19 @@ public class GoalAdd extends AppCompatActivity
         Intent intent = new Intent(this, AssessmentView.class);
         startActivity(intent);
     }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        myHelper.close();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        myHelper = new DBConnector(GoalAdd.this);
+        myHelper.getWritableDatabase();
+    }
 }

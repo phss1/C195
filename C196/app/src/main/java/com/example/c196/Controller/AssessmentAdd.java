@@ -64,4 +64,18 @@ public class AssessmentAdd extends AppCompatActivity
         Intent intent = new Intent(this, GoalAdd.class);
         startActivity(intent);
     }
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        myHelper.close();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        myHelper = new DBConnector(AssessmentAdd.this);
+        myHelper.getWritableDatabase();
+    }
 }

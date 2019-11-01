@@ -99,4 +99,19 @@ public class TermView extends AppCompatActivity
 
         return termList;
     }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        myHelper.close();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        myHelper = new DBConnector(TermView.this);
+        myHelper.getWritableDatabase();
+    }
 }
