@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Controller.CourseView">
+    tools:context=".Controller.Course.CourseView">
 
     <Button
         android:id="@+id/homeBtn2"

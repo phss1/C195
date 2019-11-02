@@ -1,4 +1,4 @@
-package com.example.c196.Controller;
+package com.example.c196.Controller.Goal;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.c196.Controller.Assessment.AssessmentView;
+import com.example.c196.Controller.Term.Terms;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
@@ -29,7 +31,6 @@ public class GoalAdd extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // TODO Auto-generated method stub
         int id = item.getItemId();
         if (id == android.R.id.home)
         {

@@ -1,4 +1,4 @@
-package com.example.c196.Controller;
+package com.example.c196.Controller.Assessment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.c196.Controller.Goal.GoalAdd;
+import com.example.c196.Controller.MainActivity;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;

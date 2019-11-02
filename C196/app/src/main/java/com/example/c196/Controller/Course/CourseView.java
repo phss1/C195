@@ -1,4 +1,4 @@
-package com.example.c196.Controller;
+package com.example.c196.Controller.Course;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.c196.Classes.*;
+import com.example.c196.Controller.MainActivity;
+import com.example.c196.Controller.Mentor.MentorAdd;
+import com.example.c196.Controller.Mentor.MentorModify;
+import com.example.c196.Controller.Term.Terms;
 import com.example.c196.R;
 import com.example.c196.Utility.*;
 import java.util.ArrayList;

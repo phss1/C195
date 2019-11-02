@@ -1,4 +1,4 @@
-package com.example.c196.Controller;
+package com.example.c196.Controller.Term;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.c196.Classes.*;
@@ -49,7 +48,7 @@ public class TermModify extends AppCompatActivity
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
-            Intent intent = new Intent(this, Terms.class);
+            Intent intent = new Intent(this, TermDetailedView.class);
             startActivity(intent);
         }
 
@@ -61,8 +60,6 @@ public class TermModify extends AppCompatActivity
         Intent intent = new Intent(this, Terms.class);
         startActivity(intent);
     }
-
-
 
     public void onClickSaveBtn(View view)
     {
@@ -83,7 +80,7 @@ public class TermModify extends AppCompatActivity
                 UtilityMethods.displayGuiMessage(TermModify.this, sqlQuery);
                 myHelper.insertRecord(sqlQuery);
 
-                Intent intent = new Intent(this, Terms.class);
+                Intent intent = new Intent(this, TermDetailedView.class);
                 startActivity(intent);
             }
             else

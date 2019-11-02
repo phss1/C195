@@ -1,4 +1,4 @@
-package com.example.c196.Controller;
+package com.example.c196.Controller.Term;
 
 import androidx.appcompat.app.AppCompatActivity;
 

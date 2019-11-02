@@ -1,4 +1,6 @@
-package com.example.c196.Controller;
+package com.example.c196.Controller.Term;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,9 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.c196.Classes.Mentor;
+import com.example.c196.Classes.Course;
+import com.example.c196.Classes.Term;
+import com.example.c196.Controller.MainActivity;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
@@ -19,7 +21,7 @@ import com.example.c196.Utility.DataProvider;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MentorView extends AppCompatActivity
+public class Terms extends AppCompatActivity
 {
     DBConnector myHelper;
     DataProvider dp = new DataProvider();
@@ -28,32 +30,32 @@ public class MentorView extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mentors_view);
-        getSupportActionBar().setTitle("View Mentors");
+        setContentView(R.layout.activity_terms);
+        getSupportActionBar().setTitle("Terms");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        myHelper = new DBConnector(MentorView.this);
+        myHelper = new DBConnector(Terms.this);
         myHelper.getWritableDatabase();
 
-        List<String> mentors = populateListView();
-        Boolean isMentorsEmpty = mentors.isEmpty();
-        if(!isMentorsEmpty)
+        List<String> terms = populateListView();
+        Boolean isTermsEmpty = terms.isEmpty();
+        if(!isTermsEmpty)
         {
-            ArrayAdapter<String> mentorsAdapter = new ArrayAdapter<>(
-                    this, android.R.layout.simple_list_item_1, mentors
-            );
+            ArrayAdapter<String> termsAdapter = new ArrayAdapter<>
+                (
+                this, android.R.layout.simple_list_item_1, terms
+                );
 
-            ListView listView = findViewById(R.id.mentorsLstVw);
-            listView.setAdapter(mentorsAdapter);
+            ListView listView = findViewById(R.id.termsLstVw);
+            listView.setAdapter(termsAdapter);
             listView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener()
                 {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
                     {
-
-                        Mentor.setSelectedItemIndex(i);
-                        onClickModifyMentor(view);
+                        Term.setSelectedItemIndex(i);
+                        onClickModifyTerm(view);
                     }
                 }
             );
@@ -67,16 +69,16 @@ public class MentorView extends AppCompatActivity
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
-            Intent intent = new Intent(this, Terms.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
 
         return true;
     }
 
-    public void onActionAddMentor(View view)
+    public void onActionAddTerm(View view)
     {
-        Intent intent = new Intent(this, MentorAdd.class);
+        Intent intent = new Intent(this, TermAdd.class);
         startActivity(intent);
     }
 
@@ -86,28 +88,30 @@ public class MentorView extends AppCompatActivity
         startActivity(intent);
     }
 
-    public void onClickModifyMentor(View view)
+    public void onClickModifyTerm(View view)
     {
-        Intent intent = new Intent(this, MentorModify.class);
+        Intent intent = new Intent(this, TermDetailedView.class);
         startActivity(intent);
     }
 
     private List<String> populateListView()
     {
-        List<String> mentorList = new ArrayList<>();
-        String query = "SELECT * from mentor";
+        String query = "SELECT * from term";
         Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
 
-        dp.getAllMentors().clear();
+        dp.getAllTerms().clear();
+        List<String> termList = new ArrayList<>();
+        ArrayList<Course> courses = new ArrayList<>();
+
         while (cursor.moveToNext())
         {
-            Mentor tempMentor = new Mentor(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
-                    cursor.getString(3));
-            dp.addMentor(tempMentor);
-            mentorList.add(cursor.getString(1));
+            Term tempTerm = new Term(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
+                    cursor.getString(3), courses);
+            dp.addTerm(tempTerm);
+            termList.add(cursor.getString(1));
         }
 
-        return mentorList;
+        return termList;
     }
 
     @Override
@@ -121,7 +125,7 @@ public class MentorView extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
-        myHelper = new DBConnector(MentorView.this);
+        myHelper = new DBConnector(Terms.this);
         myHelper.getWritableDatabase();
     }
 }

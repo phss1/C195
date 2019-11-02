@@ -6,12 +6,18 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.c196.Controller.Assessment.AssessmentView;
+import com.example.c196.Controller.Course.CourseView;
+import com.example.c196.Controller.Mentor.MentorView;
+import com.example.c196.Controller.Term.Terms;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
 
 public class MainActivity extends AppCompatActivity
 {
     DBConnector myHelper;
+
+    //TODO make sure to set up TermDetailedView listview to change to viewcourse screen
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

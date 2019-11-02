@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:label="Course Management"
-    tools:context=".Controller.TermModify">
+    tools:context=".Controller.Term.TermModify">
 
     <EditText
         android:id="@+id/termModifyStartDateTxtFld"
