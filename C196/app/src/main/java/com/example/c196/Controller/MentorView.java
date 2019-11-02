@@ -3,6 +3,7 @@ package com.example.c196.Controller;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,6 +29,8 @@ public class MentorView extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mentors_view);
+        getSupportActionBar().setTitle("View Mentors");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         myHelper = new DBConnector(MentorView.this);
         myHelper.getWritableDatabase();
@@ -55,6 +58,20 @@ public class MentorView extends AppCompatActivity
                 }
             );
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        // TODO Auto-generated method stub
+        int id = item.getItemId();
+        if (id == android.R.id.home)
+        {
+            Intent intent = new Intent(this, TermView.class);
+            startActivity(intent);
+        }
+
+        return true;
     }
 
     public void onActionAddMentor(View view)

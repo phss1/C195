@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,6 +28,8 @@ public class CourseView extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_view);
+        getSupportActionBar().setTitle("View Courses");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         myHelper = new DBConnector(CourseView.this);
         myHelper.getWritableDatabase();
@@ -54,6 +57,20 @@ public class CourseView extends AppCompatActivity
                 }
             );
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        // TODO Auto-generated method stub
+        int id = item.getItemId();
+        if (id == android.R.id.home)
+        {
+            Intent intent = new Intent(this, TermView.class);
+            startActivity(intent);
+        }
+
+        return true;
     }
 
     public void onActionAddCourse(View view)

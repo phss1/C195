@@ -3,6 +3,7 @@ package com.example.c196.Controller;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -25,6 +26,8 @@ public class MentorModify extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mentor_modify);
+        getSupportActionBar().setTitle("Modify Mentor");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         myHelper = new DBConnector(MentorModify.this);
         myHelper.getWritableDatabase();
@@ -37,6 +40,20 @@ public class MentorModify extends AppCompatActivity
         name.setText(mentorToModify.getName());
         email.setText(mentorToModify.getEmail());
         phone.setText(mentorToModify.getPhone());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        // TODO Auto-generated method stub
+        int id = item.getItemId();
+        if (id == android.R.id.home)
+        {
+            Intent intent = new Intent(this, TermView.class);
+            startActivity(intent);
+        }
+
+        return true;
     }
 
     public void onClickSaveBtn(View view)

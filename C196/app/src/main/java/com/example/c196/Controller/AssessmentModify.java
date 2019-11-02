@@ -2,7 +2,9 @@ package com.example.c196.Controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
@@ -18,6 +20,22 @@ public class AssessmentModify extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessment_modify);
+        getSupportActionBar().setTitle("Modify Assessment");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        // TODO Auto-generated method stub
+        int id = item.getItemId();
+        if (id == android.R.id.home)
+        {
+            Intent intent = new Intent(this, TermView.class);
+            startActivity(intent);
+        }
+
+        return true;
     }
 
     @Override

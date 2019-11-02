@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -33,6 +34,8 @@ public class TermView extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_view);
+        getSupportActionBar().setTitle("View Terms");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         myHelper = new DBConnector(TermView.this);
         myHelper.getWritableDatabase();
@@ -60,6 +63,20 @@ public class TermView extends AppCompatActivity
                 }
             );
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        // TODO Auto-generated method stub
+        int id = item.getItemId();
+        if (id == android.R.id.home)
+        {
+            Intent intent = new Intent(this, TermView.class);
+            startActivity(intent);
+        }
+
+        return true;
     }
 
     public void onActionAddTerm(View view)

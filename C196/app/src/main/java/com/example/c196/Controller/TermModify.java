@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toolbar;
 
 import com.example.c196.Classes.*;
 import com.example.c196.R;
@@ -28,6 +30,8 @@ public class TermModify extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_modify);
+        getSupportActionBar().setTitle("Modify Term");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         myHelper = new DBConnector(TermModify.this);
         myHelper.getWritableDatabase();
@@ -53,6 +57,20 @@ public class TermModify extends AppCompatActivity
             listView.setAdapter(termCoursesAdapter);
             listView.setChoiceMode(2);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        // TODO Auto-generated method stub
+        int id = item.getItemId();
+        if (id == android.R.id.home)
+        {
+            Intent intent = new Intent(this, TermView.class);
+            startActivity(intent);
+        }
+
+        return true;
     }
 
     public void onClickModCoursesBtn(View view)

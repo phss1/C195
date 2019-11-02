@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,6 +35,9 @@ public class AssessmentView extends AppCompatActivity
         myHelper = new DBConnector(AssessmentView.this);
         myHelper.getWritableDatabase();
 
+        getSupportActionBar().setTitle("View Assessments");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         List<String> mentors = populateListView();
         ArrayAdapter<String> mentorsAdapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_list_item_1, mentors
@@ -53,6 +57,20 @@ public class AssessmentView extends AppCompatActivity
                     }
                 }
         );
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        // TODO Auto-generated method stub
+        int id = item.getItemId();
+        if (id == android.R.id.home)
+        {
+            Intent intent = new Intent(this, TermView.class);
+            startActivity(intent);
+        }
+
+        return true;
     }
 
     public void onActionAddAssessment(View view)
