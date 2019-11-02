@@ -37,7 +37,7 @@ public class TermAdd extends AppCompatActivity
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
-            Intent intent = new Intent(this, TermView.class);
+            Intent intent = new Intent(this, Terms.class);
             startActivity(intent);
         }
 
@@ -61,7 +61,7 @@ public class TermAdd extends AppCompatActivity
                         + "\", \"" + startDate + "\", \"" + endDate + "\");";
                 myHelper.insertRecord(sqlQuery);
 
-                Intent intent = new Intent(this, TermView.class);
+                Intent intent = new Intent(this, Terms.class);
                 startActivity(intent);
             }
         }
@@ -74,7 +74,7 @@ public class TermAdd extends AppCompatActivity
 
     public void onClickCancelBtn(View view)
     {
-        Intent intent = new Intent(this, TermView.class);
+        Intent intent = new Intent(this, Terms.class);
         startActivity(intent);
     }
 

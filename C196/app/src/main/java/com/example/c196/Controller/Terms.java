@@ -11,20 +11,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.c196.Classes.Assessment;
 import com.example.c196.Classes.Course;
-import com.example.c196.Classes.Goal;
-import com.example.c196.Classes.Note;
 import com.example.c196.Classes.Term;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TermView extends AppCompatActivity
+public class Terms extends AppCompatActivity
 {
     DBConnector myHelper;
     DataProvider dp = new DataProvider();
@@ -33,11 +29,13 @@ public class TermView extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_term_view);
-        getSupportActionBar().setTitle("View Terms");
+        setContentView(R.layout.activity_terms);
+        getSupportActionBar().setTitle("Terms");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        myHelper = new DBConnector(TermView.this);
+
+
+        myHelper = new DBConnector(Terms.this);
         myHelper.getWritableDatabase();
 
         List<String> terms = populateListView();
@@ -72,7 +70,7 @@ public class TermView extends AppCompatActivity
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
-            Intent intent = new Intent(this, TermView.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
 
@@ -128,7 +126,7 @@ public class TermView extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
-        myHelper = new DBConnector(TermView.this);
+        myHelper = new DBConnector(Terms.this);
         myHelper.getWritableDatabase();
     }
 }

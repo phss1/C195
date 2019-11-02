@@ -36,7 +36,7 @@ public class MentorAdd extends AppCompatActivity
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
-            Intent intent = new Intent(this, TermView.class);
+            Intent intent = new Intent(this, Terms.class);
             startActivity(intent);
         }
 

@@ -1,7 +1,11 @@
 package com.example.c196.Utility;
 
 import android.content.Context;
+import android.util.SparseBooleanArray;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import com.example.c196.R;
 
 import java.util.regex.Pattern;
 
@@ -15,5 +19,17 @@ public class UtilityMethods
     public static boolean isValidDate(String date)
     {
         return Pattern.compile("^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d$").matcher(date).matches();
+    }
+
+    public static int isAnItemChecked(ListView listView)
+    {
+        SparseBooleanArray checked = listView.getCheckedItemPositions();
+        int itemIsChecked =-1;
+        for (int i = 0; i < listView.getAdapter().getCount(); i++)
+        {
+            itemIsChecked = checked.get(i) ? 0 : 1;
+        }
+
+        return itemIsChecked;
     }
 }

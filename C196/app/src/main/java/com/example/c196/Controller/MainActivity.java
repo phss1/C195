@@ -1,7 +1,6 @@
 package com.example.c196.Controller;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 
@@ -9,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
-import com.example.c196.Utility.UtilityMethods;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -32,6 +30,9 @@ public class MainActivity extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
+
+        myHelper = new DBConnector(MainActivity.this);
+        myHelper.getWritableDatabase();
     }
 
     @Override
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity
 
     public void onClickViewTerms(View view)
     {
-        Intent intent = new Intent(this, TermView.class);
+        Intent intent = new Intent(this, Terms.class);
         startActivity(intent);
     }
 

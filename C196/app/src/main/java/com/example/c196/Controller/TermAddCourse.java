@@ -8,23 +8,18 @@ import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.c196.Classes.Assessment;
-import com.example.c196.Classes.Course;
-import com.example.c196.Classes.Note;
 import com.example.c196.Classes.Term;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
-import com.example.c196.Utility.UtilityMethods;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TermModifyCourse extends AppCompatActivity
+public class TermAddCourse extends AppCompatActivity
 {
     DBConnector myHelper;
     DataProvider dp = new DataProvider();
@@ -33,11 +28,11 @@ public class TermModifyCourse extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_term_modify_course);
-        getSupportActionBar().setTitle("Modify Term Courses");
+        setContentView(R.layout.activity_term_add_course);
+        getSupportActionBar().setTitle("Add Course to Term");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        myHelper = new DBConnector(TermModifyCourse.this);
+        myHelper = new DBConnector(TermAddCourse.this);
         myHelper.getWritableDatabase();
 
         List<String> termCourses = populateListView();
@@ -49,7 +44,7 @@ public class TermModifyCourse extends AppCompatActivity
             this, android.R.layout.simple_list_item_multiple_choice, termCourses
             );
 
-            ListView listView = findViewById(R.id.addCToTermLstVw);
+            ListView listView = findViewById(R.id.removalLstVw);
             listView.setAdapter(termCoursesAdapter);
             listView.setChoiceMode(2);
         }
@@ -58,11 +53,10 @@ public class TermModifyCourse extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // TODO Auto-generated method stub
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
-            Intent intent = new Intent(this, TermView.class);
+            Intent intent = new Intent(this, TermModify.class);
             startActivity(intent);
         }
 
@@ -73,7 +67,7 @@ public class TermModifyCourse extends AppCompatActivity
     {
         try
         {
-            ListView listView = findViewById(R.id.addCToTermLstVw);
+            ListView listView = findViewById(R.id.removalLstVw);
             SparseBooleanArray checked = listView.getCheckedItemPositions();
             int termId = DataProvider.getAllTerms().get(Term.getSelectedItemIndex()).getId();
 
@@ -83,7 +77,7 @@ public class TermModifyCourse extends AppCompatActivity
                 {
                     String query = "update course set term_id = " + termId + " where title = \""
                             + listView.getItemAtPosition(i) + "\";";
-                    //UtilityMethods.displayGuiMessage(TermModifyCourse.this, query);
+                    //UtilityMethods.displayGuiMessage(TermAddCourse.this, query);
                     myHelper.updateRecord(query);
                 }
             }
@@ -92,7 +86,6 @@ public class TermModifyCourse extends AppCompatActivity
         {
 
         }
-
 
         Intent intent = new Intent(this, TermModify.class);
         startActivity(intent);
@@ -115,7 +108,7 @@ public class TermModifyCourse extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
-        myHelper = new DBConnector(TermModifyCourse.this);
+        myHelper = new DBConnector(TermAddCourse.this);
         myHelper.getWritableDatabase();
     }
 

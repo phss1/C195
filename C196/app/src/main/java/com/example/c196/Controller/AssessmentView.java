@@ -13,7 +13,6 @@ import android.widget.ListView;
 
 import com.example.c196.Classes.Assessment;
 import com.example.c196.Classes.Goal;
-import com.example.c196.Classes.Mentor;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
@@ -66,7 +65,7 @@ public class AssessmentView extends AppCompatActivity
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
-            Intent intent = new Intent(this, TermView.class);
+            Intent intent = new Intent(this, Terms.class);
             startActivity(intent);
         }
 

@@ -5,13 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.SparseBooleanArray;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toolbar;
 
 import com.example.c196.Classes.*;
 import com.example.c196.R;
@@ -44,73 +41,32 @@ public class TermModify extends AppCompatActivity
         title.setText(term.getTitle());
         startDate.setText(term.getStartDate());
         endDate.setText(term.getEndDate());
-
-        List<String> termCourses = populateListView();
-        Boolean isTermCoursesEmpty = termCourses.isEmpty();
-        if(!isTermCoursesEmpty)
-        {
-            ArrayAdapter<String> termCoursesAdapter = new ArrayAdapter<>(
-                    this, android.R.layout.simple_list_item_single_choice, termCourses
-            );
-
-            ListView listView = findViewById(R.id.termModifyLstVw);
-            listView.setAdapter(termCoursesAdapter);
-            listView.setChoiceMode(2);
-        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // TODO Auto-generated method stub
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
-            Intent intent = new Intent(this, TermView.class);
+            Intent intent = new Intent(this, Terms.class);
             startActivity(intent);
         }
 
         return true;
     }
 
-    public void onClickModCoursesBtn(View view)
-    {
-        Intent intent = new Intent(this, TermModifyCourse.class);
-        startActivity(intent);
-    }
-
     public void onClickCancelBtn(View view)
     {
-        Intent intent = new Intent(this, TermView.class);
+        Intent intent = new Intent(this, Terms.class);
         startActivity(intent);
     }
 
-    public void onCLickModTermDeleteBtn(View view)
-    {
-        try
-        {
-            ListView listView = findViewById(R.id.termModifyLstVw);
-            SparseBooleanArray checked = listView.getCheckedItemPositions();
-            for (int i = 0; i < listView.getAdapter().getCount(); i++)
-            {
-                if (checked.get(i))
-                {
-                    String query = "update course set term_id = -1 where title = \""
-                            + listView.getItemAtPosition(i) + "\";";
-                    myHelper.updateRecord(query);
-                    onCreate(new Bundle());
-                }
-            }
-        }
-        catch(Exception e)
-        {
 
-        }
-    }
 
     public void onClickSaveBtn(View view)
     {
-        Intent intent = new Intent(this, TermView.class);
+        Intent intent = new Intent(this, Terms.class);
         startActivity(intent);
     }
 
@@ -133,6 +89,50 @@ public class TermModify extends AppCompatActivity
         }
 
         return courseList;
+    }
+
+    public void onClickAddTermCourse(View view)
+    {
+        Intent intent = new Intent(this, TermAddCourse.class);
+        startActivity(intent);
+    }
+
+    public void onClickRemoveTermCourse(View view)
+    {
+        List<String> termCourses = populateListView();
+        if(termCourses.size() > 0)
+        {
+            Intent intent = new Intent(this, TermRemoveCourse.class);
+            startActivity(intent);
+        }
+        else
+        {
+            UtilityMethods.displayGuiMessage(TermModify.this, "Please add a course to the term first.");
+        }
+    }
+
+    public void onClickDeleteTerm(View view)
+    {
+        String query = "select * from course where term_id = " + DataProvider.getAllTerms().get(Term.getSelectedItemIndex()).getId();
+        Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
+
+        boolean coursesInTerm = cursor.getCount() > 0 ? true : false;
+        UtilityMethods.displayGuiMessage(TermModify.this, "more than one item: " + coursesInTerm);
+
+        if(!coursesInTerm)
+        {
+
+        }
+
+        //String query = "delete from term where term_id = " + DataProvider.getAllTerms().get(Term.getSelectedItemIndex()).getId();
+        //myHelper.deleteRecord(query);
+
+        // TODO make sure to check for any existing courses before running this
+        //String query2= "update course set term_id = -1 where term_id = " + DataProvider.getAllTerms().get(Term.getSelectedItemIndex()).getId();
+       //myHelper.deleteRecord(query2);
+
+        //Intent intent = new Intent(this, Terms.class);
+        //startActivity(intent);
     }
 
     @Override

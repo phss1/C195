@@ -9,10 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controller.TermModifyCourse"></activity>
+        <activity android:name=".Controller.TermRemoveCourse"></activity>
+        <activity android:name=".Controller.TermAddCourse" />
         <activity android:name=".Controller.TermModify" />
         <activity android:name=".Controller.TermAdd" />
-        <activity android:name=".Controller.TermView" />
+        <activity android:name=".Controller.Terms" />
         <activity android:name=".Controller.GoalAdd" />
         <activity android:name=".Controller.AssessmentModify" />
         <activity android:name=".Controller.AssessmentAdd" />
