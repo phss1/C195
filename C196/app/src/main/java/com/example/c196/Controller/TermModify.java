@@ -46,7 +46,7 @@ public class TermModify extends AppCompatActivity
         if(!isTermCoursesEmpty)
         {
             ArrayAdapter<String> termCoursesAdapter = new ArrayAdapter<>(
-                    this, android.R.layout.simple_list_item_multiple_choice, termCourses
+                    this, android.R.layout.simple_list_item_single_choice, termCourses
             );
 
             ListView listView = findViewById(R.id.termModifyLstVw);
@@ -72,29 +72,15 @@ public class TermModify extends AppCompatActivity
         try
         {
             ListView listView = findViewById(R.id.termModifyLstVw);
-            List<String> termCourses = populateListView();
-            Boolean isTermCoursesEmpty = termCourses.isEmpty();
-            if(!isTermCoursesEmpty)
+            SparseBooleanArray checked = listView.getCheckedItemPositions();
+            for (int i = 0; i < listView.getAdapter().getCount(); i++)
             {
-                ArrayAdapter<String> termCoursesAdapter = new ArrayAdapter<>
-                (
-                        this, android.R.layout.simple_list_item_multiple_choice, termCourses
-                );
-
-                listView.setAdapter(termCoursesAdapter);
-                SparseBooleanArray checked = listView.getCheckedItemPositions();
-
-                for (int i = 0; i < listView.getAdapter().getCount(); i++)
+                if (checked.get(i))
                 {
-                    if (checked.get(i))
-                    {
-                        String query = "update course set term_id = -1 where title = \""
-                                + listView.getItemAtPosition(i) + "\";";
-                        myHelper.updateRecord(query);
-
-                        termCoursesAdapter.remove(listView.getItemAtPosition(i).toString());
-                        termCoursesAdapter.notifyDataSetChanged();
-                    }
+                    String query = "update course set term_id = -1 where title = \""
+                            + listView.getItemAtPosition(i) + "\";";
+                    myHelper.updateRecord(query);
+                    onCreate(new Bundle());
                 }
             }
         }
