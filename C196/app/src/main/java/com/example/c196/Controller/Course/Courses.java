@@ -15,27 +15,25 @@ import com.example.c196.Classes.*;
 import com.example.c196.Controller.MainActivity;
 import com.example.c196.Controller.Mentor.MentorAdd;
 import com.example.c196.Controller.Mentor.MentorModify;
-import com.example.c196.Controller.Term.Terms;
 import com.example.c196.R;
 import com.example.c196.Utility.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseView extends AppCompatActivity
+public class Courses extends AppCompatActivity
 {
     DBConnector myHelper;
-    UtilityMethods utilities;
     DataProvider dp = new DataProvider();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_course_view);
-        getSupportActionBar().setTitle("View Courses");
+        setContentView(R.layout.activity_courses);
+        getSupportActionBar().setTitle("Courses");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        myHelper = new DBConnector(CourseView.this);
+        myHelper = new DBConnector(Courses.this);
         myHelper.getWritableDatabase();
 
         List<String> courses = populateListView();
@@ -55,7 +53,7 @@ public class CourseView extends AppCompatActivity
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
                     {
 
-                        Mentor.setSelectedItemIndex(i);
+                        Course.setSelectedItemIndex(i);
                         onClickModifyCourse(view);
                     }
                 }
@@ -66,11 +64,10 @@ public class CourseView extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // TODO Auto-generated method stub
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
-            Intent intent = new Intent(this, Terms.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
 
@@ -80,12 +77,6 @@ public class CourseView extends AppCompatActivity
     public void onActionAddCourse(View view)
     {
         Intent intent = new Intent(this, MentorAdd.class);
-        startActivity(intent);
-    }
-
-    public void onClickHomeBtn(View view)
-    {
-        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
@@ -107,7 +98,7 @@ public class CourseView extends AppCompatActivity
         dp.getAllCourses().clear();
         while (cursor.moveToNext())
         {
-            Course tempCourse = new Course(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3),
+            Course tempCourse = new Course(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
             a, n, cursor.getString(4), cursor.getString(5));
             dp.addCourse(tempCourse);
             courseList.add(cursor.getString(3));
@@ -127,7 +118,7 @@ public class CourseView extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
-        myHelper = new DBConnector(CourseView.this);
+        myHelper = new DBConnector(Courses.this);
         myHelper.getWritableDatabase();
     }
 }

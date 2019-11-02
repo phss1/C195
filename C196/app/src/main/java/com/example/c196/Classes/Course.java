@@ -1,20 +1,22 @@
 package com.example.c196.Classes;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 public class Course
 {
     private int id;
     private String title;
     private String description;
-    private int status;
+    private String status;
     private ArrayList<Assessment> assessments;
     private ArrayList<Note> notes;
     private String startDate;
     private String endDate;
+    private List<Course> courseToModify = new ArrayList<>();
+    private static int selectedItemIndex;
 
-    public Course(int id, String title, String description, int status, ArrayList<Assessment> assessments,
+    public Course(int id, String title, String description, String status, ArrayList<Assessment> assessments,
                   ArrayList<Note> notes, String startDate, String endDate)
     {
         this.id = id;
@@ -57,12 +59,12 @@ public class Course
         this.description = description;
     }
 
-    public int isStatus()
+    public String isStatus()
     {
         return status;
     }
 
-    public void setStatus(int status)
+    public void setStatus(String status)
     {
         this.status = status;
     }
@@ -115,5 +117,25 @@ public class Course
     public void setEndDate(String endDate)
     {
         this.endDate = endDate;
+    }
+
+    public static int getSelectedItemIndex()
+    {
+        return selectedItemIndex;
+    }
+
+    public static void setSelectedItemIndex(int selectedItemIndex)
+    {
+        Course.selectedItemIndex = selectedItemIndex;
+    }
+
+    public List<Course> getCourseToModify()
+    {
+        return courseToModify;
+    }
+
+    public void setCourseToModify(List<Course> courseToModify)
+    {
+        this.courseToModify = courseToModify;
     }
 }

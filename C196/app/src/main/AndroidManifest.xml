@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controller.Term.TermDetailedView"></activity>
+        <activity android:name=".Controller.Course.CourseModify"></activity>
+        <activity android:name=".Controller.Course.CourseDetailedView" />
+        <activity android:name=".Controller.Term.TermDetailedView" />
         <activity android:name=".Controller.Term.TermRemoveCourse" />
         <activity android:name=".Controller.Term.TermAddCourse" />
         <activity android:name=".Controller.Term.TermModify" />
@@ -19,7 +21,7 @@
         <activity android:name=".Controller.Assessment.AssessmentModify" />
         <activity android:name=".Controller.Assessment.AssessmentAdd" />
         <activity android:name=".Controller.Assessment.AssessmentView" />
-        <activity android:name=".Controller.Course.CourseView" />
+        <activity android:name=".Controller.Course.Courses" />
         <activity android:name=".Controller.Mentor.MentorView" />
         <activity android:name=".Controller.Mentor.MentorModify" />
         <activity android:name=".Controller.Mentor.MentorAdd" />

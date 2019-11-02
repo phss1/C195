@@ -7,7 +7,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.c196.Controller.Assessment.AssessmentView;
-import com.example.c196.Controller.Course.CourseView;
+import com.example.c196.Controller.Course.Courses;
 import com.example.c196.Controller.Mentor.MentorView;
 import com.example.c196.Controller.Term.Terms;
 import com.example.c196.R;
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
 
     public void onClickViewCourses(View view)
     {
-        Intent intent = new Intent(this, CourseView.class);
+        Intent intent = new Intent(this, Courses.class);
         startActivity(intent);
     }
 
