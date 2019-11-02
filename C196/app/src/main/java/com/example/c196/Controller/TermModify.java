@@ -66,8 +66,35 @@ public class TermModify extends AppCompatActivity
 
     public void onClickSaveBtn(View view)
     {
-        Intent intent = new Intent(this, Terms.class);
-        startActivity(intent);
+        String title = ((EditText) findViewById(R.id.termModifyTitleTxtFld)).getText().toString();
+        String startDate = ((EditText) findViewById(R.id.termModifyStartDateTxtFld)).getText().toString();
+        String endDate = ((EditText) findViewById(R.id.termModifyEndDateTxtFld)).getText().toString();
+        Boolean valuesNotNull = !title.isEmpty() && !startDate.isEmpty() && !endDate.isEmpty()
+                && UtilityMethods.isValidDate(startDate) == true
+                && UtilityMethods.isValidDate(endDate) == true;
+
+        try
+        {
+            if(valuesNotNull)
+            {
+                String sqlQuery = "update term set title = \"" + title + "\", start_date = \""
+                        + startDate + "\", end_date = \"" + endDate + "\" where term_id = "
+                        + DataProvider.getAllTerms().get(Term.getSelectedItemIndex()).getId();
+                UtilityMethods.displayGuiMessage(TermModify.this, sqlQuery);
+                myHelper.insertRecord(sqlQuery);
+
+                Intent intent = new Intent(this, Terms.class);
+                startActivity(intent);
+            }
+            else
+            {
+                UtilityMethods.displayGuiMessage(TermModify.this, "Please meake sure values are not null and date value is entered correctly.");
+            }
+        }
+        catch(Exception e)
+        {
+            //
+        }
     }
 
     private List<String> populateListView()
@@ -121,18 +148,14 @@ public class TermModify extends AppCompatActivity
 
         if(!coursesInTerm)
         {
+            String query2 = "delete from term where term_id = " + DataProvider.getAllTerms().get(Term.getSelectedItemIndex()).getId();
+            myHelper.deleteRecord(query2);
+            String query3= "update course set term_id = -1 where term_id = " + DataProvider.getAllTerms().get(Term.getSelectedItemIndex()).getId();
+            myHelper.deleteRecord(query3);
 
+            Intent intent = new Intent(this, Terms.class);
+            startActivity(intent);
         }
-
-        //String query = "delete from term where term_id = " + DataProvider.getAllTerms().get(Term.getSelectedItemIndex()).getId();
-        //myHelper.deleteRecord(query);
-
-        // TODO make sure to check for any existing courses before running this
-        //String query2= "update course set term_id = -1 where term_id = " + DataProvider.getAllTerms().get(Term.getSelectedItemIndex()).getId();
-       //myHelper.deleteRecord(query2);
-
-        //Intent intent = new Intent(this, Terms.class);
-        //startActivity(intent);
     }
 
     @Override

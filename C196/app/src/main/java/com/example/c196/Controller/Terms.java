@@ -33,8 +33,6 @@ public class Terms extends AppCompatActivity
         getSupportActionBar().setTitle("Terms");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-
         myHelper = new DBConnector(Terms.this);
         myHelper.getWritableDatabase();
 

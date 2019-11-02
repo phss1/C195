@@ -64,12 +64,15 @@ public class TermAdd extends AppCompatActivity
                 Intent intent = new Intent(this, Terms.class);
                 startActivity(intent);
             }
+            else
+            {
+                UtilityMethods.displayGuiMessage(TermAdd.this, "Please meake sure values are not null and date value is entered correctly.");
+            }
         }
         catch(Exception e)
         {
             //
         }
-
     }
 
     public void onClickCancelBtn(View view)
