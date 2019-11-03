@@ -7,7 +7,6 @@ public class Course
 {
     private int id;
     private String title;
-    private String description;
     private String status;
     private ArrayList<Assessment> assessments;
     private ArrayList<Note> notes;
@@ -16,12 +15,11 @@ public class Course
     private List<Course> courseToModify = new ArrayList<>();
     private static int selectedItemIndex;
 
-    public Course(int id, String title, String description, String status, ArrayList<Assessment> assessments,
+    public Course(int id, String title, String status, ArrayList<Assessment> assessments,
                   ArrayList<Note> notes, String startDate, String endDate)
     {
         this.id = id;
         this.title = title;
-        this.description = description;
         this.status = status;
         this.assessments = assessments;
         this.notes = notes;
@@ -47,16 +45,6 @@ public class Course
     public void setTitle(String title)
     {
         this.title = title;
-    }
-
-    public String getDescription()
-    {
-        return description;
-    }
-
-    public void setDescription(String description)
-    {
-        this.description = description;
     }
 
     public String isStatus()

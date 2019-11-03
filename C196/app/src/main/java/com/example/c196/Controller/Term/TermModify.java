@@ -106,8 +106,8 @@ public class TermModify extends AppCompatActivity
         dp.getAllCourses().clear();
         while (cursor.moveToNext())
         {
-            Course tempCourse = new Course(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
-                    a, n, cursor.getString(4), cursor.getString(5));
+            Course tempCourse = new Course(cursor.getInt(0), cursor.getString(3), cursor.getString(4),
+                    a, n, cursor.getString(5), cursor.getString(6));
             dp.addCourse(tempCourse);
             courseList.add(cursor.getString(3));
         }

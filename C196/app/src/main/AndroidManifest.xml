@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controller.Course.CourseModify"></activity>
+        <activity android:name=".CourseAdd"></activity>
+        <activity android:name=".Controller.Course.CourseModify" />
         <activity android:name=".Controller.Course.CourseDetailedView" />
         <activity android:name=".Controller.Term.TermDetailedView" />
         <activity android:name=".Controller.Term.TermRemoveCourse" />

@@ -7,12 +7,10 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.c196.Classes.Course;
 import com.example.c196.Classes.Term;
-import com.example.c196.Controller.Term.TermDetailedView;
-import com.example.c196.Controller.Term.TermModify;
-import com.example.c196.Controller.Term.Terms;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
@@ -36,25 +34,49 @@ public class CourseDetailedView extends AppCompatActivity
         myHelper = new DBConnector(CourseDetailedView.this);
         myHelper.getWritableDatabase();
 
+        TextView title = findViewById(R.id.courseDVTitleTxtVw);
+        TextView startDate = findViewById(R.id.courseDVStartDateTxtVw2);
+        TextView endDate = findViewById(R.id.courseDVEndDateTxtVw);
+
+        Course course = dp.getAllCourses().get(Course.getSelectedItemIndex());
+        title.setText(course.getTitle());
+        startDate.setText(course.getStartDate());
+        endDate.setText(course.getEndDate());
+
 
     }
 
-    public void onCLickTermDVModifyBtn(View view)
+    public void onClickModifyCourseBtn(View view)
     {
         Intent intent = new Intent(this, CourseModify.class);
         startActivity(intent);
     }
 
-    private List<String> populateListView()
+    private List<String> populateNoteListView()
     {
         List<String> courseList = new ArrayList<>();
-        int termId = DataProvider.getAllTerms().get(Term.getSelectedItemIndex()).getId();
-        String query = "SELECT * from course where term_id = " + termId;
+        int courseId = DataProvider.getAllCourses().get(Course.getSelectedItemIndex()).getId();
+        String query = "SELECT * from course where course_id = " + courseId;
         Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
 
         while (cursor.moveToNext())
         {
-            courseList.add(cursor.getString(3));
+            courseList.add(cursor.getString(1));
+        }
+
+        return courseList;
+    }
+
+    private List<String> populateAssessmentListView()
+    {
+        List<String> courseList = new ArrayList<>();
+        int courseId = DataProvider.getAllCourses().get(Course.getSelectedItemIndex()).getId();
+        String query = "SELECT * from course where course_id = " + courseId;
+        Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
+
+        while (cursor.moveToNext())
+        {
+            courseList.add(cursor.getString(1));
         }
 
         return courseList;
@@ -81,7 +103,7 @@ public class CourseDetailedView extends AppCompatActivity
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
-            Intent intent = new Intent(this, CourseModify.class);
+            Intent intent = new Intent(this, Courses.class);
             startActivity(intent);
         }
 

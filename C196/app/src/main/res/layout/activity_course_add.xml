@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CourseAdd">
+
+    <EditText
+        android:id="@+id/addCourseTitleTxtFld"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="42dp"
+        android:layout_marginLeft="42dp"
+        android:layout_marginTop="43dp"
+        android:layout_marginEnd="156dp"
+        android:layout_marginRight="156dp"
+        android:ems="10"
+        android:hint="Course Title"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/addCourseStartDateTxtFld"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="42dp"
+        android:layout_marginLeft="42dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="156dp"
+        android:layout_marginRight="156dp"
+        android:ems="10"
+        android:hint="Start Date: 01/01/1990"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addCourseStatusSpn" />
+
+    <EditText
+        android:id="@+id/addCourseEndDateTxtFld"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="42dp"
+        android:layout_marginLeft="42dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="156dp"
+        android:layout_marginRight="156dp"
+        android:ems="10"
+        android:hint="End Date 01/01/1990"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addCourseStartDateTxtFld" />
+
+    <Spinner
+        android:id="@+id/addCourseStatusSpn"
+        android:layout_width="146dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginLeft="42dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="223dp"
+        android:layout_marginRight="223dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addCourseTitleTxtFld" />
+
+    <Button
+        android:id="@+id/addCourseSaveBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="156dp"
+        android:layout_marginRight="156dp"
+        android:onClick="onClickAddCourseSaveBtn"
+        android:text="Save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addCourseEndDateTxtFld" />
+
+    <Button
+        android:id="@+id/addCourseCancelBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="42dp"
+        android:layout_marginLeft="42dp"
+        android:layout_marginTop="11dp"
+        android:onClick="onClickAddCourseCancelBtn"
+        android:text="Cancel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addCourseEndDateTxtFld" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

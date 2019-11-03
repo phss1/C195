@@ -15,6 +15,7 @@ import com.example.c196.Classes.*;
 import com.example.c196.Controller.MainActivity;
 import com.example.c196.Controller.Mentor.MentorAdd;
 import com.example.c196.Controller.Mentor.MentorModify;
+import com.example.c196.CourseAdd;
 import com.example.c196.R;
 import com.example.c196.Utility.*;
 import java.util.ArrayList;
@@ -76,13 +77,13 @@ public class Courses extends AppCompatActivity
 
     public void onActionAddCourse(View view)
     {
-        Intent intent = new Intent(this, MentorAdd.class);
+        Intent intent = new Intent(this, CourseAdd.class);
         startActivity(intent);
     }
 
     public void onClickModifyCourse(View view)
     {
-        Intent intent = new Intent(this, MentorModify.class);
+        Intent intent = new Intent(this, CourseDetailedView.class);
         startActivity(intent);
     }
 
@@ -98,8 +99,8 @@ public class Courses extends AppCompatActivity
         dp.getAllCourses().clear();
         while (cursor.moveToNext())
         {
-            Course tempCourse = new Course(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
-            a, n, cursor.getString(4), cursor.getString(5));
+            Course tempCourse = new Course(cursor.getInt(0), cursor.getString(3), cursor.getString(4),
+            a, n, cursor.getString(5), cursor.getString(6));
             dp.addCourse(tempCourse);
             courseList.add(cursor.getString(3));
         }
