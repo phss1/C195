@@ -30,7 +30,7 @@ public class CourseAdd extends AppCompatActivity
         myHelper.getWritableDatabase();
 
         Spinner spinner = findViewById(R.id.addCourseStatusSpn);
-        String[] statusArray = new String[]{"Not Started", "In Progress", "Completed"};
+        String[] statusArray = new String[]{"Plan to Take", "Not Started", "In Progress", "Completed"};
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_item, statusArray);
         spinner.setAdapter(spinnerAdapter);

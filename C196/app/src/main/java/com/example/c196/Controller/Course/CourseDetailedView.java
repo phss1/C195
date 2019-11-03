@@ -82,36 +82,6 @@ public class CourseDetailedView extends AppCompatActivity
         startActivity(intent);
     }
 
-    private List<String> populateNoteListView()
-    {
-        List<String> courseList = new ArrayList<>();
-        int courseId = DataProvider.getAllCourses().get(Course.getSelectedItemIndex()).getId();
-        String query = "SELECT * from course where course_id = " + courseId;
-        Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
-
-        while (cursor.moveToNext())
-        {
-            courseList.add(cursor.getString(1));
-        }
-
-        return courseList;
-    }
-
-    private List<String> populateAssessmentListView()
-    {
-        List<String> courseList = new ArrayList<>();
-        int courseId = DataProvider.getAllCourses().get(Course.getSelectedItemIndex()).getId();
-        String query = "SELECT * from course where course_id = " + courseId;
-        Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
-
-        while (cursor.moveToNext())
-        {
-            courseList.add(cursor.getString(1));
-        }
-
-        return courseList;
-    }
-
     @Override
     protected void onPause()
     {
