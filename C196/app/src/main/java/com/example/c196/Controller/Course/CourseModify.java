@@ -5,15 +5,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.c196.Classes.Course;
 import com.example.c196.Classes.Term;
+import com.example.c196.Controller.Note.NoteAdd;
+import com.example.c196.Controller.Term.TermDetailedView;
+import com.example.c196.Controller.Term.TermModify;
+import com.example.c196.Controller.Term.Terms;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
+import com.example.c196.Utility.UtilityMethods;
 
 public class CourseModify extends AppCompatActivity
 {
@@ -51,6 +57,9 @@ public class CourseModify extends AppCompatActivity
             case "Completed":  indexToSelect = 3;
                 spinner.setSelection(indexToSelect);
                 break;
+            case "":  indexToSelect = 0;
+                spinner.setSelection(indexToSelect);
+                break;
         }
 
         Course course = dp.getAllCourses().get(Course.getSelectedItemIndex());
@@ -61,6 +70,55 @@ public class CourseModify extends AppCompatActivity
         title.setText(course.getTitle());
         startDate.setText(course.getStartDate());
         endDate.setText(course.getEndDate());
+    }
+
+    public void courseModSaveBtn(View view)
+    {
+        String title = ((EditText) findViewById(R.id.courseModifyTitleTxtFld)).getText().toString();
+        String status = ((Spinner) findViewById(R.id.courseModifyStatusSpn)).getSelectedItem().toString();
+        String startDate = ((EditText) findViewById(R.id.courseModifyStartDateTxtFld)).getText().toString();
+        String endDate = ((EditText) findViewById(R.id.courseModifyEndDateTxtFld)).getText().toString();
+        Boolean valuesNotNull = !title.isEmpty() && !startDate.isEmpty() && !endDate.isEmpty()
+                && UtilityMethods.isValidDate(startDate) == true
+                && UtilityMethods.isValidDate(endDate) == true;
+
+        try
+        {
+            if(valuesNotNull)
+            {
+                String sqlQuery = "update course set title = \"" + title + "\", status = \"" + status
+                        + "\", start_date = \"" + startDate + "\", end_date = \"" + endDate + "\" where course_id = "
+                        + DataProvider.getAllCourses().get(Course.getSelectedItemIndex()).getId();
+                UtilityMethods.displayGuiMessage(CourseModify.this, sqlQuery);
+                myHelper.insertRecord(sqlQuery);
+
+                Intent intent = new Intent(this, Courses.class);
+                startActivity(intent);
+            }
+            else
+            {
+                UtilityMethods.displayGuiMessage(CourseModify.this, "Please meake sure values are not null and date value is entered correctly.");
+            }
+        }
+        catch(Exception e)
+        {
+            //
+        }
+
+        Intent intent = new Intent(this, CourseDetailedView.class);
+        startActivity(intent);
+    }
+
+    public void modCourseAddNoteBtn(View view)
+    {
+        Intent intent = new Intent(this, NoteAdd.class);
+        startActivity(intent);
+    }
+
+    public void courseModCancelBtn(View view)
+    {
+        Intent intent = new Intent(this, CourseDetailedView.class);
+        startActivity(intent);
     }
 
     @Override

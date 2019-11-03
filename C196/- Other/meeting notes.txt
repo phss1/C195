@@ -1,7 +1,2 @@
-constaint layout
-
-button to go to term, can use action bar to hour other button for other commands
-
-action bar to house buttons to create, modify, delete
-
-have search take you to another menu, if term located, show detailed view for that term
+how to load last screen like left arrow on phone?
+layout so far?

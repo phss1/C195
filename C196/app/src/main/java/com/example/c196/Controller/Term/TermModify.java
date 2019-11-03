@@ -77,10 +77,9 @@ public class TermModify extends AppCompatActivity
                 String sqlQuery = "update term set title = \"" + title + "\", start_date = \""
                         + startDate + "\", end_date = \"" + endDate + "\" where term_id = "
                         + DataProvider.getAllTerms().get(Term.getSelectedItemIndex()).getId();
-                UtilityMethods.displayGuiMessage(TermModify.this, sqlQuery);
                 myHelper.insertRecord(sqlQuery);
 
-                Intent intent = new Intent(this, TermDetailedView.class);
+                Intent intent = new Intent(this, Terms.class);
                 startActivity(intent);
             }
             else
