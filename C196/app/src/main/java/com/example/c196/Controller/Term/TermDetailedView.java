@@ -5,17 +5,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.c196.Classes.Course;
 import com.example.c196.Classes.Term;
+import com.example.c196.Controller.Course.CourseDetailedView;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
+import com.example.c196.Utility.UtilityMethods;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +62,16 @@ public class TermDetailedView extends AppCompatActivity
             ListView listView = findViewById(R.id.termDVCoursesLstVw);
             listView.setAdapter(termCoursesAdapter);
             listView.setChoiceMode(2);
+            listView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener()
+                {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+                    {
+                        changeGuiScreen(view, i);
+                    }
+                }
+            );
         }
     }
 
@@ -65,6 +79,30 @@ public class TermDetailedView extends AppCompatActivity
     {
         Intent intent = new Intent(this, TermModify.class);
         startActivity(intent);
+    }
+
+    public void changeGuiScreen(View view, int i)
+    {
+        List<String> courses = populateListView();
+        String courseTitle = courses.get(i);
+        ArrayList<Course> allCourses = dp.getAllCourses();
+
+        for(Course course : allCourses)
+        {
+            String course1Title = course.getTitle();
+            UtilityMethods.displayGuiMessage(TermDetailedView.this, ""+ course1Title.matches(courseTitle));
+
+            if(course1Title.matches(courseTitle))
+            {
+                int index = allCourses.indexOf(course);
+                UtilityMethods.displayGuiMessage(TermDetailedView.this, "Value of selected item is: " + index);
+            }
+        }
+
+        int index = allCourses.indexOf(courseTitle);
+
+        //Intent intent = new Intent(this, CourseDetailedView.class);
+        //startActivity(intent);
     }
 
     private List<String> populateListView()
