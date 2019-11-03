@@ -9,13 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controller.Note.NoteAdd"></activity>
+        <activity android:name=".Controller.Term.TermCreateCourse"></activity>
+        <activity android:name=".Controller.Note.NoteAdd" />
         <activity android:name=".Controller.Course.CourseAdd" />
         <activity android:name=".Controller.Course.CourseModify" />
         <activity android:name=".Controller.Course.CourseDetailedView" />
         <activity android:name=".Controller.Term.TermDetailedView" />
         <activity android:name=".Controller.Term.TermRemoveCourse" />
-        <activity android:name=".Controller.Term.TermAddCourse" />
+        <activity android:name=".Controller.Term.TermAddCourses" />
         <activity android:name=".Controller.Term.TermModify" />
         <activity android:name=".Controller.Term.TermAdd" />
         <activity android:name=".Controller.Term.Terms" />

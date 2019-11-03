@@ -19,7 +19,7 @@ import com.example.c196.Utility.DataProvider;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TermAddCourse extends AppCompatActivity
+public class TermAddCourses extends AppCompatActivity
 {
     DBConnector myHelper;
     DataProvider dp = new DataProvider();
@@ -28,11 +28,11 @@ public class TermAddCourse extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_term_add_course);
-        getSupportActionBar().setTitle("Add Course to Term");
+        setContentView(R.layout.activity_term_add_courses);
+        getSupportActionBar().setTitle("Add Courses");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        myHelper = new DBConnector(TermAddCourse.this);
+        myHelper = new DBConnector(TermAddCourses.this);
         myHelper.getWritableDatabase();
 
         List<String> termCourses = populateListView();
@@ -77,7 +77,7 @@ public class TermAddCourse extends AppCompatActivity
                 {
                     String query = "update course set term_id = " + termId + " where title = \""
                             + listView.getItemAtPosition(i) + "\";";
-                    //UtilityMethods.displayGuiMessage(TermAddCourse.this, query);
+                    //UtilityMethods.displayGuiMessage(TermAddCourses.this, query);
                     myHelper.updateRecord(query);
                 }
             }
@@ -88,6 +88,12 @@ public class TermAddCourse extends AppCompatActivity
         }
 
         Intent intent = new Intent(this, TermModify.class);
+        startActivity(intent);
+    }
+
+    public void termAddNewCourseBtn(View view)
+    {
+        Intent intent = new Intent(this, TermCreateCourse.class);
         startActivity(intent);
     }
 
@@ -108,7 +114,7 @@ public class TermAddCourse extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
-        myHelper = new DBConnector(TermAddCourse.this);
+        myHelper = new DBConnector(TermAddCourses.this);
         myHelper.getWritableDatabase();
     }
 

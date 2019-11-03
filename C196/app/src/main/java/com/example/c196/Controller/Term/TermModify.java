@@ -116,7 +116,7 @@ public class TermModify extends AppCompatActivity
 
     public void onClickAddTermCourse(View view)
     {
-        Intent intent = new Intent(this, TermAddCourse.class);
+        Intent intent = new Intent(this, TermAddCourses.class);
         startActivity(intent);
     }
 

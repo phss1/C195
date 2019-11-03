@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Controller.Term.TermAddCourse">
+    tools:context=".Controller.Term.TermAddCourses">
 
     <ListView
         android:id="@+id/removalLstVw"
@@ -19,33 +19,44 @@
         android:id="@+id/addCToTermSaveBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="133dp"
-        android:layout_marginEnd="96dp"
-        android:layout_marginRight="96dp"
-        android:layout_marginBottom="145dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="135dp"
+        android:layout_marginEnd="33dp"
+        android:layout_marginRight="33dp"
         android:onClick="onClickAddCToTermSaveBtn"
         android:text="Save"
-        app:layout_constraintBottom_toTopOf="@+id/removalLstVw"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/addCToTermCancelBtn"
+        app:layout_constraintStart_toEndOf="@+id/termAddNewCourseBtn"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/addCToTermCancelBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="89dp"
-        android:layout_marginLeft="89dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
         android:layout_marginTop="135dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginBottom="143dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
         android:onClick="onClickAddCToTermCancelBtn"
         android:text="@android:string/cancel"
-        app:layout_constraintBottom_toTopOf="@+id/removalLstVw"
-        app:layout_constraintEnd_toStartOf="@+id/addCToTermSaveBtn"
+        app:layout_constraintEnd_toStartOf="@+id/termAddNewCourseBtn"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/termAddNewCourseBtn"
+        android:layout_width="88dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="132dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:onClick="termAddNewCourseBtn"
+        android:text="Add New Course"
+        app:layout_constraintEnd_toStartOf="@+id/addCToTermSaveBtn"
+        app:layout_constraintStart_toEndOf="@+id/addCToTermCancelBtn"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

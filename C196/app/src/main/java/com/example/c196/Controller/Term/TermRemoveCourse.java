@@ -41,7 +41,7 @@ public class TermRemoveCourse extends AppCompatActivity
         {
             ArrayAdapter<String> termCoursesAdapter = new ArrayAdapter<>
                     (
-                            this, android.R.layout.simple_list_item_multiple_choice, termCourses
+                            this, android.R.layout.simple_list_item_single_choice, termCourses
                     );
 
             ListView listView = findViewById(R.id.removalLstVw);
@@ -63,7 +63,6 @@ public class TermRemoveCourse extends AppCompatActivity
                     {
                         String query = "update course set term_id = -1 where title = \""
                                 + listView.getItemAtPosition(i) + "\";";
-                        UtilityMethods.displayGuiMessage(TermRemoveCourse.this, "term id is: " + listView.getItemAtPosition(i));
                         myHelper.updateRecord(query);
                     }
                 }
