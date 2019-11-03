@@ -33,7 +33,6 @@ public class TermAdd extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // TODO Auto-generated method stub
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
@@ -66,7 +65,7 @@ public class TermAdd extends AppCompatActivity
             }
             else
             {
-                UtilityMethods.displayGuiMessage(TermAdd.this, "Please meake sure values are not null and date value is entered correctly.");
+                UtilityMethods.displayGuiMessage(TermAdd.this, "Please make sure values are not null and date value is entered correctly.");
             }
         }
         catch(Exception e)

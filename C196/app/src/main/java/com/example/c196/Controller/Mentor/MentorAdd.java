@@ -33,11 +33,10 @@ public class MentorAdd extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // TODO Auto-generated method stub
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
-            Intent intent = new Intent(this, Terms.class);
+            Intent intent = new Intent(this, MentorView.class);
             startActivity(intent);
         }
 

@@ -28,8 +28,14 @@ public class MainActivity extends AppCompatActivity
         myHelper = new DBConnector(MainActivity.this);
         myHelper.getWritableDatabase();
         myHelper.createTables();
-        //myHelper.insertRecord("insert into course(term_id, mentor_id, title, status, start_date, end_date) " +
-        //        "values(-1,-1,\"Course1\",\'true\',\"01/01/2020\",\"12/01/2020\");");
+        /*myHelper.insertRecord("insert into course(term_id, mentor_id, title, status, start_date, end_date) " +
+                "values(-1,-1,\"Course1\",\'true\',\"01/01/2020\",\"12/01/2020\");");
+        myHelper.insertRecord("insert into assessment(course_id, title, date) values(-1, \"A1\", \"01/01/2020\");");
+        myHelper.insertRecord("insert into assessment(course_id, title, date) values(-1, \"A2\", \"01/01/2020\");");
+        myHelper.insertRecord("insert into assessment(course_id, title, date) values(-1, \"A3\", \"01/01/2020\");");
+        myHelper.insertRecord("insert into assessment(course_id, title, date) values(-1, \"A4\", \"01/01/2020\");");
+        */
+
     }
 
     @Override

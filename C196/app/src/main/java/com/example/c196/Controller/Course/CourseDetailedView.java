@@ -7,8 +7,11 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.c196.Classes.Assessment;
 import com.example.c196.Classes.Course;
 import com.example.c196.Classes.Term;
 import com.example.c196.R;
@@ -43,7 +46,34 @@ public class CourseDetailedView extends AppCompatActivity
         startDate.setText(course.getStartDate());
         endDate.setText(course.getEndDate());
 
+        List<String> courseAssessments = populateListView();
+        Boolean isCourseAssessmentsNull = courseAssessments.isEmpty();
+        if(!isCourseAssessmentsNull)
+        {
+            ArrayAdapter<String> termCoursesAdapter = new ArrayAdapter<String>
+                    (
+                            this, android.R.layout.simple_list_item_1, courseAssessments
+                    );
 
+            ListView listView = findViewById(R.id.courseDVAssessmentLstVw);
+            listView.setAdapter(termCoursesAdapter);
+            listView.setChoiceMode(2);
+        }
+    }
+
+    private List<String> populateListView()
+    {
+        List<String> courseList = new ArrayList<>();
+        int courseId = DataProvider.getAllCourses().get(Course.getSelectedItemIndex()).getId();
+        String query = "SELECT * from assessment where course_id = " + courseId;
+        Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
+
+        while (cursor.moveToNext())
+        {
+            courseList.add(cursor.getString(2));
+        }
+
+        return courseList;
     }
 
     public void onClickModifyCourseBtn(View view)

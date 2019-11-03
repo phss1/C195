@@ -58,18 +58,17 @@
         android:layout_marginTop="86dp"
         android:layout_marginEnd="88dp"
         android:layout_marginRight="88dp"
-        android:layout_marginBottom="191dp"
         android:onClick="onClickModifyCourseBtn"
         android:text="Modify Course"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/_dynamic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/courseDVTitleTxtVw"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:layout_width="409dp"
-        android:layout_height="398dp"
+        android:id="@+id/courseDVAssessmentLstVw"
+        android:layout_width="415dp"
+        android:layout_height="404dp"
         android:layout_marginStart="1dp"
         android:layout_marginLeft="1dp"
         android:layout_marginEnd="1dp"
