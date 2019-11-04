@@ -103,8 +103,7 @@ public class CourseDetailedView extends AppCompatActivity
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
-            Intent intent = new Intent(this, Courses.class);
-            startActivity(intent);
+            finish();
         }
 
         return true;

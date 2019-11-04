@@ -32,10 +32,10 @@ public class AssessmentAdd extends AppCompatActivity
         Spinner spinner = findViewById(R.id.addAssessmentSpinner);
 
         ArrayList<String> courseArray = UtilityMethods.createCourseSpinnerValues();
-
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_item, courseArray);
         spinner.setAdapter(spinnerAdapter);
+        spinner.setSelection(Course.getSelectedItemIndex());
     }
 
     public void onClickSaveBtn(View view)
@@ -44,7 +44,9 @@ public class AssessmentAdd extends AppCompatActivity
         String startDate = ((EditText) findViewById(R.id.startDateTxtFld)).getText().toString();
         String endDate = ((EditText) findViewById(R.id.endDateTxtFld)).getText().toString();
         String associatedCourseTitle = ((Spinner) findViewById(R.id.addAssessmentSpinner)).getSelectedItem().toString();
-        Boolean valuesNotNull = !title.isEmpty() && !startDate.isEmpty() && !endDate.isEmpty();
+        Boolean valuesNotNull = !title.isEmpty() && !startDate.isEmpty() && !endDate.isEmpty()
+                && UtilityMethods.isValidDate(startDate) == true
+                && UtilityMethods.isValidDate(endDate) == true;
 
         ArrayList<Course> courses = dp.getAllCourses();
         for(Course course : courses)
@@ -58,7 +60,8 @@ public class AssessmentAdd extends AppCompatActivity
                 String query = "insert into assessment(course_id, title, start_date, end_date) " +
                         "values(" + courseId + ", \"" + title + "\", \"" + startDate + "\", \""
                         + endDate + "\", " + ");";
-                UtilityMethods.displayGuiMessage(AssessmentAdd.this, "" + query);
+                //UtilityMethods.displayGuiMessage(AssessmentAdd.this, "" + query);
+                myHelper.insertRecord(query);
                 break;
             }
         }
