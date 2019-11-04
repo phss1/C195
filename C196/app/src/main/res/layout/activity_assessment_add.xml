@@ -6,153 +6,77 @@
     android:layout_height="match_parent"
     tools:context=".Controller.Assessment.AssessmentAdd">
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="226dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="92dp"
-        android:layout_marginLeft="92dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="93dp"
-        android:layout_marginRight="93dp"
-        android:layout_marginBottom="28dp"
-        android:text="Assessments"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        android:typeface="normal"
-        app:layout_constraintBottom_toTopOf="@+id/titleTxtFld"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <EditText
         android:id="@+id/titleTxtFld"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="99dp"
-        android:layout_marginLeft="99dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="99dp"
-        android:layout_marginRight="99dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="35dp"
         android:ems="10"
         android:hint="title"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-    <EditText
-        android:id="@+id/descriptionTxtFld"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="99dp"
-        android:layout_marginLeft="99dp"
-        android:layout_marginTop="21dp"
-        android:layout_marginEnd="99dp"
-        android:layout_marginRight="99dp"
-        android:ems="10"
-        android:hint="description"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTxtFld" />
-
-    <EditText
-        android:id="@+id/startDateTxtFld"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="99dp"
-        android:layout_marginLeft="99dp"
-        android:layout_marginTop="19dp"
-        android:layout_marginEnd="99dp"
-        android:layout_marginRight="99dp"
-        android:ems="10"
-        android:hint="StartDate: 01/22/2019"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionTxtFld" />
-
-    <EditText
-        android:id="@+id/endDateTxtFld"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="99dp"
-        android:layout_marginLeft="99dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="99dp"
-        android:layout_marginRight="99dp"
-        android:ems="10"
-        android:hint="EndDate: 01/23/2019"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startDateTxtFld" />
-
-    <ListView
-        android:id="@+id/goalsLstVw"
-        android:layout_width="354dp"
-        android:layout_height="265dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addGoalBtn" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/SaveBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:layout_marginLeft="18dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="29dp"
-        android:layout_marginRight="29dp"
-        android:layout_marginBottom="35dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="156dp"
         android:onClick="onClickSaveBtn"
         android:text="Save"
-        app:layout_constraintBottom_toTopOf="@+id/goalsLstVw"
-        app:layout_constraintEnd_toStartOf="@+id/addGoalBtn"
-        app:layout_constraintStart_toEndOf="@+id/Cancel"
-        app:layout_constraintTop_toBottomOf="@+id/endDateTxtFld"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Button
-        android:id="@+id/addGoalBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="23dp"
-        android:layout_marginLeft="23dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="42dp"
-        android:layout_marginRight="42dp"
-        android:layout_marginBottom="18dp"
-        android:text="Add Goal"
-        app:layout_constraintBottom_toTopOf="@+id/goalsLstVw"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/SaveBtn"
-        app:layout_constraintTop_toBottomOf="@+id/endDateTxtFld" />
+        app:layout_constraintStart_toEndOf="@+id/endDateTxtFld"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/Cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="55dp"
-        android:layout_marginLeft="55dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginRight="18dp"
-        android:layout_marginBottom="35dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="12dp"
+        android:onClick="onClickCancelBtn"
         android:text="Cancel"
-        app:layout_constraintBottom_toTopOf="@+id/goalsLstVw"
-        app:layout_constraintEnd_toStartOf="@+id/SaveBtn"
+        app:layout_constraintStart_toEndOf="@+id/addAssessmentSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/SaveBtn" />
+
+    <Spinner
+        android:id="@+id/addAssessmentSpinner"
+        android:layout_width="210dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/endDateTxtFld"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/endDateTxtFld" />
+
+    <EditText
+        android:id="@+id/startDateTxtFld"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="18dp"
+        android:ems="10"
+        android:hint="StartDate: 01/22/2019"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTxtFld" />
+
+    <EditText
+        android:id="@+id/endDateTxtFld"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="EndDate: 01/23/2019"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startDateTxtFld" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

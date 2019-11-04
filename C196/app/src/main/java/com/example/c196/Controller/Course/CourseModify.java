@@ -12,6 +12,7 @@ import android.widget.Spinner;
 
 import com.example.c196.Classes.Course;
 import com.example.c196.Classes.Term;
+import com.example.c196.Controller.Assessment.AssessmentAdd;
 import com.example.c196.Controller.Note.NoteAdd;
 import com.example.c196.Controller.Term.TermDetailedView;
 import com.example.c196.Controller.Term.TermModify;
@@ -92,8 +93,7 @@ public class CourseModify extends AppCompatActivity
                 UtilityMethods.displayGuiMessage(CourseModify.this, sqlQuery);
                 myHelper.insertRecord(sqlQuery);
 
-                Intent intent = new Intent(this, Courses.class);
-                startActivity(intent);
+                finish();
             }
             else
             {
@@ -104,6 +104,12 @@ public class CourseModify extends AppCompatActivity
         {
             //
         }
+    }
+
+    public void onClickAddAssessment(View view)
+    {
+        Intent intent = new Intent(this, AssessmentAdd.class);
+        startActivity(intent);
     }
 
     public void modCourseAddNoteBtn(View view)
@@ -120,8 +126,7 @@ public class CourseModify extends AppCompatActivity
 
     public void courseModCancelBtn(View view)
     {
-        Intent intent = new Intent(this, CourseDetailedView.class);
-        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -145,8 +150,7 @@ public class CourseModify extends AppCompatActivity
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
-            Intent intent = new Intent(this, CourseDetailedView.class);
-            startActivity(intent);
+            finish();
         }
 
         return true;

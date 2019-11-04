@@ -71,6 +71,7 @@
         android:layout_marginStart="17dp"
         android:layout_marginLeft="17dp"
         android:layout_marginTop="13dp"
+        android:onClick="onClickAddAssessment"
         android:text="Add Assessment"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"

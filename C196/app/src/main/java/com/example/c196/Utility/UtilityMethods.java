@@ -5,12 +5,26 @@ import android.util.SparseBooleanArray;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.c196.Classes.Course;
 import com.example.c196.R;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class UtilityMethods
 {
+    public static ArrayList<String> createCourseSpinnerValues()
+    {
+        ArrayList<Course> courses = DataProvider.getAllCourses();
+        ArrayList<String> courseArray = new ArrayList<>();
+        for(Course course : courses)
+        {
+            courseArray.add(course.getTitle());
+        }
+
+        return courseArray;
+    }
+
     public static void displayGuiMessage(Context context, String message)
     {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
