@@ -23,6 +23,11 @@ public class AssessmentModify extends AppCompatActivity
         setContentView(R.layout.activity_assessment_modify);
         getSupportActionBar().setTitle("Modify Assessment");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        myHelper = new DBConnector(AssessmentModify.this);
+        myHelper.getWritableDatabase();
+
+
     }
 
     @Override
@@ -31,8 +36,7 @@ public class AssessmentModify extends AppCompatActivity
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
-            Intent intent = new Intent(this, AssessmentView.class);
-            startActivity(intent);
+            finish();
         }
 
         return true;

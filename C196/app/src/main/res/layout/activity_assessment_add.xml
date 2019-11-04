@@ -20,28 +20,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/SaveBtn"
+        android:id="@+id/cancelBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
-        android:layout_marginTop="156dp"
-        android:onClick="onClickSaveBtn"
-        android:text="Save"
-        app:layout_constraintStart_toEndOf="@+id/endDateTxtFld"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/Cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="25dp"
         android:onClick="onClickCancelBtn"
         android:text="Cancel"
         app:layout_constraintStart_toEndOf="@+id/addAssessmentSpinner"
-        app:layout_constraintTop_toBottomOf="@+id/SaveBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/addAssSaveBtn" />
 
     <Spinner
         android:id="@+id/addAssessmentSpinner"
@@ -78,5 +66,17 @@
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startDateTxtFld" />
+
+    <Button
+        android:id="@+id/addAssSaveBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="143dp"
+        android:onClick="onClickAddAssSaveBtn"
+        android:text="Save"
+        app:layout_constraintStart_toEndOf="@+id/endDateTxtFld"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,6 +31,9 @@ public class AssessmentAdd extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Spinner spinner = findViewById(R.id.addAssessmentSpinner);
 
+        myHelper = new DBConnector(AssessmentAdd.this);
+        myHelper.getWritableDatabase();
+
         ArrayList<String> courseArray = UtilityMethods.createCourseSpinnerValues();
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_item, courseArray);
@@ -38,53 +41,44 @@ public class AssessmentAdd extends AppCompatActivity
         spinner.setSelection(Course.getSelectedItemIndex());
     }
 
-    public void onClickSaveBtn(View view)
+    public void onClickAddAssSaveBtn(View view)
     {
         String title = ((EditText) findViewById(R.id.titleTxtFld)).getText().toString();
         String startDate = ((EditText) findViewById(R.id.startDateTxtFld)).getText().toString();
         String endDate = ((EditText) findViewById(R.id.endDateTxtFld)).getText().toString();
         String associatedCourseTitle = ((Spinner) findViewById(R.id.addAssessmentSpinner)).getSelectedItem().toString();
-        Boolean valuesNotNull = !title.isEmpty() && !startDate.isEmpty() && !endDate.isEmpty()
-                && UtilityMethods.isValidDate(startDate) == true
+        Boolean valuesNotNull = !title.isEmpty() && UtilityMethods.isValidDate(startDate) == true
                 && UtilityMethods.isValidDate(endDate) == true;
 
-        ArrayList<Course> courses = dp.getAllCourses();
-        for(Course course : courses)
-        {
-            boolean foundTitleMatch = course.getTitle().contains(associatedCourseTitle) ? true : false;
-            if(foundTitleMatch)
-            {
-                UtilityMethods.displayGuiMessage(AssessmentAdd.this, "There was a match found: " + associatedCourseTitle);
-                int courseId = course.getId();
-
-                String query = "insert into assessment(course_id, title, start_date, end_date) " +
-                        "values(" + courseId + ", \"" + title + "\", \"" + startDate + "\", \""
-                        + endDate + "\", " + ");";
-                //UtilityMethods.displayGuiMessage(AssessmentAdd.this, "" + query);
-                myHelper.insertRecord(query);
-                break;
-            }
-        }
-        /*
         try
         {
-            if (valuesNotNull.equals(true))
+            if (valuesNotNull)
             {
-                String slqQuery = "insert into assessment(course_id, title, description, ) values(" + "\"" + title + "\""
-                        + ", \"" + description + "\", \"" + startDate + "\");";
+                ArrayList<Course> courses = dp.getAllCourses();
+                for(Course course : courses)
+                {
+                    boolean foundTitleMatch = course.getTitle().contains(associatedCourseTitle) ? true : false;
+                    if(foundTitleMatch)
+                    {
+                        int courseId = course.getId();
 
-                myHelper.insertRecord(slqQuery);
-
-                finish();
+                        String query = "insert into assessment(course_id, title, start_date, end_date) " +
+                                "values(" + courseId + ", \"" + title + "\", \"" + startDate + "\", \""
+                                + endDate + "\");";
+                        UtilityMethods.displayGuiMessage(AssessmentAdd.this, "valuesnotnull was: "+ query);
+                        myHelper.insertRecord(query);
+                        finish();
+                    }
+                }
             }
             else
             {
-                //
+                UtilityMethods.displayGuiMessage(AssessmentAdd.this, "Please make sure no fields are null and date fields are filled out in correct format.");
             }
         } catch (Exception e)
         {
             //
-        }*/
+        }
     }
 
     public void onClickCancelBtn(View view)

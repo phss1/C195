@@ -6,4 +6,74 @@
     android:layout_height="match_parent"
     tools:context=".Controller.Assessment.AssessmentModify">
 
+    <EditText
+        android:id="@+id/modAssTitleTxtFld"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="17dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="19dp"
+        android:ems="10"
+        android:hint="Title"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/modAssStartDateTxtFld"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="11dp"
+        android:ems="10"
+        android:hint="Start Date: 01/01/2020"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/modAssTitleTxtFld" />
+
+    <EditText
+        android:id="@+id/modAssEndDateTxtFld"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="9dp"
+        android:ems="10"
+        android:hint="End Date: 01/01/2020"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/modAssStartDateTxtFld" />
+
+    <Spinner
+        android:id="@+id/modAssCourseSpn"
+        android:layout_width="184dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="9dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/modAssEndDateTxtFld" />
+
+    <Button
+        android:id="@+id/modAssSaveBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="107dp"
+        android:text="Save"
+        app:layout_constraintStart_toEndOf="@+id/modAssEndDateTxtFld"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/modAssCancelBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="27dp"
+        android:text="@android:string/cancel"
+        app:layout_constraintStart_toEndOf="@+id/modAssCourseSpn"
+        app:layout_constraintTop_toBottomOf="@+id/modAssSaveBtn" />
 </androidx.constraintlayout.widget.ConstraintLayout>
