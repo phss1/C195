@@ -20,6 +20,7 @@ import com.example.c196.Utility.UtilityMethods;
 public class NoteAdd extends AppCompatActivity
 {
     DBConnector myHelper;
+    DataProvider dp = new DataProvider();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -43,13 +44,15 @@ public class NoteAdd extends AppCompatActivity
         {
             if(valuesNotNull)
             {
-                String sqlQuery = "insert into course(course_id, title, description, title, status,  " +
-                        "start_date, end_date) values(-1, \"" + title
-                        + "\", \"" + description  + "\");";
+                int courseId = dp.getAllCourses().get(Course.getSelectedItemIndex()).getId();
+                String sqlQuery = "insert into note(course_id, title, description) values(" +
+                        + courseId + ", \"" + title + "\", \"" + description  + "\");";
                 myHelper.insertRecord(sqlQuery);
 
-                Intent intent = new Intent(this, CourseModify.class);
-                startActivity(intent);
+                UtilityMethods.displayGuiMessage(NoteAdd.this, "" + sqlQuery);
+
+                //Intent intent = new Intent(this, CourseModify.class);
+                //startActivity(intent);
             }
             else
             {

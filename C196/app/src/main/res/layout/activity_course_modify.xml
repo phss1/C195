@@ -102,12 +102,13 @@
         app:layout_constraintTop_toBottomOf="@+id/courseModifyEndDateTxtFld" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/modCourseNoteBtn"
         android:layout_width="71dp"
         android:layout_height="49dp"
         android:layout_marginStart="19dp"
         android:layout_marginLeft="19dp"
         android:layout_marginTop="13dp"
+        android:onClick="onClickModCourseNoteBtn"
         android:text="Modify Notes"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/modifyCoModAssBtn"
@@ -135,7 +136,7 @@
         android:onClick="courseModCancelBtn"
         android:text="Cancel"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/button6"
+        app:layout_constraintStart_toEndOf="@+id/modCourseNoteBtn"
         app:layout_constraintTop_toBottomOf="@+id/courseModSaveBtn" />
 
     <Button

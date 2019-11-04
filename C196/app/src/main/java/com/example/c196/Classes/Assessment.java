@@ -1,14 +1,12 @@
 package com.example.c196.Classes;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Assessment
 {
     private int id;
     private String title;
-    private String description;
     private String startDate;
     private String endDate;
     private ArrayList<Goal> goals;
@@ -16,11 +14,10 @@ public class Assessment
     private List<Assessment> assessmentToModify = new ArrayList<>();
     private static int selectedItemIndex;
 
-    public Assessment(int id, String title, String description, String startDate, String endDate, ArrayList<Goal> goals)
+    public Assessment(int id, String title, String startDate, String endDate, ArrayList<Goal> goals)
     {
         this.id = id;
         this.title = title;
-        this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
         this.goals = goals;
@@ -69,16 +66,6 @@ public class Assessment
     public void setTitle(String title)
     {
         this.title = title;
-    }
-
-    public String getDescription()
-    {
-        return description;
-    }
-
-    public void setDescription(String description)
-    {
-        this.description = description;
     }
 
     public String getStartDate()

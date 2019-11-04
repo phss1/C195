@@ -31,11 +31,10 @@ public class AssessmentAdd extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // TODO Auto-generated method stub
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, AssessmentView.class);
             startActivity(intent);
         }
 

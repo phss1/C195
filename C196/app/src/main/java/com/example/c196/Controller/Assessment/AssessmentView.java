@@ -63,11 +63,10 @@ public class AssessmentView extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // TODO Auto-generated method stub
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
-            Intent intent = new Intent(this, Terms.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
 
@@ -96,22 +95,15 @@ public class AssessmentView extends AppCompatActivity
     {
         String query = "SELECT * from assessment";
         Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
-        String query2 = "SELECT * from goal";
-        Cursor cursor2 = myHelper.getReadableDatabase().rawQuery(query2,null);
 
         dp.getAllMentors().clear();
         List<String> assessmentList = new ArrayList<>();
+        ArrayList<Goal> g = new ArrayList<>();
 
         while (cursor.moveToNext())
         {
-            ArrayList<Goal> goals = new ArrayList<>();
-            while(cursor2.moveToNext())
-            {
-                Goal tempGoal = new Goal(cursor2.getString(0), cursor2.getString(1));
-                goals.add(tempGoal);
-            }
-            Assessment tempAssessment = new Assessment(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
-                    cursor.getString(3), cursor.getString(4), goals);
+            Assessment tempAssessment = new Assessment(cursor.getInt(1), cursor.getString(2), cursor.getString(3),
+                    cursor.getString(4), g);
             dp.addAssessment(tempAssessment);
             assessmentList.add(cursor.getString(1));
         }

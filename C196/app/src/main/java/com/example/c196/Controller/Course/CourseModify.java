@@ -97,21 +97,24 @@ public class CourseModify extends AppCompatActivity
             }
             else
             {
-                UtilityMethods.displayGuiMessage(CourseModify.this, "Please meake sure values are not null and date value is entered correctly.");
+                UtilityMethods.displayGuiMessage(CourseModify.this, "Please make sure values are not null and date value is entered correctly.");
             }
         }
         catch(Exception e)
         {
             //
         }
-
-        Intent intent = new Intent(this, CourseDetailedView.class);
-        startActivity(intent);
     }
 
     public void modCourseAddNoteBtn(View view)
     {
         Intent intent = new Intent(this, NoteAdd.class);
+        startActivity(intent);
+    }
+
+    public void onClickModCourseNoteBtn(View view)
+    {
+        Intent intent = new Intent(this, CourseDeleteNote.class);
         startActivity(intent);
     }
 

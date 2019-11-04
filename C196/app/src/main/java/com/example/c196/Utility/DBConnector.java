@@ -49,14 +49,15 @@ public class DBConnector extends SQLiteOpenHelper {
 
         this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS goal(goal_id INTEGER primary key autoincrement,\n" +
                 "assessment_id int(10) not null,\n" +
-                "goal_description varchar(30) not null,\n" +
-                "goal_date varchar(30) not null, " +
+                "description varchar(30) not null,\n" +
+                "date varchar(30) not null, " +
                 "FOREIGN KEY(assessment_id) REFERENCES assessment(assessment_id));");
 
         this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS assessment(assessment_id INTEGER primary key autoincrement,\n" +
                 "course_id int(10) not null, " +
                 "title varchar(30) not null, " +
-                "date datetime not null, " +
+                "start_date varchar not null, " +
+                "end_date varchar not null, " +
                 "FOREIGN KEY(course_id) REFERENCES course(course_id));");
 
         this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS note(note_id INTEGER primary key autoincrement,\n" +
