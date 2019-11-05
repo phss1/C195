@@ -51,8 +51,8 @@ public class NoteAdd extends AppCompatActivity
 
                 UtilityMethods.displayGuiMessage(NoteAdd.this, "" + sqlQuery);
 
-                //Intent intent = new Intent(this, CourseModify.class);
-                //startActivity(intent);
+                Intent intent = new Intent(this, CourseModify.class);
+                startActivity(intent);
             }
             else
             {

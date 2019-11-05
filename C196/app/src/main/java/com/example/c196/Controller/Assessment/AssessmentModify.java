@@ -41,13 +41,21 @@ public class AssessmentModify extends AppCompatActivity
         myHelper = new DBConnector(AssessmentModify.this);
         myHelper.getWritableDatabase();
 
-
-
+        String assessmentType = (dp.getAllAssessments().get(Assessment.getSelectedItemIndex())).getType();
         Spinner spinner1 = findViewById(R.id.AddATypeSpn);
         String[] statusArray = new String[]{"Project", "Objective"};
         ArrayAdapter<String> spinnerAdapter1 = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_item, statusArray);
         spinner1.setAdapter(spinnerAdapter1);
+
+        UtilityMethods.displayGuiMessage(AssessmentModify.this, "assessment type: " + assessmentType);
+        switch(assessmentType)
+        {
+            case "Project": spinner1.setSelection(0);
+                break;
+            case "Objective": spinner1.setSelection(1);
+                break;
+        }
 
         Spinner spinner2 = findViewById(R.id.modAssCourseSpn);
         ArrayList<String> courseArray = UtilityMethods.createCourseSpinnerValues();
@@ -55,39 +63,6 @@ public class AssessmentModify extends AppCompatActivity
                 android.R.layout.simple_spinner_item, courseArray);
         spinner2.setAdapter(spinnerAdapter2);
         spinner2.setSelection(Course.getSelectedItemIndex());
-    }
-
-    private List<String> populateListView()
-    {
-        List<String> assessmentList = new ArrayList<>();
-        String query = "SELECT * from assessment";
-        Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
-        ArrayList<Goal> a = new ArrayList<>();
-
-        dp.getAllAssessments().clear();
-        while (cursor.moveToNext())
-        {
-            Assessment assessment = new Assessment(cursor.getInt(1), cursor.getString(2), cursor.getString(3),
-                    cursor.getString(4), cursor.getString(5), a);
-            dp.addAssessment(assessment);
-            assessmentList.add(cursor.getString(3));
-        }
-/*
-        ArrayList<Assessment> assessments = dp.getAllAssessments();
-        String selectedTermCourseTitle = courses.get(index);
-        for(Course course : allCourses)
-        {
-            boolean foundTitleMatch = course.getTitle().contains(selectedTermCourseTitle) ? true : false;
-            if(foundTitleMatch)
-            {
-                Course.setSelectedItemIndex(allCourses.indexOf(course));
-                Intent intent = new Intent(this, CourseDetailedView.class);
-                startActivity(intent);
-                break;
-            }
-        }
-*/
-        return assessmentList;
     }
 
     @Override

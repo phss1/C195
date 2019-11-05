@@ -57,6 +57,49 @@ public class CourseManageAssessments extends AppCompatActivity
         }
     }
 
+    public void onClickCourseAModifyBtn(View view)
+    {
+        String query = "select * from assessment";
+        Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
+        ArrayList<Goal> a = new ArrayList<>();
+
+        dp.getAllAssessments().clear();
+
+        ListView listView = findViewById(R.id.courseManAssessmentsLstVw);
+        SparseBooleanArray checked = listView.getCheckedItemPositions();
+        for (int i = 0; i < listView.getAdapter().getCount(); i++) {
+            if (checked.get(i))
+            {
+                while (cursor.moveToNext())
+                {
+                    Assessment assessment = new Assessment(cursor.getInt(1), cursor.getString(2), cursor.getString(3),
+                            cursor.getString(4), cursor.getString(5), a);
+                    dp.addAssessment(assessment);
+                }
+
+                String assessmentTitle = listView.getItemAtPosition(i).toString();
+                ArrayList<Assessment> assessments = dp.getAllAssessments();
+                for(Assessment assessment : assessments)
+                {
+                    boolean foundTitleMatch = assessment.getTitle().contains(assessmentTitle) ? true : false;
+                    if(foundTitleMatch)
+                    {
+                        Assessment.setSelectedItemIndex(assessments.indexOf(assessment));
+                        Intent intent = new Intent(this, AssessmentModify.class);
+                        startActivity(intent);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    public static void populateAssessmentList()
+    {
+
+    }
+
     public void onClickCourseADeleteBtn(View view)
     {
         try
@@ -68,7 +111,6 @@ public class CourseManageAssessments extends AppCompatActivity
                 {
                     String query = "delete from assessment where title = \""
                             + listView.getItemAtPosition(i) + "\";";
-                    UtilityMethods.displayGuiMessage(CourseManageAssessments.this, "" + query);
                     myHelper.deleteRecord(query);
 
                     Intent intent = new Intent(this, Courses.class);
@@ -82,12 +124,6 @@ public class CourseManageAssessments extends AppCompatActivity
         }
 
 
-    }
-
-    public void onClickCourseAModifyBtn(View view)
-    {
-        Intent intent = new Intent(this, AssessmentModify.class);
-        startActivity(intent);
     }
 
     private List<String> populateListView()

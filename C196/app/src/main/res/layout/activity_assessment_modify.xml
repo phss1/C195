@@ -81,6 +81,9 @@
         android:id="@+id/AddATypeSpn"
         android:layout_width="184dp"
         android:layout_height="43dp"
-        tools:layout_editor_absoluteX="17dp"
-        tools:layout_editor_absoluteY="244dp" />
+        android:layout_marginStart="17dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="18dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/modAssCourseSpn" />
 </androidx.constraintlayout.widget.ConstraintLayout>
