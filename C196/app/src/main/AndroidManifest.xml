@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controller.Course.CourseDeleteNote"></activity>
+        <activity android:name=".Controller.Course.CourseManageAssessments"></activity>
+        <activity android:name=".Controller.Course.CourseDeleteNote" />
         <activity android:name=".Controller.Term.TermCreateCourse" />
         <activity android:name=".Controller.Note.NoteAdd" />
         <activity android:name=".Controller.Course.CourseAdd" />

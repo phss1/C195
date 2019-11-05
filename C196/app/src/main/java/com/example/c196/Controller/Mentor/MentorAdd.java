@@ -7,15 +7,11 @@ import android.view.View;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.c196.Controller.Term.Terms;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
-import com.example.c196.Utility.UtilityMethods;
 
 public class MentorAdd extends AppCompatActivity
 {
-    UtilityMethods utilities = new UtilityMethods();
     DBConnector myHelper;
 
     @Override
@@ -28,6 +24,8 @@ public class MentorAdd extends AppCompatActivity
 
         myHelper = new DBConnector(MentorAdd.this);
         myHelper.getWritableDatabase();
+
+
     }
 
     @Override

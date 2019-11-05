@@ -70,8 +70,6 @@ public class CourseDeleteNote extends AppCompatActivity
         try
         {
             ListView listView = findViewById(R.id.viewCourseNotesLstVw);
-            //if(UtilityMethods.isAnItemChecked(listView) > 0)
-            //{
                 SparseBooleanArray checked = listView.getCheckedItemPositions();
                 for (int i = 0; i < listView.getAdapter().getCount(); i++) {
                     if (checked.get(i))
@@ -86,7 +84,6 @@ public class CourseDeleteNote extends AppCompatActivity
                         startActivity(intent);
                     }
                 }
-            //}
         }
         catch(Exception e)
         {

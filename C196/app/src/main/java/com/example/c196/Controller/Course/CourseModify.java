@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import com.example.c196.Classes.Course;
 import com.example.c196.Classes.Term;
 import com.example.c196.Controller.Assessment.AssessmentAdd;
+import com.example.c196.Controller.Assessment.AssessmentModify;
 import com.example.c196.Controller.Note.NoteAdd;
 import com.example.c196.Controller.Term.TermDetailedView;
 import com.example.c196.Controller.Term.TermModify;
@@ -90,10 +91,10 @@ public class CourseModify extends AppCompatActivity
                 String sqlQuery = "update course set title = \"" + title + "\", status = \"" + status
                         + "\", start_date = \"" + startDate + "\", end_date = \"" + endDate + "\" where course_id = "
                         + DataProvider.getAllCourses().get(Course.getSelectedItemIndex()).getId();
-                UtilityMethods.displayGuiMessage(CourseModify.this, sqlQuery);
                 myHelper.insertRecord(sqlQuery);
 
-                finish();
+                Intent intent = new Intent(this, Courses.class);
+                startActivity(intent);
             }
             else
             {
@@ -115,6 +116,13 @@ public class CourseModify extends AppCompatActivity
     public void modCourseAddNoteBtn(View view)
     {
         Intent intent = new Intent(this, NoteAdd.class);
+        startActivity(intent);
+    }
+
+
+    public void onClickModifyCoModAssBtn(View view)
+    {
+        Intent intent = new Intent(this, CourseManageAssessments.class);
         startActivity(intent);
     }
 

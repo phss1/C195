@@ -12,9 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.c196.Classes.Assessment;
+import com.example.c196.Classes.Course;
 import com.example.c196.Classes.Goal;
 import com.example.c196.Controller.MainActivity;
-import com.example.c196.Controller.Term.Terms;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
@@ -58,6 +58,8 @@ public class AssessmentView extends AppCompatActivity
                     }
                 }
         );
+
+        Course.setSelectedItemIndex(0);
     }
 
     @Override
@@ -102,10 +104,10 @@ public class AssessmentView extends AppCompatActivity
 
         while (cursor.moveToNext())
         {
-            Assessment tempAssessment = new Assessment(cursor.getInt(1), cursor.getString(2), cursor.getString(3),
-                    cursor.getString(4), g);
+            Assessment tempAssessment = new Assessment(cursor.getInt(1), cursor.getString(2),
+                    cursor.getString(3), cursor.getString(4), cursor.getString(5), g);
             dp.addAssessment(tempAssessment);
-            assessmentList.add(cursor.getString(1));
+            assessmentList.add(cursor.getString(2));
         }
 
         return assessmentList;

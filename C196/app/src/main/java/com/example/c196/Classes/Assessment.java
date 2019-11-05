@@ -7,6 +7,7 @@ public class Assessment
 {
     private int id;
     private String title;
+    private String type;
     private String startDate;
     private String endDate;
     private ArrayList<Goal> goals;
@@ -14,10 +15,11 @@ public class Assessment
     private List<Assessment> assessmentToModify = new ArrayList<>();
     private static int selectedItemIndex;
 
-    public Assessment(int id, String title, String startDate, String endDate, ArrayList<Goal> goals)
+    public Assessment(int id, String title, String type, String startDate, String endDate, ArrayList<Goal> goals)
     {
         this.id = id;
         this.title = title;
+        this.type = type;
         this.startDate = startDate;
         this.endDate = endDate;
         this.goals = goals;
@@ -46,6 +48,14 @@ public class Assessment
     public static void setSelectedItemIndex(int selectedItemIndex)
     {
         Assessment.selectedItemIndex = selectedItemIndex;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getId()

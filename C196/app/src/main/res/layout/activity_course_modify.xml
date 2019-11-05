@@ -84,7 +84,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="13dp"
-        android:text="Modify Assessments"
+        android:onClick="onClickModifyCoModAssBtn"
+        android:text="Manage Assessments"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/modCoAddAssBtn" />

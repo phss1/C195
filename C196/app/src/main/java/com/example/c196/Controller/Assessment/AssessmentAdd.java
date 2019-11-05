@@ -29,16 +29,21 @@ public class AssessmentAdd extends AppCompatActivity
         setContentView(R.layout.activity_assessment_add);
         getSupportActionBar().setTitle("Add Assessment");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Spinner spinner = findViewById(R.id.addAssessmentSpinner);
-
         myHelper = new DBConnector(AssessmentAdd.this);
         myHelper.getWritableDatabase();
 
+        Spinner spinner1 = findViewById(R.id.addATypeSpn);
+        String[] statusArray = new String[]{"Project", "Objective"};
+        ArrayAdapter<String> spinnerAdapter1 = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_item, statusArray);
+        spinner1.setAdapter(spinnerAdapter1);
+
+        Spinner spinner2 = findViewById(R.id.addAssessmentSpinner);
         ArrayList<String> courseArray = UtilityMethods.createCourseSpinnerValues();
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter(this,
+        ArrayAdapter<String> spinnerAdapter2 = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_item, courseArray);
-        spinner.setAdapter(spinnerAdapter);
-        spinner.setSelection(Course.getSelectedItemIndex());
+        spinner2.setAdapter(spinnerAdapter2);
+        spinner2.setSelection(Course.getSelectedItemIndex());
     }
 
     public void onClickAddAssSaveBtn(View view)
@@ -46,6 +51,7 @@ public class AssessmentAdd extends AppCompatActivity
         String title = ((EditText) findViewById(R.id.titleTxtFld)).getText().toString();
         String startDate = ((EditText) findViewById(R.id.startDateTxtFld)).getText().toString();
         String endDate = ((EditText) findViewById(R.id.endDateTxtFld)).getText().toString();
+        String assessmentType = ((Spinner) findViewById(R.id.addATypeSpn)).getSelectedItem().toString();
         String associatedCourseTitle = ((Spinner) findViewById(R.id.addAssessmentSpinner)).getSelectedItem().toString();
         Boolean valuesNotNull = !title.isEmpty() && UtilityMethods.isValidDate(startDate) == true
                 && UtilityMethods.isValidDate(endDate) == true;
@@ -62,10 +68,9 @@ public class AssessmentAdd extends AppCompatActivity
                     {
                         int courseId = course.getId();
 
-                        String query = "insert into assessment(course_id, title, start_date, end_date) " +
-                                "values(" + courseId + ", \"" + title + "\", \"" + startDate + "\", \""
-                                + endDate + "\");";
-                        UtilityMethods.displayGuiMessage(AssessmentAdd.this, "valuesnotnull was: "+ query);
+                        String query = "insert into assessment(course_id, title, type, start_date, end_date) " +
+                                "values(" + courseId + ", \"" + title + "\", \"" + assessmentType + "\", \""
+                                + startDate + "\", \"" + endDate + "\");";
                         myHelper.insertRecord(query);
                         finish();
                     }

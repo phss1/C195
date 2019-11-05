@@ -6,80 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".Controller.Mentor.MentorView">
 
-    <TextView
-        android:id="@+id/viewMentorsTxtVw"
-        android:layout_width="137dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="140dp"
-        android:layout_marginLeft="140dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="134dp"
-        android:layout_marginRight="134dp"
-        android:text="Mentors"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        android:typeface="normal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/addBtn"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="117dp"
-        android:layout_marginRight="117dp"
+        android:layout_marginStart="151dp"
+        android:layout_marginLeft="151dp"
+        android:layout_marginTop="138dp"
         android:onClick="onActionAddMentor"
         android:text="Add"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/mentorsLstVw"
-        android:layout_width="325dp"
-        android:layout_height="416dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginLeft="14dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginRight="13dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        android:layout_width="415dp"
+        android:layout_height="498dp"
+        android:layout_marginTop="44dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addBtn" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="177dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="117dp"
-        android:layout_marginLeft="117dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="117dp"
-        android:layout_marginRight="117dp"
-        android:layout_marginBottom="10dp"
-        android:text="Select an item from the list to either modify or delete."
-        app:layout_constraintBottom_toTopOf="@+id/addBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewMentorsTxtVw" />
-
-    <Button
-        android:id="@+id/homeBtn"
-        android:layout_width="65dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="117dp"
-        android:layout_marginLeft="117dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginBottom="19dp"
-        android:onClick="onClickHomeBtn"
-        android:text="Home"
-        app:layout_constraintBottom_toTopOf="@+id/mentorsLstVw"
-        app:layout_constraintEnd_toStartOf="@+id/addBtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
