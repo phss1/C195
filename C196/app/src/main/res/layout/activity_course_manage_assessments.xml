@@ -6,4 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".Controller.Course.CourseManageAssessments">
 
+    <Button
+        android:id="@+id/courseAModifyBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="103dp"
+        android:layout_marginLeft="103dp"
+        android:layout_marginTop="84dp"
+        android:onClick="onClickCourseAModifyBtn"
+        android:text="Modify"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/courseADeleteBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="84dp"
+        android:onClick="onClickCourseADeleteBtn"
+        android:text="Delete"
+        app:layout_constraintStart_toEndOf="@+id/courseAModifyBtn"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/courseManAssessmentsLstVw"
+        android:layout_width="409dp"
+        android:layout_height="466dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

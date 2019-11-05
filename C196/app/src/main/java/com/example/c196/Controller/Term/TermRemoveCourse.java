@@ -31,7 +31,6 @@ public class TermRemoveCourse extends AppCompatActivity
         setContentView(R.layout.activity_term_remove_course);
         getSupportActionBar().setTitle("Remove Course from Term");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         myHelper = new DBConnector(TermRemoveCourse.this);
         myHelper.getWritableDatabase();
 
@@ -54,7 +53,7 @@ public class TermRemoveCourse extends AppCompatActivity
     {
         try
         {
-            ListView listView = findViewById(R.id.removalLstVw);
+            ListView listView = findViewById(R.id.courseManAssessmentsLstVw);
             if(UtilityMethods.isAnItemChecked(listView) > 0)
             {
                 SparseBooleanArray checked = listView.getCheckedItemPositions();

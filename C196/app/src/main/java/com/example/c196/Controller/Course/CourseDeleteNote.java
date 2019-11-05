@@ -76,8 +76,6 @@ public class CourseDeleteNote extends AppCompatActivity
                     {
                         String query = "delete from note where title = \""
                                 + listView.getItemAtPosition(i) + "\";";
-
-                        UtilityMethods.displayGuiMessage(CourseDeleteNote.this, "" + query);
                         myHelper.deleteRecord(query);
 
                         Intent intent = new Intent(this, CourseModify.class);

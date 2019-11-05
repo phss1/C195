@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import com.example.c196.Classes.Term;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
+import com.example.c196.Utility.UtilityMethods;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,8 +59,23 @@ public class CourseDetailedView extends AppCompatActivity
 
             ListView listView = findViewById(R.id.courseDVAssessmentLstVw);
             listView.setAdapter(termCoursesAdapter);
-            listView.setChoiceMode(2);
+            listView.setOnItemClickListener(
+                    new AdapterView.OnItemClickListener()
+                    {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+                        {
+                            changeGuiScreen();
+                        }
+                    }
+            );
         }
+    }
+
+    private void changeGuiScreen()
+    {
+        Intent intent = new Intent(this, CourseManageAssessments.class);
+        startActivity(intent);
     }
 
     private List<String> populateListView()
@@ -103,7 +120,8 @@ public class CourseDetailedView extends AppCompatActivity
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
-            finish();
+            Intent intent = new Intent(this, Courses.class);
+            startActivity(intent);
         }
 
         return true;
