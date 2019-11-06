@@ -12,18 +12,12 @@ import android.widget.Spinner;
 
 import com.example.c196.Classes.Assessment;
 import com.example.c196.Classes.Course;
-import com.example.c196.Classes.Goal;
 import com.example.c196.Classes.Note;
-import com.example.c196.Controller.Course.CourseDetailedView;
-import com.example.c196.Controller.Term.Terms;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
 import com.example.c196.Utility.UtilityMethods;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.example.c196.Utility.DataProvider.getAllAssessments;
 
@@ -66,8 +60,6 @@ public class AssessmentModify extends AppCompatActivity
                 break;
         }
 
-        UtilityMethods.displayGuiMessage(AssessmentModify.this, "String course selected index null: " + Course.getSelectedItemIndex());
-
         if(Course.getSelectedItemIndex() == 0)
         {
             int assessmentId = assessment.getId();
@@ -80,30 +72,55 @@ public class AssessmentModify extends AppCompatActivity
                 courseId = cursor.getInt(0);
             }
 
-            String query2 = "select * from course where course_id = " + courseId;
+            String query2 = "select title from course where course_id = " + courseId;
             Cursor cursor2 = myHelper.getReadableDatabase().rawQuery(query2,null);
 
             while(cursor2.moveToNext())
             {
                 String courseTitle = cursor2.getString(0);
+                createCourseList();
                 ArrayList<Course> courses = dp.getAllCourses();
                 for(Course course : courses)
                 {
                     if(course.getTitle().contains(courseTitle))
                     {
                         int index = courses.indexOf(course);
-                        Course.setSelectedItemIndex(index);
+                        Spinner spinner2 = findViewById(R.id.modAssCourseSpn);
+                        ArrayList<String> courseArray = UtilityMethods.createCourseSpinnerValues();
+                        ArrayAdapter<String> spinnerAdapter2 = new ArrayAdapter(this,
+                                android.R.layout.simple_spinner_item, courseArray);
+                        spinner2.setAdapter(spinnerAdapter2);
+                        spinner2.setSelection(index);
                     }
                 }
             }
         }
+        else
+        {
+            Spinner spinner2 = findViewById(R.id.modAssCourseSpn);
+            ArrayList<String> courseArray = UtilityMethods.createCourseSpinnerValues();
+            ArrayAdapter<String> spinnerAdapter2 = new ArrayAdapter(this,
+                    android.R.layout.simple_spinner_item, courseArray);
+            spinner2.setAdapter(spinnerAdapter2);
+            spinner2.setSelection(Course.getSelectedItemIndex());
+        }
+    }
 
-        Spinner spinner2 = findViewById(R.id.modAssCourseSpn);
-        ArrayList<String> courseArray = UtilityMethods.createCourseSpinnerValues();
-        ArrayAdapter<String> spinnerAdapter2 = new ArrayAdapter(this,
-                android.R.layout.simple_spinner_item, courseArray);
-        spinner2.setAdapter(spinnerAdapter2);
-        spinner2.setSelection(Course.getSelectedItemIndex());
+    private void createCourseList()
+    {
+        String query = "select * from course";
+        Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
+
+        ArrayList<Assessment> a = new ArrayList<>();
+        ArrayList<Note> n = new ArrayList<>();
+
+        dp.getAllCourses().clear();
+        while (cursor.moveToNext())
+        {
+            Course tempCourse = new Course(cursor.getInt(0), cursor.getString(3), cursor.getString(4),
+                    a, n, cursor.getString(5), cursor.getString(6));
+            dp.addCourse(tempCourse);
+        }
     }
 
     @Override
