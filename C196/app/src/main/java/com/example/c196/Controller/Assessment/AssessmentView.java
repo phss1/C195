@@ -81,12 +81,6 @@ public class AssessmentView extends AppCompatActivity
         startActivity(intent);
     }
 
-    public void onClickHomeBtn(View view)
-    {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-
     public void onClickModifyAssessment(View view)
     {
         Intent intent = new Intent(this, AssessmentModify.class);
