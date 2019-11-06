@@ -104,7 +104,7 @@ public class AssessmentView extends AppCompatActivity
 
         while (cursor.moveToNext())
         {
-            Assessment tempAssessment = new Assessment(cursor.getInt(1), cursor.getString(2),
+            Assessment tempAssessment = new Assessment(cursor.getInt(0), cursor.getString(2),
                     cursor.getString(3), cursor.getString(4), cursor.getString(5), g);
             dp.addAssessment(tempAssessment);
             assessmentList.add(cursor.getString(2));

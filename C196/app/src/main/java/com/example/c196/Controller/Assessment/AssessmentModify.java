@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.c196.Classes.Assessment;
@@ -32,14 +33,21 @@ public class AssessmentModify extends AppCompatActivity
     DataProvider dp = new DataProvider();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessment_modify);
         getSupportActionBar().setTitle("Modify Assessment");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         myHelper = new DBConnector(AssessmentModify.this);
         myHelper.getWritableDatabase();
+
+        Assessment assessment = dp.getAllAssessments().get(Assessment.getSelectedItemIndex());
+        EditText title = findViewById(R.id.modAssTitleTxtFld);
+        EditText startDate = findViewById(R.id.modAssStartDateTxtFld);
+        EditText endDate = findViewById(R.id.modAssEndDateTxtFld);
+        title.setText(assessment.getTitle());
+        startDate.setText(assessment.getStartDate());
+        endDate.setText(assessment.getEndDate());
 
         String assessmentType = (dp.getAllAssessments().get(Assessment.getSelectedItemIndex())).getType();
         Spinner spinner1 = findViewById(R.id.AddATypeSpn);
@@ -48,13 +56,46 @@ public class AssessmentModify extends AppCompatActivity
                 android.R.layout.simple_spinner_item, statusArray);
         spinner1.setAdapter(spinnerAdapter1);
 
-        UtilityMethods.displayGuiMessage(AssessmentModify.this, "assessment type: " + assessmentType);
-        switch(assessmentType)
+        switch (assessmentType)
         {
-            case "Project": spinner1.setSelection(0);
+            case "Project":
+                spinner1.setSelection(0);
                 break;
-            case "Objective": spinner1.setSelection(1);
+            case "Objective":
+                spinner1.setSelection(1);
                 break;
+        }
+
+        UtilityMethods.displayGuiMessage(AssessmentModify.this, "String course selected index null: " + Course.getSelectedItemIndex());
+
+        if(Course.getSelectedItemIndex() == 0)
+        {
+            int assessmentId = assessment.getId();
+            String query = "select course_id from assessment where assessment_id = " + assessmentId;
+            Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
+
+            int courseId=-1;
+            while(cursor.moveToNext())
+            {
+                courseId = cursor.getInt(0);
+            }
+
+            String query2 = "select * from course where course_id = " + courseId;
+            Cursor cursor2 = myHelper.getReadableDatabase().rawQuery(query2,null);
+
+            while(cursor2.moveToNext())
+            {
+                String courseTitle = cursor2.getString(0);
+                ArrayList<Course> courses = dp.getAllCourses();
+                for(Course course : courses)
+                {
+                    if(course.getTitle().contains(courseTitle))
+                    {
+                        int index = courses.indexOf(course);
+                        Course.setSelectedItemIndex(index);
+                    }
+                }
+            }
         }
 
         Spinner spinner2 = findViewById(R.id.modAssCourseSpn);
