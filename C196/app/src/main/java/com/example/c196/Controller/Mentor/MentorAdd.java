@@ -1,18 +1,27 @@
 package com.example.c196.Controller.Mentor;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.c196.Classes.Mentor;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
+import com.example.c196.Utility.DataProvider;
+import com.example.c196.Utility.UtilityMethods;
+
+import java.util.ArrayList;
 
 public class MentorAdd extends AppCompatActivity
 {
     DBConnector myHelper;
+    DataProvider dp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -25,7 +34,26 @@ public class MentorAdd extends AppCompatActivity
         myHelper = new DBConnector(MentorAdd.this);
         myHelper.getWritableDatabase();
 
+        Spinner spinner2 = findViewById(R.id.addMtrCourseSpn);
+        ArrayList<String> courseArray = populateCourseList();
 
+        ArrayAdapter<String> spinnerAdapter2 = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_item, courseArray);
+        spinner2.setAdapter(spinnerAdapter2);
+    }
+
+    private ArrayList<String> populateCourseList()
+    {
+        ArrayList<String> courseList = new ArrayList<>();
+        String query = "SELECT title from course";
+        Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
+
+        while (cursor.moveToNext())
+        {
+            courseList.add(cursor.getString(0));
+        }
+
+        return courseList;
     }
 
     @Override
@@ -46,6 +74,7 @@ public class MentorAdd extends AppCompatActivity
         String name = ((EditText) findViewById(R.id.nameTxtFld)).getText().toString();
         String email = ((EditText) findViewById(R.id.emailTxtFld)).getText().toString();
         String phone = ((EditText) findViewById(R.id.phoneTxtFld)).getText().toString();
+        String selectedCourseTitle = ((Spinner) findViewById(R.id.addMtrCourseSpn)).getSelectedItem().toString();
         Boolean valuesNotNull = !name.isEmpty() && !email.isEmpty() && !phone.isEmpty();
 
         try
@@ -54,8 +83,12 @@ public class MentorAdd extends AppCompatActivity
             {
                 String slqQuery = "insert into mentor(name, email, phone) values(" + "\"" + name + "\""
                         + ", \"" + email + "\", \"" + phone + "\");";
-
                 myHelper.insertRecord(slqQuery);
+                String query = "update course set mentor_id = "
+                        + (dp.getAllMentors().get(Mentor.getSelectedItemIndex())).getId()
+                        + " where title = \"" + selectedCourseTitle + "\"";
+                UtilityMethods.displayGuiMessage(MentorAdd.this, "" + query);
+                myHelper.updateRecord(query);
 
                 Intent intent = new Intent(this, MentorView.class);
                 startActivity(intent);
