@@ -95,11 +95,6 @@ public class CourseManageAssessments extends AppCompatActivity
         }
     }
 
-    public static void populateAssessmentList()
-    {
-
-    }
-
     public void onClickCourseADeleteBtn(View view)
     {
         try
@@ -129,7 +124,8 @@ public class CourseManageAssessments extends AppCompatActivity
     private List<String> populateListView()
     {
         List<String> assessmentList = new ArrayList<>();
-        String query = "SELECT * from assessment";
+        String query = "SELECT * from assessment where course_id = "
+                + dp.getAllCourses().get(Course.getSelectedItemIndex()).getId();
         Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
         ArrayList<Goal> a = new ArrayList<>();
 

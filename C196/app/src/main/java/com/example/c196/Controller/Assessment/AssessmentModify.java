@@ -177,19 +177,14 @@ public class AssessmentModify extends AppCompatActivity
     {
         try
         {
-            ListView listView = findViewById(R.id.viewCourseNotesLstVw);
-            SparseBooleanArray checked = listView.getCheckedItemPositions();
-            for (int i = 0; i < listView.getAdapter().getCount(); i++) {
-                if (checked.get(i))
-                {
-                    String query = "delete from assessment where title = \""
-                            + listView.getItemAtPosition(i) + "\";";
-                    myHelper.deleteRecord(query);
+            String asmtTitle = ((EditText) findViewById(R.id.modAssTitleTxtFld)).getText().toString();
+            String query = "delete from assessment where title = \""
+                    + asmtTitle + "\";";
+            UtilityMethods.displayGuiMessage(AssessmentModify.this, "" + query);
+            myHelper.deleteRecord(query);
 
-                    Intent intent = new Intent(this, CourseModify.class);
-                    startActivity(intent);
-                }
-            }
+            Intent intent = new Intent(this, AssessmentView.class);
+            startActivity(intent);
         }
         catch(Exception e)
         {

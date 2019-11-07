@@ -1,18 +1,24 @@
 package com.example.c196.Utility;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.util.SparseBooleanArray;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.c196.Classes.Assessment;
 import com.example.c196.Classes.Course;
+import com.example.c196.Classes.Note;
 import com.example.c196.R;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class UtilityMethods
 {
+    DBConnector myHelper;
+
     public static ArrayList<String> createCourseSpinnerValues()
     {
         ArrayList<Course> courses = DataProvider.getAllCourses();

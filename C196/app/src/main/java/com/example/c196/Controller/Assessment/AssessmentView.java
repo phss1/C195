@@ -39,13 +39,13 @@ public class AssessmentView extends AppCompatActivity
         getSupportActionBar().setTitle("View Assessments");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        List<String> mentors = populateListView();
-        ArrayAdapter<String> mentorsAdapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_list_item_1, mentors
+        List<String> assessments = populateListView();
+        ArrayAdapter<String> assessmentsAdapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_list_item_1, assessments
         );
 
         ListView listView = findViewById(R.id.AssessmentLstVw);
-        listView.setAdapter(mentorsAdapter);
+        listView.setAdapter(assessmentsAdapter);
         listView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener()
                 {
@@ -92,7 +92,7 @@ public class AssessmentView extends AppCompatActivity
         String query = "SELECT * from assessment";
         Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
 
-        dp.getAllMentors().clear();
+        dp.getAllAssessments().clear();
         List<String> assessmentList = new ArrayList<>();
         ArrayList<Goal> g = new ArrayList<>();
 

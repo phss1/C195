@@ -2,6 +2,8 @@ package com.example.c196.Controller.Assessment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,13 +11,17 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.c196.Classes.Assessment;
 import com.example.c196.Classes.Course;
+import com.example.c196.Classes.Note;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
 import com.example.c196.Utility.UtilityMethods;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AssessmentAdd extends AppCompatActivity
 {
@@ -40,6 +46,12 @@ public class AssessmentAdd extends AppCompatActivity
 
         Spinner spinner2 = findViewById(R.id.addAssessmentSpinner);
         ArrayList<String> courseArray = UtilityMethods.createCourseSpinnerValues();
+
+        if(courseArray.size() == 0)
+        {
+            courseArray = populateCourseList();
+        }
+
         ArrayAdapter<String> spinnerAdapter2 = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_item, courseArray);
         spinner2.setAdapter(spinnerAdapter2);
@@ -72,7 +84,9 @@ public class AssessmentAdd extends AppCompatActivity
                                 "values(" + courseId + ", \"" + title + "\", \"" + assessmentType + "\", \""
                                 + startDate + "\", \"" + endDate + "\");";
                         myHelper.insertRecord(query);
-                        finish();
+
+                        Intent intent = new Intent(this, AssessmentView.class);
+                        startActivity(intent);
                     }
                 }
             }
@@ -84,6 +98,27 @@ public class AssessmentAdd extends AppCompatActivity
         {
             //
         }
+    }
+
+    private ArrayList<String> populateCourseList()
+    {
+        ArrayList<String> courseList = new ArrayList<>();
+        String query = "SELECT * from course";
+        Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
+
+        ArrayList<Assessment> a = new ArrayList<>();
+        ArrayList<Note> n = new ArrayList<>();
+
+        dp.getAllCourses().clear();
+        while (cursor.moveToNext())
+        {
+            Course tempCourse = new Course(cursor.getInt(0), cursor.getString(3), cursor.getString(4),
+                    a, n, cursor.getString(5), cursor.getString(6));
+            dp.addCourse(tempCourse);
+            courseList.add(cursor.getString(3));
+        }
+
+        return courseList;
     }
 
     public void onClickCancelBtn(View view)
