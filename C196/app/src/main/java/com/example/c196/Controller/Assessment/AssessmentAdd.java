@@ -47,7 +47,7 @@ public class AssessmentAdd extends AppCompatActivity
         Spinner spinner2 = findViewById(R.id.addAssessmentSpinner);
         ArrayList<String> courseArray = UtilityMethods.createCourseSpinnerValues();
 
-        if(courseArray.size() == 0)
+        if(courseArray.size() == 0 && !Course.isUseAlternate() == true)
         {
             courseArray = populateCourseList();
         }
@@ -85,8 +85,9 @@ public class AssessmentAdd extends AppCompatActivity
                                 + startDate + "\", \"" + endDate + "\");";
                         myHelper.insertRecord(query);
 
-                        Intent intent = new Intent(this, AssessmentView.class);
-                        startActivity(intent);
+                        finish();
+                        /*Intent intent = new Intent(this, AssessmentView.class);
+                        startActivity(intent);*/
                     }
                 }
             }

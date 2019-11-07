@@ -14,6 +14,7 @@ public class Course
     private String endDate;
     private List<Course> courseToModify = new ArrayList<>();
     private static int selectedItemIndex;
+    private static boolean useAlternate;
 
     public Course(int id, String title, String status, ArrayList<Assessment> assessments,
                   ArrayList<Note> notes, String startDate, String endDate)
@@ -125,5 +126,15 @@ public class Course
     public void setCourseToModify(List<Course> courseToModify)
     {
         this.courseToModify = courseToModify;
+    }
+
+    public static boolean isUseAlternate()
+    {
+        return useAlternate;
+    }
+
+    public static void setUseAlternate(boolean useAlternate)
+    {
+        Course.useAlternate = useAlternate;
     }
 }

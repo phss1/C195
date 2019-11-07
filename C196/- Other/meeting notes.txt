@@ -1,3 +1,2 @@
-how to load last screen like left arrow on phone?
-layout so far?
-mentor options for courses only or terms as well?
+where to display mentor and course status?
+what is meant by a progress app? Percentage of completed against not completed on main screen ok?

@@ -50,8 +50,8 @@ public class Courses extends AppCompatActivity
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
                     {
-
                         Course.setSelectedItemIndex(i);
+                        Course.setUseAlternate(true);
                         onClickModifyCourse(view);
                     }
                 }

@@ -49,8 +49,6 @@ public class NoteAdd extends AppCompatActivity
                         + courseId + ", \"" + title + "\", \"" + description  + "\");";
                 myHelper.insertRecord(sqlQuery);
 
-                UtilityMethods.displayGuiMessage(NoteAdd.this, "" + sqlQuery);
-
                 Intent intent = new Intent(this, CourseModify.class);
                 startActivity(intent);
             }
@@ -63,10 +61,6 @@ public class NoteAdd extends AppCompatActivity
         {
             //
         }
-
-
-        Intent intent = new Intent(this, CourseModify.class);
-        startActivity(intent);
     }
 
     public void addNoteCancelBtn(View view)

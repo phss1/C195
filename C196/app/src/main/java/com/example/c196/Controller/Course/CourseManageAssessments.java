@@ -67,7 +67,8 @@ public class CourseManageAssessments extends AppCompatActivity
 
         ListView listView = findViewById(R.id.courseManAssessmentsLstVw);
         SparseBooleanArray checked = listView.getCheckedItemPositions();
-        for (int i = 0; i < listView.getAdapter().getCount(); i++) {
+        for (int i = 0; i < listView.getAdapter().getCount(); i++)
+        {
             if (checked.get(i))
             {
                 while (cursor.moveToNext())
@@ -84,7 +85,6 @@ public class CourseManageAssessments extends AppCompatActivity
                     boolean foundTitleMatch = assessment.getTitle().contains(assessmentTitle) ? true : false;
                     if(foundTitleMatch)
                     {
-                        Assessment.setSelectedItemIndex(assessments.indexOf(assessment));
                         Intent intent = new Intent(this, AssessmentModify.class);
                         startActivity(intent);
                         break;

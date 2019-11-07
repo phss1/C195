@@ -5,25 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.SparseBooleanArray;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.example.c196.Classes.Assessment;
 import com.example.c196.Classes.Course;
 import com.example.c196.Classes.Note;
-import com.example.c196.Controller.Course.CourseModify;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
 import com.example.c196.Utility.UtilityMethods;
 import java.util.ArrayList;
-
-import static com.example.c196.Utility.DataProvider.getAllAssessments;
 
 public class AssessmentModify extends AppCompatActivity
 {
@@ -64,7 +59,7 @@ public class AssessmentModify extends AppCompatActivity
                 break;
         }
 
-        if(Course.getSelectedItemIndex() == 0)
+        if(Course.getSelectedItemIndex() == 0 && !Course.isUseAlternate() == true)
         {
             int assessmentId = assessment.getId();
             String query = "select course_id from assessment where assessment_id = " + assessmentId;
@@ -98,6 +93,15 @@ public class AssessmentModify extends AppCompatActivity
                     }
                 }
             }
+        }
+        else if(Course.isUseAlternate() == true)
+        {
+            Spinner spinner2 = findViewById(R.id.modAssCourseSpn);
+            ArrayList<String> courseArray = UtilityMethods.createCourseSpinnerValues();
+            ArrayAdapter<String> spinnerAdapter2 = new ArrayAdapter(this,
+                    android.R.layout.simple_spinner_item, courseArray);
+            spinner2.setAdapter(spinnerAdapter2);
+            spinner2.setSelection(Course.getSelectedItemIndex());
         }
         else
         {
@@ -194,8 +198,7 @@ public class AssessmentModify extends AppCompatActivity
 
     public void modAssCancelBtn(View view)
     {
-        Intent intent = new Intent(this, AssessmentAdd.class);
-        startActivity(intent);
+        finish();
     }
 
     @Override
