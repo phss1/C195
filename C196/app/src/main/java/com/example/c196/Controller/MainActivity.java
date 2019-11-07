@@ -36,6 +36,21 @@ public class MainActivity extends AppCompatActivity
         myHelper.insertRecord("insert into assessment(course_id, title, date) values(-1, \"A4\", \"01/01/2020\");");
         */
 
+        /*
+        Next work on Mentor modify screen to get list of courses working
+
+        // TODO modify mentors on modify course screen
+        // TODO modify terms on modify course screen
+        // TODO fix issue where
+        // TODO add mentor and course status info to course detailed view
+        // TODO setup percentage done on main screen based on courses with completed to not completed. find out if based on all courses or term?
+        // TODO notifications for assessment goal dates
+        // TODO create scheduler app
+        // TODO story board
+        // TODO do signed apk for deployment package and take screen shots
+        // TODO Short essay on project reflection
+            */
+
     }
 
     @Override

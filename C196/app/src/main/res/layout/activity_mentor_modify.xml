@@ -12,33 +12,16 @@
         android:layout_height="45dp"
         android:layout_marginStart="99dp"
         android:layout_marginLeft="99dp"
-        android:layout_marginTop="62dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="99dp"
         android:layout_marginRight="99dp"
         android:ems="10"
         android:hint="name"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/modifyMentorTxtVw" />
-
-    <EditText
-        android:id="@+id/emailTxtFld2"
-        android:layout_width="264dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="99dp"
-        android:layout_marginLeft="99dp"
-        android:layout_marginTop="19dp"
-        android:layout_marginEnd="99dp"
-        android:layout_marginRight="99dp"
-        android:layout_marginBottom="18dp"
-        android:ems="10"
-        android:hint="email address"
-        android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/phoneTxtFld2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameTxtFld2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/phoneTxtFld2"
@@ -46,25 +29,24 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="99dp"
         android:layout_marginLeft="99dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="99dp"
         android:layout_marginRight="99dp"
         android:ems="10"
         android:hint="phone #"
         android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailTxtFld2" />
 
-    <Button
-        android:id="@+id/cancelBtn2"
-        android:layout_width="81dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="74dp"
-        android:layout_marginLeft="74dp"
-        android:layout_marginTop="14dp"
-        android:onClick="onClickCancelBtn"
-        android:text="cancel"
+    <Spinner
+        android:id="@+id/mtrModCourseSpn"
+        android:layout_width="262dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="77dp"
+        android:layout_marginLeft="77dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phoneTxtFld2" />
 
@@ -72,12 +54,24 @@
         android:id="@+id/saveBtn2"
         android:layout_width="59dp"
         android:layout_height="49dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="80dp"
         android:onClick="onClickSaveBtn"
         android:text="Save"
         app:layout_constraintStart_toEndOf="@+id/deleteBtn"
+        app:layout_constraintTop_toBottomOf="@+id/phoneTxtFld2" />
+
+    <Button
+        android:id="@+id/cancelBtn2"
+        android:layout_width="81dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginLeft="76dp"
+        android:layout_marginTop="80dp"
+        android:onClick="onClickCancelBtn"
+        android:text="cancel"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phoneTxtFld2" />
 
     <Button
@@ -86,7 +80,7 @@
         android:layout_height="49dp"
         android:layout_marginStart="22dp"
         android:layout_marginLeft="22dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="25dp"
         android:layout_marginRight="25dp"
         android:onClick="onClickDeleteBtn"
@@ -95,23 +89,23 @@
         app:layout_constraintStart_toEndOf="@+id/cancelBtn2"
         app:layout_constraintTop_toBottomOf="@+id/phoneTxtFld2" />
 
-    <TextView
-        android:id="@+id/modifyMentorTxtVw"
-        android:layout_width="241dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="85dp"
-        android:layout_marginLeft="85dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="85dp"
-        android:layout_marginRight="85dp"
-        android:layout_marginBottom="62dp"
-        android:text="Modify Mentor"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        android:typeface="normal"
-        app:layout_constraintBottom_toTopOf="@+id/nameTxtFld2"
+    <EditText
+        android:id="@+id/emailTxtFld2"
+        android:layout_width="264dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="99dp"
+        android:layout_marginLeft="99dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="99dp"
+        android:layout_marginRight="99dp"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:hint="email address"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/phoneTxtFld2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/nameTxtFld2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

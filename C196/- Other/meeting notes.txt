@@ -1,4 +1,4 @@
 where to display mentor and course status?
 what is meant by a progress app? Percentage of completed against not completed on main screen ok?
-
-best way to set constraints
+what is meant by creating a scheduler app?
+best way to set constraints?
