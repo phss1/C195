@@ -3,6 +3,7 @@ package com.example.c196.Controller.Course;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.c196.Classes.Course;
+import com.example.c196.Classes.Mentor;
 import com.example.c196.Classes.Term;
 import com.example.c196.Controller.Assessment.AssessmentAdd;
 import com.example.c196.Controller.Assessment.AssessmentModify;
@@ -22,6 +24,9 @@ import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
 import com.example.c196.Utility.UtilityMethods;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CourseModify extends AppCompatActivity
 {
@@ -72,6 +77,26 @@ public class CourseModify extends AppCompatActivity
         title.setText(course.getTitle());
         startDate.setText(course.getStartDate());
         endDate.setText(course.getEndDate());
+
+        int courseId = course.getId();
+        int mentorId = getMentorId(courseId).get(0);
+
+        if(!(mentorId == -1) && getCourseMentor(mentorId).size() > 0)
+        {
+            Spinner spinner2 = findViewById(R.id.courseMentorSpn);
+            Mentor mentor = getCourseMentor(mentorId).get(0);
+            List<String> mentorNames = populateMentorsList();
+            ArrayAdapter<String> spinnerAdapter2 = new ArrayAdapter(this,
+                    android.R.layout.simple_spinner_item, mentorNames);
+            spinner2.setAdapter(spinnerAdapter2);
+
+            for(int i = 0; i > mentorNames.size(); i++)
+            {
+
+            }
+
+
+        }
     }
 
     public void onClickModCourseDeleteBtn(View view)
@@ -81,6 +106,64 @@ public class CourseModify extends AppCompatActivity
 
         Intent intent = new Intent(this, CourseDeleteNote.class);
         startActivity(intent);
+    }
+
+    private List<String> populateMentorsList()
+    {
+        List<String> mentorList = new ArrayList<>();
+        String query = "SELECT * from mentor";
+        Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
+
+        dp.getAllMentors().clear();
+        while (cursor.moveToNext())
+        {
+            Mentor tempMentor = new Mentor(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
+                    cursor.getString(3));
+            dp.addMentor(tempMentor);
+            mentorList.add(cursor.getString(1));
+        }
+
+        return mentorList;
+    }
+
+    private List<Mentor> getCourseMentor(int mentorId)
+    {
+        String query = "select * from mentor where mentor_id = " + mentorId;
+        Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
+
+        List<Mentor> mentor = new ArrayList<>();
+        while (cursor.moveToNext())
+        {
+            Mentor tempMentor = new Mentor(cursor.getInt(0), cursor.getString(1),
+                    cursor.getString(2), cursor.getString(3));
+            mentor.add(tempMentor);
+        }
+
+        String query2 = "select * from mentor";
+        Cursor cursor2 = myHelper.getReadableDatabase().rawQuery(query2,null);
+
+        while (cursor2.moveToNext())
+        {
+            Mentor tempMentor = new Mentor(cursor.getInt(0), cursor.getString(1),
+                    cursor.getString(2), cursor.getString(3));
+            dp.addMentor(tempMentor);
+        }
+
+        return mentor;
+    }
+
+    private List<Integer> getMentorId(int courseId)
+    {
+        String query = "select mentor_id from course where course_id = " + courseId;
+        Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
+
+        List<Integer> ids = new ArrayList<>();
+        while (cursor.moveToNext())
+        {
+            ids.add(cursor.getInt(0));
+        }
+
+        return ids;
     }
 
     public void courseModSaveBtn(View view)

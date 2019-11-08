@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity
         myHelper.getWritableDatabase();
         myHelper.createTables();
 
+        //current issue: course modify, line 147
+
         // TODO complete course modify delete button
         // TODO modify mentors on modify course screen
         // TODO modify terms on modify course screen

@@ -12,12 +12,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="19dp"
         android:layout_marginLeft="19dp"
-        android:layout_marginTop="67dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="179dp"
         android:layout_marginRight="179dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,7 +63,7 @@
         android:layout_marginRight="180dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/courseModifyTitleTxtFld" />
+        app:layout_constraintTop_toBottomOf="@+id/courseMentorSpn" />
 
     <Button
         android:id="@+id/modCoAddAssBtn"
@@ -154,5 +155,15 @@
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/modCourseDeleteBtn"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/courseMentorSpn"
+        android:layout_width="212dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseModifyTitleTxtFld" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
