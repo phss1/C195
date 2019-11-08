@@ -17,6 +17,7 @@ import com.example.c196.Utility.DataProvider;
 import com.example.c196.Utility.UtilityMethods;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MentorAdd extends AppCompatActivity
 {
@@ -84,8 +85,13 @@ public class MentorAdd extends AppCompatActivity
                 String slqQuery = "insert into mentor(name, email, phone) values(" + "\"" + name + "\""
                         + ", \"" + email + "\", \"" + phone + "\");";
                 myHelper.insertRecord(slqQuery);
+
+                List<Integer> mentorIds = populateListView();
+                int listSize = mentorIds.size() - 1;
+                int newMentorId = mentorIds.get(listSize);
+
                 String query = "update course set mentor_id = "
-                        + (dp.getAllMentors().get(Mentor.getSelectedItemIndex())).getId()
+                        + newMentorId
                         + " where title = \"" + selectedCourseTitle + "\"";
                 UtilityMethods.displayGuiMessage(MentorAdd.this, "" + query);
                 myHelper.updateRecord(query);
@@ -101,6 +107,21 @@ public class MentorAdd extends AppCompatActivity
         {
 
         }
+    }
+
+    private List<Integer> populateListView()
+    {
+        List<Integer> mentorList = new ArrayList<>();
+        String query = "SELECT * from mentor";
+        Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
+
+        dp.getAllMentors().clear();
+        while (cursor.moveToNext())
+        {
+            mentorList.add(cursor.getInt(0));
+        }
+
+        return mentorList;
     }
 
     public void onClickCancelBtn(View view)

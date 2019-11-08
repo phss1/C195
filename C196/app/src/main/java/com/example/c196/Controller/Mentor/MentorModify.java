@@ -1,13 +1,17 @@
 package com.example.c196.Controller.Mentor;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.c196.Classes.Assessment;
 import com.example.c196.Classes.Mentor;
 import com.example.c196.Controller.Term.Terms;
 import com.example.c196.R;
@@ -15,10 +19,13 @@ import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
 import com.example.c196.Utility.UtilityMethods;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 public class MentorModify extends AppCompatActivity
 {
     DBConnector myHelper;
-    UtilityMethods utilities;
     DataProvider dp = new DataProvider();
 
     @Override
@@ -40,6 +47,26 @@ public class MentorModify extends AppCompatActivity
         name.setText(mentorToModify.getName());
         email.setText(mentorToModify.getEmail());
         phone.setText(mentorToModify.getPhone());
+
+        Spinner spinner1 = findViewById(R.id.mtrModCourseSpn);
+        List<String> statusArray = populateSpinnerCourses();
+        ArrayAdapter<String> spinnerAdapter1 = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_item, statusArray);
+        spinner1.setAdapter(spinnerAdapter1);
+    }
+
+    private List<String> populateSpinnerCourses()
+    {
+        List<String> courseTitles = new ArrayList<>();
+        String query = "SELECT title from course";
+        Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
+
+        while (cursor.moveToNext())
+        {
+            courseTitles.add(cursor.getString(0));
+        }
+
+        return courseTitles;
     }
 
     @Override
