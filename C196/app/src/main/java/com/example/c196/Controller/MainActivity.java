@@ -17,8 +17,6 @@ public class MainActivity extends AppCompatActivity
 {
     DBConnector myHelper;
 
-    //TODO make sure to set up TermDetailedView listview to change to viewcourse screen
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -28,29 +26,18 @@ public class MainActivity extends AppCompatActivity
         myHelper = new DBConnector(MainActivity.this);
         myHelper.getWritableDatabase();
         myHelper.createTables();
-        /*myHelper.insertRecord("insert into course(term_id, mentor_id, title, status, start_date, end_date) " +
-                "values(-1,-1,\"Course1\",\'true\',\"01/01/2020\",\"12/01/2020\");");
-        myHelper.insertRecord("insert into assessment(course_id, title, date) values(-1, \"A1\", \"01/01/2020\");");
-        myHelper.insertRecord("insert into assessment(course_id, title, date) values(-1, \"A2\", \"01/01/2020\");");
-        myHelper.insertRecord("insert into assessment(course_id, title, date) values(-1, \"A3\", \"01/01/2020\");");
-        myHelper.insertRecord("insert into assessment(course_id, title, date) values(-1, \"A4\", \"01/01/2020\");");
-        */
 
-        /*
-        Next work on Mentor modify screen to get list of courses working
-
+        // TODO complete course modify delete button
         // TODO modify mentors on modify course screen
         // TODO modify terms on modify course screen
-        // TODO fix issue where
         // TODO add mentor and course status info to course detailed view
+        // TODO make sure to set up TermDetailedView listview to change to viewcourse screen
         // TODO setup percentage done on main screen based on courses with completed to not completed. find out if based on all courses or term?
         // TODO notifications for assessment goal dates
         // TODO create scheduler app
         // TODO story board
         // TODO do signed apk for deployment package and take screen shots
         // TODO Short essay on project reflection
-            */
-
     }
 
     @Override

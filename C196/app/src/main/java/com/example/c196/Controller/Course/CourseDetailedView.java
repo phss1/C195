@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.c196.Classes.Assessment;
 import com.example.c196.Classes.Course;
+import com.example.c196.Classes.Mentor;
 import com.example.c196.Classes.Term;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
@@ -42,11 +43,28 @@ public class CourseDetailedView extends AppCompatActivity
         TextView title = findViewById(R.id.courseDVTitleTxtVw);
         TextView startDate = findViewById(R.id.courseDVStartDateTxtVw2);
         TextView endDate = findViewById(R.id.courseDVEndDateTxtVw);
+        TextView status = findViewById(R.id.courseStatus);
+        TextView mentorName = findViewById(R.id.mentorNameTxtVw);
+        TextView mentorPhone = findViewById(R.id.mPhone);
+        TextView mentorEmail = findViewById(R.id.mentorEmailTxtVw);
 
         Course course = dp.getAllCourses().get(Course.getSelectedItemIndex());
         title.setText(course.getTitle());
         startDate.setText(course.getStartDate());
         endDate.setText(course.getEndDate());
+        status.setText(course.getStatus());
+        int courseId = course.getId();
+        int mentorId = getMentorId(courseId).get(0);
+
+        if(!(mentorId == -1) && getCourseMentor(mentorId).size() > 0)
+        {
+
+            Mentor mentor = getCourseMentor(mentorId).get(0);
+            mentorName.setText(mentor.getName());
+            mentorPhone.setText(mentor.getPhone());
+            mentorEmail.setText(mentor.getEmail());
+        }
+
 
         List<String> courseAssessments = populateListView();
         Boolean isCourseAssessmentsNull = courseAssessments.isEmpty();
@@ -70,6 +88,37 @@ public class CourseDetailedView extends AppCompatActivity
                     }
             );
         }
+    }
+
+    private List<Mentor>  getCourseMentor(int mentorId)
+    {
+        String query = "select * from mentor where mentor_id = " + mentorId;
+        Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
+
+        List<Mentor> mentor = new ArrayList<>();
+        while (cursor.moveToNext())
+        {
+            Mentor tempMentor = new Mentor(cursor.getInt(0), cursor.getString(1),
+                    cursor.getString(2), cursor.getString(3));
+            mentor.add(tempMentor);
+        }
+
+        return mentor;
+    }
+
+    private List<Integer> getMentorId(int courseId)
+    {
+        String query = "select mentor_id from course where course_id = " + courseId;
+        Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
+
+        List<Integer> ids = new ArrayList<>();
+        int mentorId = -1;
+        while (cursor.moveToNext())
+        {
+            ids.add(cursor.getInt(0));
+        }
+
+        return ids;
     }
 
     private void changeGuiScreen()

@@ -7,16 +7,70 @@
     tools:context=".Controller.Course.CourseDetailedView">
 
     <TextView
+        android:id="@+id/mentorNameTxtVw"
+        android:layout_width="150dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="9dp"
+        android:text="No mentor for Course"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseStatus" />
+
+    <TextView
+        android:id="@+id/mPhone"
+        android:layout_width="150dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="9dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mentorNameTxtVw" />
+
+    <TextView
+        android:id="@+id/courseStatus"
+        android:layout_width="150dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:text="cs"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseDVEndDateTxtVw" />
+
+    <TextView
+        android:id="@+id/mentorEmailTxtVw"
+        android:layout_width="150dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="11dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mPhone" />
+
+    <Button
+        android:id="@+id/modifyCourseBtn"
+        android:layout_width="79dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="61dp"
+        android:onClick="onClickModifyCourseBtn"
+        android:text="Modify Course"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/courseDVStartDateTxtVw2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/courseDVTitleTxtVw"
         android:layout_width="156dp"
         android:layout_height="33dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginLeft="56dp"
-        android:layout_marginTop="76dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
         android:textColor="#030303"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/courseDVStartDateTxtVw2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="ct" />
@@ -25,13 +79,10 @@
         android:id="@+id/courseDVStartDateTxtVw2"
         android:layout_width="150dp"
         android:layout_height="20dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginLeft="56dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="39dp"
-        android:layout_marginRight="39dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
         android:text="sd"
-        app:layout_constraintEnd_toStartOf="@+id/modifyCourseBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/courseDVTitleTxtVw" />
 
@@ -39,36 +90,17 @@
         android:id="@+id/courseDVEndDateTxtVw"
         android:layout_width="150dp"
         android:layout_height="20dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginLeft="56dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="7dp"
-        android:layout_marginEnd="205dp"
-        android:layout_marginRight="205dp"
         android:text="ed"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/courseDVStartDateTxtVw2" />
 
-    <Button
-        android:id="@+id/modifyCourseBtn"
-        android:layout_width="79dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="86dp"
-        android:layout_marginEnd="88dp"
-        android:layout_marginRight="88dp"
-        android:onClick="onClickModifyCourseBtn"
-        android:text="Modify Course"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/courseDVTitleTxtVw"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ListView
         android:id="@+id/courseDVAssessmentLstVw"
-        android:layout_width="415dp"
-        android:layout_height="404dp"
+        android:layout_width="410dp"
+        android:layout_height="351dp"
         android:layout_marginStart="1dp"
         android:layout_marginLeft="1dp"
         android:layout_marginEnd="1dp"

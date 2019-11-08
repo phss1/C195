@@ -74,6 +74,15 @@ public class CourseModify extends AppCompatActivity
         endDate.setText(course.getEndDate());
     }
 
+    public void onClickModCourseDeleteBtn(View view)
+    {
+        Course course = dp.getAllCourses().get(Course.getSelectedItemIndex());
+        String query1 = "delete from course where title = " + course.getTitle();
+
+        Intent intent = new Intent(this, CourseDeleteNote.class);
+        startActivity(intent);
+    }
+
     public void courseModSaveBtn(View view)
     {
         String title = ((EditText) findViewById(R.id.courseModifyTitleTxtFld)).getText().toString();

@@ -35,12 +35,12 @@ public class MentorAdd extends AppCompatActivity
         myHelper = new DBConnector(MentorAdd.this);
         myHelper.getWritableDatabase();
 
-        Spinner spinner2 = findViewById(R.id.addMtrCourseSpn);
+        /*Spinner spinner2 = findViewById(R.id.addMtrCourseSpn);
         ArrayList<String> courseArray = populateCourseList();
 
         ArrayAdapter<String> spinnerAdapter2 = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_item, courseArray);
-        spinner2.setAdapter(spinnerAdapter2);
+        spinner2.setAdapter(spinnerAdapter2);*/
     }
 
     private ArrayList<String> populateCourseList()
@@ -75,7 +75,7 @@ public class MentorAdd extends AppCompatActivity
         String name = ((EditText) findViewById(R.id.nameTxtFld)).getText().toString();
         String email = ((EditText) findViewById(R.id.emailTxtFld)).getText().toString();
         String phone = ((EditText) findViewById(R.id.phoneTxtFld)).getText().toString();
-        String selectedCourseTitle = ((Spinner) findViewById(R.id.addMtrCourseSpn)).getSelectedItem().toString();
+        //String selectedCourseTitle = ((Spinner) findViewById(R.id.addMtrCourseSpn)).getSelectedItem().toString();
         Boolean valuesNotNull = !name.isEmpty() && !email.isEmpty() && !phone.isEmpty();
 
         try
@@ -86,8 +86,11 @@ public class MentorAdd extends AppCompatActivity
                         + ", \"" + email + "\", \"" + phone + "\");";
                 myHelper.insertRecord(slqQuery);
 
+                Intent intent = new Intent(this, MentorView.class);
+                startActivity(intent);
+
                 List<Integer> mentorIds = populateListView();
-                int listSize = mentorIds.size() - 1;
+                /*int listSize = mentorIds.size() - 1;
                 int newMentorId = mentorIds.get(listSize);
 
                 String query = "update course set mentor_id = "
@@ -96,8 +99,7 @@ public class MentorAdd extends AppCompatActivity
                 UtilityMethods.displayGuiMessage(MentorAdd.this, "" + query);
                 myHelper.updateRecord(query);
 
-                Intent intent = new Intent(this, MentorView.class);
-                startActivity(intent);
+                */
             }
             else
             {
@@ -115,7 +117,6 @@ public class MentorAdd extends AppCompatActivity
         String query = "SELECT * from mentor";
         Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
 
-        dp.getAllMentors().clear();
         while (cursor.moveToNext())
         {
             mentorList.add(cursor.getInt(0));

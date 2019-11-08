@@ -34,7 +34,7 @@ public class DBConnector extends SQLiteOpenHelper {
                 "term_id int(10) not null, " +
                 "mentor_id int(10) not null, " +
                 "title varchar(30) not null, " +
-                "status boolean not null, " +
+                "status varchar(30) not null, " +
                 "start_date datetime not null, " +
                 "end_date datetime not null, " +
                 "FOREIGN KEY(mentor_id) REFERENCES mentor(mentor_id), " +

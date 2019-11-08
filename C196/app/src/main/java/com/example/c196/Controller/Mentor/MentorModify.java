@@ -48,11 +48,11 @@ public class MentorModify extends AppCompatActivity
         email.setText(mentorToModify.getEmail());
         phone.setText(mentorToModify.getPhone());
 
-        Spinner spinner1 = findViewById(R.id.mtrModCourseSpn);
+        /*Spinner spinner1 = findViewById(R.id.mtrModCourseSpn);
         List<String> statusArray = populateSpinnerCourses();
         ArrayAdapter<String> spinnerAdapter1 = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_item, statusArray);
-        spinner1.setAdapter(spinnerAdapter1);
+        spinner1.setAdapter(spinnerAdapter1);*/
     }
 
     private List<String> populateSpinnerCourses()
@@ -106,7 +106,6 @@ public class MentorModify extends AppCompatActivity
         String query = "delete from mentor where mentor_id = " + mentorId + ";";
         myHelper.deleteRecord(query);
 
-        //Mentor.deleteMentor();
         Intent intent = new Intent(this, MentorView.class);
         startActivity(intent);
     }
