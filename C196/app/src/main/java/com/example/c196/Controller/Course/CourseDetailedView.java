@@ -112,7 +112,6 @@ public class CourseDetailedView extends AppCompatActivity
         Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
 
         List<Integer> ids = new ArrayList<>();
-        int mentorId = -1;
         while (cursor.moveToNext())
         {
             ids.add(cursor.getInt(0));

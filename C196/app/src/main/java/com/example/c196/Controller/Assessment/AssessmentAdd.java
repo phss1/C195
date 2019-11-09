@@ -47,7 +47,7 @@ public class AssessmentAdd extends AppCompatActivity
         Spinner spinner2 = findViewById(R.id.addAssessmentSpinner);
         ArrayList<String> courseArray = UtilityMethods.createCourseSpinnerValues();
 
-        if(courseArray.size() == 0 && !Course.isUseAlternate() == true)
+        if(courseArray.size() < 1 && !Course.isUseAlternate() == true)
         {
             courseArray = populateCourseList();
         }

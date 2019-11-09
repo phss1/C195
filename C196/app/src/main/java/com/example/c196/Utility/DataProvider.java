@@ -73,9 +73,4 @@ public class DataProvider
     {
         this.allTerms = allTerms;
     }
-
-    public static void addCourse(Term newTerm)
-    {
-        DataProvider.allTerms.add(newTerm);
-    }
 }

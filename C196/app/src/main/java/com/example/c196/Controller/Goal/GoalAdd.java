@@ -13,6 +13,7 @@ import com.example.c196.Controller.Term.Terms;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
+import com.example.c196.Utility.UtilityMethods;
 
 public class GoalAdd extends AppCompatActivity
 {
@@ -51,7 +52,7 @@ public class GoalAdd extends AppCompatActivity
     {
         String description = ((EditText) findViewById(R.id.descriptionTxtFld)).getText().toString();
         String date = ((EditText) findViewById(R.id.dateTxtFld)).getText().toString();
-        Boolean valuesNotNull = !description.isEmpty() && !date.isEmpty();
+        Boolean valuesNotNull = !description.isEmpty() && !date.isEmpty() && UtilityMethods.isValidDate(date);
 
         try
         {

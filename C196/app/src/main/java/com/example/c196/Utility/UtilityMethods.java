@@ -12,12 +12,6 @@ import java.util.regex.Pattern;
 
 public class UtilityMethods
 {
-    public static String createCourseListModScreen()
-    {
-
-
-        return "";
-    }
 
     public static ArrayList<String> createCourseSpinnerValues()
     {

@@ -80,22 +80,71 @@ public class CourseModify extends AppCompatActivity
 
         int courseId = course.getId();
         int mentorId = getMentorId(courseId).get(0);
+        int arraySize = getCourseMentor(mentorId).size();
+        boolean arrayHasValues = arraySize > 0;
 
-        if(!(mentorId == -1) && getCourseMentor(mentorId).size() > 0)
+        if(!(mentorId == -1) && arrayHasValues)
         {
             Spinner spinner2 = findViewById(R.id.courseMentorSpn);
-            Mentor mentor = getCourseMentor(mentorId).get(0);
             List<String> mentorNames = populateMentorsList();
             ArrayAdapter<String> spinnerAdapter2 = new ArrayAdapter(this,
                     android.R.layout.simple_spinner_item, mentorNames);
             spinner2.setAdapter(spinnerAdapter2);
 
-            for(int i = 0; i > mentorNames.size(); i++)
+            String name = (getCourseMentor(mentorId).get(0)).getName();
+            for(String mentorName : mentorNames)
             {
-
+                if(mentorName.contains(name))
+                {
+                    int index = mentorNames.indexOf(mentorName);
+                    spinner2.setSelection(index);
+                }
             }
+        }
+        else
+        {
+            Spinner spinner2 = findViewById(R.id.courseMentorSpn);
+            List<String> mentorNames = populateMentorsList();
+            ArrayAdapter<String> spinnerAdapter2 = new ArrayAdapter(this,
+                    android.R.layout.simple_spinner_item, mentorNames);
+            spinner2.setAdapter(spinnerAdapter2);
+        }
+    }
 
+    public void courseModSaveBtn(View view)
+    {
+        String title = ((EditText) findViewById(R.id.courseModifyTitleTxtFld)).getText().toString();
+        String status = ((Spinner) findViewById(R.id.courseModifyStatusSpn)).getSelectedItem().toString();
+        String startDate = ((EditText) findViewById(R.id.courseModifyStartDateTxtFld)).getText().toString();
+        String endDate = ((EditText) findViewById(R.id.courseModifyEndDateTxtFld)).getText().toString();
+        Boolean valuesNotNull = !title.isEmpty() && !startDate.isEmpty() && !endDate.isEmpty()
+                && UtilityMethods.isValidDate(startDate) == true
+                && UtilityMethods.isValidDate(endDate) == true;
+        int mentorIndex = ((Spinner) findViewById(R.id.courseMentorSpn)).getSelectedItemPosition();
+        Mentor mentor = dp.getAllMentors().get(mentorIndex);
+        int mentorId = mentor.getId();
 
+        try
+        {
+            if(valuesNotNull)
+            {
+                String sqlQuery = "update course set mentor_id = " + mentorId + ", title = \""
+                        + title + "\", status = \"" + status
+                        + "\", start_date = \"" + startDate + "\", end_date = \"" + endDate + "\" where course_id = "
+                        + DataProvider.getAllCourses().get(Course.getSelectedItemIndex()).getId();
+                myHelper.insertRecord(sqlQuery);
+
+                Intent intent = new Intent(this, Courses.class);
+                startActivity(intent);
+            }
+            else
+            {
+                UtilityMethods.displayGuiMessage(CourseModify.this, "Please make sure values are not null and date value is entered correctly.");
+            }
+        }
+        catch(Exception e)
+        {
+            //
         }
     }
 
@@ -103,6 +152,7 @@ public class CourseModify extends AppCompatActivity
     {
         Course course = dp.getAllCourses().get(Course.getSelectedItemIndex());
         String query1 = "delete from course where title = " + course.getTitle();
+        myHelper.deleteRecord(query1);
 
         Intent intent = new Intent(this, CourseDeleteNote.class);
         startActivity(intent);
@@ -139,14 +189,18 @@ public class CourseModify extends AppCompatActivity
             mentor.add(tempMentor);
         }
 
-        String query2 = "select * from mentor";
-        Cursor cursor2 = myHelper.getReadableDatabase().rawQuery(query2,null);
-
-        while (cursor2.moveToNext())
+        if(mentor.size() > 0)
         {
-            Mentor tempMentor = new Mentor(cursor.getInt(0), cursor.getString(1),
-                    cursor.getString(2), cursor.getString(3));
-            dp.addMentor(tempMentor);
+            String query2 = "select * from mentor";
+            Cursor cursor2 = myHelper.getReadableDatabase().rawQuery(query2, null);
+
+            dp.getAllMentors().clear();
+            while (cursor2.moveToNext())
+            {
+                Mentor tempMentor = new Mentor(cursor2.getInt(0), cursor2.getString(1),
+                        cursor2.getString(2), cursor2.getString(3));
+                dp.addMentor(tempMentor);
+            }
         }
 
         return mentor;
@@ -166,38 +220,7 @@ public class CourseModify extends AppCompatActivity
         return ids;
     }
 
-    public void courseModSaveBtn(View view)
-    {
-        String title = ((EditText) findViewById(R.id.courseModifyTitleTxtFld)).getText().toString();
-        String status = ((Spinner) findViewById(R.id.courseModifyStatusSpn)).getSelectedItem().toString();
-        String startDate = ((EditText) findViewById(R.id.courseModifyStartDateTxtFld)).getText().toString();
-        String endDate = ((EditText) findViewById(R.id.courseModifyEndDateTxtFld)).getText().toString();
-        Boolean valuesNotNull = !title.isEmpty() && !startDate.isEmpty() && !endDate.isEmpty()
-                && UtilityMethods.isValidDate(startDate) == true
-                && UtilityMethods.isValidDate(endDate) == true;
 
-        try
-        {
-            if(valuesNotNull)
-            {
-                String sqlQuery = "update course set title = \"" + title + "\", status = \"" + status
-                        + "\", start_date = \"" + startDate + "\", end_date = \"" + endDate + "\" where course_id = "
-                        + DataProvider.getAllCourses().get(Course.getSelectedItemIndex()).getId();
-                myHelper.insertRecord(sqlQuery);
-
-                Intent intent = new Intent(this, Courses.class);
-                startActivity(intent);
-            }
-            else
-            {
-                UtilityMethods.displayGuiMessage(CourseModify.this, "Please make sure values are not null and date value is entered correctly.");
-            }
-        }
-        catch(Exception e)
-        {
-            //
-        }
-    }
 
     public void onClickAddAssessment(View view)
     {
@@ -226,7 +249,8 @@ public class CourseModify extends AppCompatActivity
 
     public void courseModCancelBtn(View view)
     {
-        finish();
+        Intent intent = new Intent(this, CourseDetailedView.class);
+        startActivity(intent);
     }
 
     @Override
@@ -250,7 +274,8 @@ public class CourseModify extends AppCompatActivity
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
-            finish();
+            Intent intent = new Intent(this, CourseDetailedView.class);
+            startActivity(intent);
         }
 
         return true;

@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import com.example.c196.Classes.Assessment;
 import com.example.c196.Classes.Course;
 import com.example.c196.Classes.Note;
+import com.example.c196.Controller.Goal.GoalAdd;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
@@ -175,7 +176,11 @@ public class AssessmentModify extends AppCompatActivity
         }
     }
 
-    //
+    public void onClickAsmtAddGoal(View view)
+    {
+        Intent intent = new Intent(this, GoalAdd.class);
+        startActivity(intent);
+    }
 
     public void onClickModAssDeleteBtn(View view)
     {
@@ -184,7 +189,6 @@ public class AssessmentModify extends AppCompatActivity
             String asmtTitle = ((EditText) findViewById(R.id.modAssTitleTxtFld)).getText().toString();
             String query = "delete from assessment where title = \""
                     + asmtTitle + "\";";
-            UtilityMethods.displayGuiMessage(AssessmentModify.this, "" + query);
             myHelper.deleteRecord(query);
 
             Intent intent = new Intent(this, AssessmentView.class);

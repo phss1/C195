@@ -121,6 +121,7 @@
         android:layout_marginStart="61dp"
         android:layout_marginLeft="61dp"
         android:layout_marginTop="16dp"
+        android:onClick="onClickAsmtAddGoal"
         android:text="Add Goal"
         app:layout_constraintStart_toEndOf="@+id/modAssCourseSpn"
         app:layout_constraintTop_toBottomOf="@+id/modAssCancelBtn" />
