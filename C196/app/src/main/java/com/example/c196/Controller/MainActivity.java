@@ -1,8 +1,10 @@
 package com.example.c196.Controller;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,14 +29,23 @@ public class MainActivity extends AppCompatActivity
         myHelper.getWritableDatabase();
         myHelper.createTables();
 
-        //current issue: course modify, line 147
+        String query = "select status from course";
+        Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
 
-        // TODO complete course modify delete button
-        // TODO modify mentors on modify course screen
-        // TODO modify terms on modify course screen
-        // TODO add mentor and course status info to course detailed view
-        // TODO make sure to set up TermDetailedView listview to change to viewcourse screen
-        // TODO setup percentage done on main screen based on courses with completed to not completed. find out if based on all courses or term?
+        double completed = 0;
+        int notCompleted = 0;
+        double totalCourseCount = 0;
+        while(cursor.moveToNext())
+        {
+            double test = cursor.getString(0).contains("Completed") ? completed++ : notCompleted++;
+            totalCourseCount++;
+        }
+
+        String percentDone = String.valueOf((completed / totalCourseCount) * 100);
+        String degreeProgress = "Degree Completion - " + percentDone + "%";
+        TextView degreeStatus = findViewById(R.id.testTxtVw);
+        degreeStatus.setText(degreeProgress);
+
         // TODO notifications for assessment goal dates
         // TODO create scheduler app
         // TODO story board

@@ -95,7 +95,8 @@ public class AssessmentModify extends AppCompatActivity
                 }
             }
         }
-        else if(Course.isUseAlternate() == true)
+
+        if(Course.isUseAlternate() == true)
         {
             Spinner spinner2 = findViewById(R.id.modAssCourseSpn);
             ArrayList<String> courseArray = UtilityMethods.createCourseSpinnerValues();
@@ -107,7 +108,7 @@ public class AssessmentModify extends AppCompatActivity
         else
         {
             Spinner spinner2 = findViewById(R.id.modAssCourseSpn);
-            ArrayList<String> courseArray = UtilityMethods.createCourseSpinnerValues();
+            ArrayList<String> courseArray = createCourseList();
             ArrayAdapter<String> spinnerAdapter2 = new ArrayAdapter(this,
                     android.R.layout.simple_spinner_item, courseArray);
             spinner2.setAdapter(spinnerAdapter2);
@@ -115,13 +116,14 @@ public class AssessmentModify extends AppCompatActivity
         }
     }
 
-    private void createCourseList()
+    private ArrayList<String> createCourseList()
     {
         String query = "select * from course";
         Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
 
         ArrayList<Assessment> a = new ArrayList<>();
         ArrayList<Note> n = new ArrayList<>();
+        ArrayList<java.lang.String> courseTitles = new ArrayList<>();
 
         dp.getAllCourses().clear();
         while (cursor.moveToNext())
@@ -129,7 +131,10 @@ public class AssessmentModify extends AppCompatActivity
             Course tempCourse = new Course(cursor.getInt(0), cursor.getString(3), cursor.getString(4),
                     a, n, cursor.getString(5), cursor.getString(6));
             dp.addCourse(tempCourse);
+            courseTitles.add(cursor.getString(3));
         }
+
+        return courseTitles;
     }
 
     public void modAssSaveBtn(View view)

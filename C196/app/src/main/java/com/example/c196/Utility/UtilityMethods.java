@@ -12,7 +12,6 @@ import java.util.regex.Pattern;
 
 public class UtilityMethods
 {
-
     public static ArrayList<String> createCourseSpinnerValues()
     {
         ArrayList<Course> courses = DataProvider.getAllCourses();
