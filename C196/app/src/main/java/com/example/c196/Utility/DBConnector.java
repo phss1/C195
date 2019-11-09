@@ -44,14 +44,13 @@ public class DBConnector extends SQLiteOpenHelper {
                 //"course_id integer(10) not null,\n" +
                 "title varchar(30) not null, " +
                 "start_date datetime not null, " +
-                "end_date datetime not null);"); //+
-                //"FOREIGN KEY(course_id) REFERENCES course(course_id));");
+                "end_date datetime not null);");
 
         this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS goal(goal_id INTEGER primary key autoincrement,\n" +
                 "assessment_id int(10) not null,\n" +
                 "description varchar(30) not null,\n" +
                 "date varchar(30) not null, " +
-                "FOREIGN KEY(assessment_id) REFERENCES assessment(assessment_id));");
+                "FOREIGN KEY(assessment_id) REFERENCES assessment(assessment_id) on delete cascade);");
 
         this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS assessment(assessment_id INTEGER primary key autoincrement,\n" +
                 "course_id int(10) not null, " +
@@ -59,13 +58,13 @@ public class DBConnector extends SQLiteOpenHelper {
                 "type varchar(30) not null, " +
                 "start_date varchar not null, " +
                 "end_date varchar not null, " +
-                "FOREIGN KEY(course_id) REFERENCES course(course_id));");
+                "FOREIGN KEY(course_id) REFERENCES course(course_id) on delete cascade);");
 
         this.getWritableDatabase().execSQL("CREATE TABLE IF NOT EXISTS note(note_id INTEGER primary key autoincrement,\n" +
                 "course_id int(10) not null,\n" +
                 "title varchar(30) not null,\n" +
                 "description varchar(1000) not null, " +
-                "FOREIGN KEY(course_id) REFERENCES course(course_id));");
+                "FOREIGN KEY(course_id) REFERENCES course(course_id) on delete cascade);");
     }
 
     //insert sql record methods

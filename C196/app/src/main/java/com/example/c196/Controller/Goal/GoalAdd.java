@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.c196.Controller.Assessment.AssessmentView;
+import com.example.c196.Controller.MainActivity;
 import com.example.c196.Controller.Term.Terms;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
@@ -63,7 +64,7 @@ public class GoalAdd extends AppCompatActivity
 
                 myHelper.insertRecord(slqQuery);
 
-                Intent intent = new Intent(this, AssessmentView.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
             }
             else
@@ -75,9 +76,6 @@ public class GoalAdd extends AppCompatActivity
         {
 
         }
-
-        Intent intent = new Intent(this, AssessmentView.class);
-        startActivity(intent);
     }
 
     @Override

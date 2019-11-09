@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import com.example.c196.Classes.Assessment;
 import com.example.c196.Classes.Course;
 import com.example.c196.Classes.Note;
+import com.example.c196.Controller.MainActivity;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
@@ -85,9 +86,8 @@ public class AssessmentAdd extends AppCompatActivity
                                 + startDate + "\", \"" + endDate + "\");";
                         myHelper.insertRecord(query);
 
-                        finish();
-                        /*Intent intent = new Intent(this, AssessmentView.class);
-                        startActivity(intent);*/
+                        Intent intent = new Intent(this, MainActivity.class);
+                        startActivity(intent);
                     }
                 }
             }

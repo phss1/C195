@@ -138,9 +138,7 @@ public class TermModify extends AppCompatActivity
     {
         String query = "select * from course where term_id = " + DataProvider.getAllTerms().get(Term.getSelectedItemIndex()).getId();
         Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
-
         boolean coursesInTerm = cursor.getCount() > 0 ? true : false;
-        UtilityMethods.displayGuiMessage(TermModify.this, "more than one item: " + coursesInTerm);
 
         if(!coursesInTerm)
         {

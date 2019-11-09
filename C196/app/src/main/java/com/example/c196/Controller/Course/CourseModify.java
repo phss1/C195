@@ -151,10 +151,10 @@ public class CourseModify extends AppCompatActivity
     public void onClickModCourseDeleteBtn(View view)
     {
         Course course = dp.getAllCourses().get(Course.getSelectedItemIndex());
-        String query1 = "delete from course where title = " + course.getTitle();
+        String query1 = "delete from course where title = \"" + course.getTitle() + "\";";
         myHelper.deleteRecord(query1);
 
-        Intent intent = new Intent(this, CourseDeleteNote.class);
+        Intent intent = new Intent(this, Courses.class);
         startActivity(intent);
     }
 
