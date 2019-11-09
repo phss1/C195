@@ -150,6 +150,11 @@ public class TermModify extends AppCompatActivity
             Intent intent = new Intent(this, Terms.class);
             startActivity(intent);
         }
+        else
+        {
+            UtilityMethods.displayGuiMessage(TermModify.this, "Please make sure " +
+                    "you remove any associated courses before deleting the term. Thanks!");
+        }
     }
 
     @Override

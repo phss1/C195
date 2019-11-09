@@ -53,7 +53,7 @@ public class TermRemoveCourse extends AppCompatActivity
     {
         try
         {
-            ListView listView = findViewById(R.id.courseManAssessmentsLstVw);
+            ListView listView = findViewById(R.id.removalLstVw);
             if(UtilityMethods.isAnItemChecked(listView) > 0)
             {
                 SparseBooleanArray checked = listView.getCheckedItemPositions();
