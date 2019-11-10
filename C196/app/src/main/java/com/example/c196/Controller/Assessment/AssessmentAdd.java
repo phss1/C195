@@ -8,9 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -24,16 +26,18 @@ import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
 import com.example.c196.Utility.UtilityMethods;
 
-import java.lang.reflect.Array;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
+import java.util.Date;
+import java.util.Random;
 
 public class AssessmentAdd extends AppCompatActivity
 {
     DBConnector myHelper;
-    DataProvider dp;
+    DataProvider dp = new DataProvider();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -52,11 +56,15 @@ public class AssessmentAdd extends AppCompatActivity
         spinner1.setAdapter(spinnerAdapter1);
 
         Spinner spinner2 = findViewById(R.id.addAssessmentSpinner);
-        ArrayList<String> courseArray = UtilityMethods.createCourseSpinnerValues();
+        ArrayList<String> courseArray = new ArrayList<>();
 
-        if(courseArray.size() < 1 && !Course.isUseAlternate() == true)
+        if(UtilityMethods.createCourseSpinnerValues().size() <= 0 && !Course.isUseAlternate() == true)
         {
             courseArray = populateCourseList();
+        }
+        else
+        {
+            courseArray = UtilityMethods.createCourseSpinnerValues();
         }
 
         ArrayAdapter<String> spinnerAdapter2 = new ArrayAdapter(this,
@@ -64,12 +72,28 @@ public class AssessmentAdd extends AppCompatActivity
         spinner2.setAdapter(spinnerAdapter2);
         spinner2.setSelection(Course.getSelectedItemIndex());
 
-        UtilityMethods.displayGuiMessage(AssessmentAdd.this, UtilityMethods.createUniqueId());
     }
 
-    public void checkedEnableAlarmChkBx(View view)
+    public void checkedEnableAlarmChkBx(View view) throws ParseException
     {
-        finish();
+        String id = new Random().toString();
+
+        EditText startDate = findViewById(R.id.startDateTxtFld);
+        String sDate = startDate.getText().toString();
+        UtilityMethods.displayGuiMessage(AssessmentAdd.this, sDate);
+
+        //SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        //Date date = sdf.parse(sDate);
+
+        //long lStartDate = date.getTime();
+
+        //UtilityMethods.displayGuiMessage(AssessmentAdd.this, ""+lStartDate);
+        boolean checked = ((CheckBox) view).isChecked();
+        if(checked)
+        {
+
+        }
+
     }
 
     private static void updateTimeText(Calendar c)

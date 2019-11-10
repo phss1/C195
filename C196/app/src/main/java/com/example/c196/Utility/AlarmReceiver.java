@@ -17,7 +17,7 @@ public class AlarmReceiver extends BroadcastReceiver
     public void onReceive(Context context, Intent intent)
     {
         NotificationHelper notificationHelper = new NotificationHelper(context);
-        //NotificationCompat.Builder nb = notificationHelper.getChannelNotification("","");
+        //NotificationCompat.Builder nb = notificationHelper.getChannelNotification();
         //notificationHelper.getManager().notify(1, nb.build());
 
         //cancelAlarm(context);
@@ -35,4 +35,33 @@ public class AlarmReceiver extends BroadcastReceiver
         //updateTimeText();
         //startAlarm();
     }
+
+    /*
+    private static void updateTimeText(Calendar c)
+    {
+        String timeText = "AlarmReceiver set for: ";
+        timeText+= DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
+
+
+    }
+
+    private static void startAlarm(Context context, Calendar c)
+    {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+    }
+
+    private void cancelAlarm(Context context)
+    {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+
+        alarmManager.cancel(pendingIntent);
+    }
+*/
+
 }

@@ -93,9 +93,12 @@
         android:id="@+id/enableAlarmChkBx"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="20dp"
         android:checked="false"
+        android:onClick="checkedEnableAlarmChkBx"
         android:text="Enable Alarm"
-        tools:layout_editor_absoluteX="266dp"
-        tools:layout_editor_absoluteY="284dp" />
+        app:layout_constraintStart_toEndOf="@+id/addATypeSpn"
+        app:layout_constraintTop_toBottomOf="@+id/cancelBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
