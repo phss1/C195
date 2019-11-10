@@ -8,10 +8,18 @@ import android.widget.Toast;
 
 import com.example.c196.Classes.Course;
 import java.util.ArrayList;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class UtilityMethods
 {
+    public static String createUniqueId()
+    {
+        String uniqueID = UUID.randomUUID().toString();
+        return  uniqueID;
+
+    }
+
     public static ArrayList<String> createCourseSpinnerValues()
     {
         ArrayList<Course> courses = DataProvider.getAllCourses();

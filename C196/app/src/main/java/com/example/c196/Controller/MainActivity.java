@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
-import com.example.c196.Classes.NotificationHelper;
+import com.example.c196.Utility.NotificationHelper;
 import com.example.c196.Controller.Assessment.AssessmentView;
 import com.example.c196.Controller.Course.Courses;
 import com.example.c196.Controller.Mentor.MentorView;
@@ -51,13 +51,13 @@ public class MainActivity extends AppCompatActivity
         TextView degreeStatus = findViewById(R.id.testTxtVw);
         degreeStatus.setText(degreeProgress);
 
-        // TODO notifications for assessment goal dates
+        // TODO notifications for assessment and goal dates
         // TODO create scheduler app
         // TODO story board
         // TODO do signed apk for deployment package and take screen shots
         // TODO Short essay on project reflection
 
-        sendNotification();
+        //sendNotification();
     }
 
     public void sendNotification()

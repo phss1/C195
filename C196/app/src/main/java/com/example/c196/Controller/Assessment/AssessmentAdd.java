@@ -2,6 +2,9 @@ package com.example.c196.Controller.Assessment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -16,12 +19,15 @@ import com.example.c196.Classes.Course;
 import com.example.c196.Classes.Note;
 import com.example.c196.Controller.MainActivity;
 import com.example.c196.R;
+import com.example.c196.Utility.AlarmReceiver;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
 import com.example.c196.Utility.UtilityMethods;
 
 import java.lang.reflect.Array;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AssessmentAdd extends AppCompatActivity
@@ -57,6 +63,39 @@ public class AssessmentAdd extends AppCompatActivity
                 android.R.layout.simple_spinner_item, courseArray);
         spinner2.setAdapter(spinnerAdapter2);
         spinner2.setSelection(Course.getSelectedItemIndex());
+
+        UtilityMethods.displayGuiMessage(AssessmentAdd.this, UtilityMethods.createUniqueId());
+    }
+
+    public void checkedEnableAlarmChkBx(View view)
+    {
+        finish();
+    }
+
+    private static void updateTimeText(Calendar c)
+    {
+        String timeText = "AlarmReceiver set for: ";
+        timeText+= DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
+
+
+    }
+
+    private void startAlarm(Context context, Calendar c)
+    {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+    }
+
+    private void cancelAlarm(Context context)
+    {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+
+        alarmManager.cancel(pendingIntent);
     }
 
     public void onClickAddAssSaveBtn(View view)

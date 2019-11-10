@@ -1,4 +1,4 @@
-package com.example.c196.Classes;
+package com.example.c196.Utility;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
