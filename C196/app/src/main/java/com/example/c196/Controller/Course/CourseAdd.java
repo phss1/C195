@@ -51,7 +51,7 @@ public class CourseAdd extends AppCompatActivity
         {
             if(valuesNotNull)
             {
-                String sqlQuery = "insert into course(term_id, mentor_id, title, status,  " +
+                String sqlQuery = "insert into course(term_id, mentor_id, title, status, " +
                         "start_date, end_date) values(-1, -1, \"" + title
                         + "\", \"" + status  + "\", \"" + startDate + "\", \"" + endDate + "\");";
                 myHelper.insertRecord(sqlQuery);

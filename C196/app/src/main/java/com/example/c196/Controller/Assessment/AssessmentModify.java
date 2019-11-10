@@ -117,7 +117,7 @@ public class AssessmentModify extends AppCompatActivity
             spinner2.setSelection(Course.getSelectedItemIndex());
         }
 
-        String query3 = "select description goal where assessment_id = "
+        /*String query3 = "select * goal where assessment_id = "
                 + DataProvider.getAllAssessments().get(Assessment.getSelectedItemIndex()).getId() + ";";
         UtilityMethods.displayGuiMessage(AssessmentModify.this, query3);
         Cursor cursor4 = myHelper.getReadableDatabase().rawQuery(query3,null);
@@ -125,7 +125,7 @@ public class AssessmentModify extends AppCompatActivity
 
         while(cursor4.moveToNext())
         {
-            goals.add(cursor4.getString(0));
+            goals.add(cursor4.getString(2));
         }
         if(goals.size() > 1)
         {
@@ -135,7 +135,7 @@ public class AssessmentModify extends AppCompatActivity
 
             ListView listView = findViewById(R.id.asmtGoalLstVw);
             listView.setAdapter(assessmentsAdapter);
-        }
+        }*/
     }
 
     private ArrayList<String> createCourseList()
