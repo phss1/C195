@@ -1,24 +1,24 @@
 package com.example.c196.Utility;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
-
-import java.text.DateFormat;
 import java.util.Calendar;
 
 public class AlarmReceiver extends BroadcastReceiver
 {
+    private String title;
+    private String message;
+    private int alarmId;
+
     @Override
     public void onReceive(Context context, Intent intent)
     {
         NotificationHelper notificationHelper = new NotificationHelper(context);
-        //NotificationCompat.Builder nb = notificationHelper.getChannelNotification();
-        //notificationHelper.getManager().notify(1, nb.build());
+        NotificationCompat.Builder nb = notificationHelper.getChannelNotification(title, message);
+        notificationHelper.getManager().notify(alarmId, nb.build());
 
         //cancelAlarm(context);
     }
@@ -34,6 +34,30 @@ public class AlarmReceiver extends BroadcastReceiver
 
         //updateTimeText();
         //startAlarm();
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public int getAlarmId() {
+        return alarmId;
+    }
+
+    public void setAlarmId(int alarmId) {
+        this.alarmId = alarmId;
     }
 
     /*

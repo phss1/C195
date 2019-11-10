@@ -80,33 +80,46 @@ public class AssessmentAdd extends AppCompatActivity
 
         EditText startDate = findViewById(R.id.startDateTxtFld);
         String sDate = startDate.getText().toString();
-        UtilityMethods.displayGuiMessage(AssessmentAdd.this, sDate);
+        //UtilityMethods.displayGuiMessage(AssessmentAdd.this, sDate);
 
-        //SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        //Date date = sdf.parse(sDate);
-
-        //long lStartDate = date.getTime();
-
-        //UtilityMethods.displayGuiMessage(AssessmentAdd.this, ""+lStartDate);
         boolean checked = ((CheckBox) view).isChecked();
         if(checked)
         {
+            if(!sDate.isEmpty())
+            {
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                Date date = sdf.parse(sDate);
+                long addTwoMin = 10000;
+                date.setTime(Calendar.getInstance().getTimeInMillis() + addTwoMin);
+                long lStartDate = date.getTime();
+                //UtilityMethods.displayGuiMessage(AssessmentAdd.this, ""+ Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
 
+                String title = "Goal Reminder";
+                String message = "Reminding you of your goal.";
+
+                onTimeSet(date, sDate, title, message);
+            }
         }
-
     }
 
-    private static void updateTimeText(Calendar c)
+    public void onTimeSet(Date date, String dateString, String title, String message)
     {
-        String timeText = "AlarmReceiver set for: ";
-        timeText+= DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
+        String[] dateValues = dateString.split("/");
+        Calendar c = Calendar.getInstance();
+        c.set(Integer.valueOf(dateValues[0]), Integer.valueOf(dateValues[1]), Integer.valueOf(dateValues[2]));
+        c.set(Calendar.HOUR_OF_DAY, (c.get(Calendar.HOUR_OF_DAY)));
+        c.setTime(date);
 
-
+        startAlarm(c, title, message);
     }
 
-    private void startAlarm(Context context, Calendar c)
+    private void startAlarm(Calendar c, String title, String message)
     {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        AlarmReceiver receiver = new AlarmReceiver();
+        receiver.setTitle(title);
+        receiver.setMessage(message);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
 

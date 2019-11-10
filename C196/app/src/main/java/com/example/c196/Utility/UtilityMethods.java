@@ -8,14 +8,15 @@ import android.widget.Toast;
 
 import com.example.c196.Classes.Course;
 import java.util.ArrayList;
-import java.util.UUID;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 public class UtilityMethods
 {
-    public static String createUniqueId()
+    public static int createUniqueId()
     {
-        String uniqueID = UUID.randomUUID().toString();
+        Random random = new Random();
+        int uniqueID = Integer.valueOf(random.toString());
         return  uniqueID;
 
     }

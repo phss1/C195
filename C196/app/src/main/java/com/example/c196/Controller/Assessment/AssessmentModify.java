@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.example.c196.Classes.Assessment;
@@ -20,6 +21,7 @@ import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
 import com.example.c196.Utility.UtilityMethods;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AssessmentModify extends AppCompatActivity
 {
@@ -113,6 +115,26 @@ public class AssessmentModify extends AppCompatActivity
                     android.R.layout.simple_spinner_item, courseArray);
             spinner2.setAdapter(spinnerAdapter2);
             spinner2.setSelection(Course.getSelectedItemIndex());
+        }
+
+        String query3 = "select description goal where assessment_id = "
+                + DataProvider.getAllAssessments().get(Assessment.getSelectedItemIndex()).getId() + ";";
+        UtilityMethods.displayGuiMessage(AssessmentModify.this, query3);
+        Cursor cursor4 = myHelper.getReadableDatabase().rawQuery(query3,null);
+        ArrayList<String> goals = new ArrayList<>();
+
+        while(cursor4.moveToNext())
+        {
+            goals.add(cursor4.getString(0));
+        }
+        if(goals.size() > 1)
+        {
+            ArrayAdapter<String> assessmentsAdapter = new ArrayAdapter<>(
+                    this, android.R.layout.simple_list_item_1, goals
+            );
+
+            ListView listView = findViewById(R.id.asmtGoalLstVw);
+            listView.setAdapter(assessmentsAdapter);
         }
     }
 
