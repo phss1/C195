@@ -7,7 +7,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import com.example.c196.Classes.NotificationHelper;
 import com.example.c196.Controller.Assessment.AssessmentView;
 import com.example.c196.Controller.Course.Courses;
 import com.example.c196.Controller.Mentor.MentorView;
@@ -18,6 +20,7 @@ import com.example.c196.Utility.DBConnector;
 public class MainActivity extends AppCompatActivity
 {
     DBConnector myHelper;
+    NotificationHelper notificationHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity
         myHelper = new DBConnector(MainActivity.this);
         myHelper.getWritableDatabase();
         myHelper.createTables();
+
+        notificationHelper = new NotificationHelper(this);
 
         String query = "select status from course";
         Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
@@ -51,7 +56,17 @@ public class MainActivity extends AppCompatActivity
         // TODO story board
         // TODO do signed apk for deployment package and take screen shots
         // TODO Short essay on project reflection
+
+        sendNotification();
     }
+
+    public void sendNotification()
+    {
+        NotificationCompat.Builder nb = notificationHelper.getChannelNotification("Test Title", "Test Message");
+        notificationHelper.getManager().notify(1, nb.build());
+    }
+
+
 
     @Override
     protected void onResume()

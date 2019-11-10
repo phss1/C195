@@ -13,6 +13,7 @@ public class Alarm extends BroadcastReceiver
     @Override
     public void onReceive(Context context, Intent intent)
     {
+        NotificationHelper notificationHelper = new NotificationHelper(context);
 
     }
 

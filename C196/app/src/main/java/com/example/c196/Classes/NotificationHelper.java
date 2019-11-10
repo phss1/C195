@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.os.Build;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
 
 import com.example.c196.R;
 
@@ -34,6 +35,8 @@ public class NotificationHelper extends ContextWrapper
         channel.enableVibration(true);
         channel.setLightColor(R.color.colorPrimary);
         channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+
+        getManager().createNotificationChannel(channel);
     }
 
     public NotificationManager getManager()
@@ -42,5 +45,14 @@ public class NotificationHelper extends ContextWrapper
         {
             manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         }
+
+        return manager;
+    }
+
+    public NotificationCompat.Builder getChannelNotification(String title, String message)
+    {
+        return new NotificationCompat.Builder(getApplicationContext(), channel_id)
+                .setContentTitle(title).setContentText(message).setSmallIcon(R.drawable.ic_launcher_background);
+
     }
 }
