@@ -26,7 +26,6 @@ import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
 import com.example.c196.Utility.UtilityMethods;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ public class AssessmentAdd extends AppCompatActivity
         spinner1.setAdapter(spinnerAdapter1);
 
         Spinner spinner2 = findViewById(R.id.addAssessmentSpinner);
-        ArrayList<String> courseArray = new ArrayList<>();
+        ArrayList<String> courseArray;
 
         if(UtilityMethods.createCourseSpinnerValues().size() <= 0 && !Course.isUseAlternate() == true)
         {
@@ -77,10 +76,8 @@ public class AssessmentAdd extends AppCompatActivity
 
     public void isCheckBoxTicked() throws ParseException
     {
-        String id = new Random().toString();
         EditText startDate = findViewById(R.id.startDateTxtFld);
         String sDate = startDate.getText().toString();
-        //UtilityMethods.displayGuiMessage(AssessmentAdd.this, sDate);
 
         boolean checked = ((CheckBox) findViewById(R.id.checkBox)).isChecked();
         UtilityMethods.displayGuiMessage(AssessmentAdd.this, ""+checked);

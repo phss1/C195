@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.example.c196.Classes.Assessment;
+import com.example.c196.Controller.Assessment.AssessmentAdd;
 import com.example.c196.Controller.Assessment.AssessmentModify;
 import com.example.c196.Controller.Assessment.AssessmentView;
 import com.example.c196.Controller.MainActivity;
@@ -33,6 +34,7 @@ public class GoalAdd extends AppCompatActivity
 {
     DBConnector myHelper;
     DataProvider dp = new DataProvider();
+    AlarmReceiver ar = new AlarmReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -62,13 +64,15 @@ public class GoalAdd extends AppCompatActivity
         startActivity(intent);
     }
 
-    public void onClickSaveBtn(View view)
+    public void onClickSaveBtn(View view) throws ParseException
     {
         String description = ((EditText) findViewById(R.id.descriptionTxtFld)).getText().toString();
         String date = ((EditText) findViewById(R.id.dateTxtFld)).getText().toString();
         Boolean valuesNotNull = !description.isEmpty() && !date.isEmpty() && UtilityMethods.isValidDate(date);
 
-        if (valuesNotNull.equals(true)) {
+        if (valuesNotNull.equals(true))
+        {
+            isCheckBoxTicked();
             String slqQuery = "insert into goal(assessment_id, description, date) values("
                     + dp.getAllAssessments().get(Assessment.getSelectedItemIndex()).getId() + ", \""
                     + description + "\", \"" + date + "\");";
@@ -80,30 +84,59 @@ public class GoalAdd extends AppCompatActivity
         }
     }
 
-    public void checkedEnableAlarmChkBx(View view) throws ParseException, Exception
+    public void isCheckBoxTicked() throws ParseException
     {
-        String idTemp = new Random().toString();
-        int id = Integer.valueOf(idTemp);
-
-        EditText startDate = findViewById(R.id.startDateTxtFld);
+        EditText startDate = findViewById(R.id.dateTxtFld);
         String sDate = startDate.getText().toString();
 
-        boolean checked = ((CheckBox) view).isChecked();
+        boolean checked = ((CheckBox) findViewById(R.id.goalAlarmChkBx)).isChecked();
         if(checked)
         {
             if(!sDate.isEmpty())
             {
+                EditText tempTitle = findViewById(R.id.descriptionTxtFld);
+                String newTitle = tempTitle.getText().toString();
+                String title = newTitle + " Reminder";
+                String message = "Reminding you of your goal for " + newTitle;
+                int newAlarmId = UtilityMethods.createUniqueId();
+                //UtilityMethods.displayGuiMessage(AssessmentAdd.this, ""+newAlarmId);
+
+                ar.setTitle(title);
+                ar.setMessage(message);
+                ar.setAlarmId(newAlarmId);
+
+                AlarmReceiver ar = new AlarmReceiver();
+                String sTitle = ar.getTitle();
+
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
                 Date date = sdf.parse(sDate);
-                long addTwoMin = 10000;
+                long addTwoMin = 2000;
                 date.setTime(Calendar.getInstance().getTimeInMillis() + addTwoMin);
+                //long lStartDate = date.getTime();
 
-                String title = "Goal Reminder";
-                String message = "Reminding you of your goal.";
-
-                onTimeSet(date, sDate, title, message, id);
+                onTimeSet(date, sDate);
             }
         }
+    }
+
+    public void onTimeSet(Date date, String dateString)
+    {
+        String[] dateValues = dateString.split("/");
+        Calendar c = Calendar.getInstance();
+        c.set(Integer.valueOf(dateValues[0]), Integer.valueOf(dateValues[1]), Integer.valueOf(dateValues[2]));
+        c.set(Calendar.HOUR_OF_DAY, (c.get(Calendar.HOUR_OF_DAY)));
+        c.setTime(date);
+
+        startAlarm(c);
+    }
+
+    private void startAlarm(Calendar c)
+    {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
     }
 
     public void onTimeSet(Date date, String dateString, String title, String message, int alarmId)
