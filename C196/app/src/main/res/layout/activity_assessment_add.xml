@@ -89,4 +89,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addAssessmentSpinner" />
 
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="33dp"
+        android:onClick="checkedEnableAlarmChkBx"
+        android:text="CheckBox"
+        app:layout_constraintStart_toEndOf="@+id/addATypeSpn"
+        app:layout_constraintTop_toBottomOf="@+id/cancelBtn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

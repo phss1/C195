@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
 
     public void sendNotification()
     {
-        NotificationCompat.Builder nb = notificationHelper.getChannelNotification("Test Title", "Test Message");
+        NotificationCompat.Builder nb = notificationHelper.getChannelNotification();
         notificationHelper.getManager().notify(1, nb.build());
     }
 

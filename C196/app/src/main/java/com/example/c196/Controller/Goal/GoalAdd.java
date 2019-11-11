@@ -62,7 +62,7 @@ public class GoalAdd extends AppCompatActivity
         startActivity(intent);
     }
 
-    public void onClickSaveBtn(View view) throws ParseException
+    public void onClickSaveBtn(View view)
     {
         String description = ((EditText) findViewById(R.id.descriptionTxtFld)).getText().toString();
         String date = ((EditText) findViewById(R.id.dateTxtFld)).getText().toString();
@@ -75,36 +75,36 @@ public class GoalAdd extends AppCompatActivity
             UtilityMethods.displayGuiMessage(GoalAdd.this, "" + slqQuery);
             myHelper.insertRecord(slqQuery);
 
-            boolean checked = ((CheckBox) findViewById(R.id.goalAlarmChkBx)).isChecked();
-            if (checked) {
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-                Date currentDate = sdf.parse(date);
-                long addTwoMin = 30000;
-                currentDate.setTime(Calendar.getInstance().getTimeInMillis() + addTwoMin);
-                //long lStartDate = currentDate.getTime();
-
-                int id = UtilityMethods.createUniqueId();
-                String title = description + " - Reminder";
-                String message = "Reminding you of your goal: " + description;
-                onTimeSet(currentDate, date, title, message, id);
-            }
-
             Intent intent = new Intent(this, AssessmentModify.class);
             startActivity(intent);
         }
-
-        try
-        {
-
-
-        }
-        catch (Exception e)
-        {
-
-        }
     }
 
-    //
+    public void checkedEnableAlarmChkBx(View view) throws ParseException, Exception
+    {
+        String idTemp = new Random().toString();
+        int id = Integer.valueOf(idTemp);
+
+        EditText startDate = findViewById(R.id.startDateTxtFld);
+        String sDate = startDate.getText().toString();
+
+        boolean checked = ((CheckBox) view).isChecked();
+        if(checked)
+        {
+            if(!sDate.isEmpty())
+            {
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                Date date = sdf.parse(sDate);
+                long addTwoMin = 10000;
+                date.setTime(Calendar.getInstance().getTimeInMillis() + addTwoMin);
+
+                String title = "Goal Reminder";
+                String message = "Reminding you of your goal.";
+
+                onTimeSet(date, sDate, title, message, id);
+            }
+        }
+    }
 
     public void onTimeSet(Date date, String dateString, String title, String message, int alarmId)
     {

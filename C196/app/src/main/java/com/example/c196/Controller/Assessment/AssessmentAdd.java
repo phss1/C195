@@ -38,6 +38,7 @@ public class AssessmentAdd extends AppCompatActivity
 {
     DBConnector myHelper;
     DataProvider dp = new DataProvider();
+    AlarmReceiver ar = new AlarmReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -77,7 +78,6 @@ public class AssessmentAdd extends AppCompatActivity
     public void checkedEnableAlarmChkBx(View view) throws ParseException
     {
         String id = new Random().toString();
-
         EditText startDate = findViewById(R.id.startDateTxtFld);
         String sDate = startDate.getText().toString();
         //UtilityMethods.displayGuiMessage(AssessmentAdd.this, sDate);
@@ -87,22 +87,33 @@ public class AssessmentAdd extends AppCompatActivity
         {
             if(!sDate.isEmpty())
             {
+                EditText tempTitle = findViewById(R.id.modAssTitleTxtFld);
+                String newTitle = tempTitle.getText().toString();
+                String title = newTitle + " Reminder";
+                String message = "Reminding you of your goal for " + newTitle;
+                int newAlarmId = UtilityMethods.createUniqueId();
+
+                ar.setTitle(title);
+                ar.setMessage(message);
+                ar.setAlarmId(newAlarmId);
+
+                AlarmReceiver ar = new AlarmReceiver();
+                String sTitle = ar.getTitle();
+                UtilityMethods.displayGuiMessage(AssessmentAdd.this, sTitle);
+
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
                 Date date = sdf.parse(sDate);
-                long addTwoMin = 10000;
+                long addTwoMin = 2000;
                 date.setTime(Calendar.getInstance().getTimeInMillis() + addTwoMin);
-                long lStartDate = date.getTime();
+                //long lStartDate = date.getTime();
                 //UtilityMethods.displayGuiMessage(AssessmentAdd.this, ""+ Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
 
-                String title = "Goal Reminder";
-                String message = "Reminding you of your goal.";
-
-                onTimeSet(date, sDate, title, message);
+                onTimeSet(date, sDate);
             }
         }
     }
 
-    public void onTimeSet(Date date, String dateString, String title, String message)
+    public void onTimeSet(Date date, String dateString)
     {
         String[] dateValues = dateString.split("/");
         Calendar c = Calendar.getInstance();
@@ -110,29 +121,16 @@ public class AssessmentAdd extends AppCompatActivity
         c.set(Calendar.HOUR_OF_DAY, (c.get(Calendar.HOUR_OF_DAY)));
         c.setTime(date);
 
-        startAlarm(c, title, message);
+        startAlarm(c);
     }
 
-    private void startAlarm(Calendar c, String title, String message)
+    private void startAlarm(Calendar c)
     {
-        AlarmReceiver receiver = new AlarmReceiver();
-        receiver.setTitle(title);
-        receiver.setMessage(message);
-
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
-    }
-
-    private void cancelAlarm(Context context)
-    {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
-
-        alarmManager.cancel(pendingIntent);
     }
 
     public void onClickAddAssSaveBtn(View view)

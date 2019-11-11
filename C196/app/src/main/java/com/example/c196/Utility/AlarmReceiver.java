@@ -9,18 +9,17 @@ import java.util.Calendar;
 
 public class AlarmReceiver extends BroadcastReceiver
 {
-    private String title;
-    private String message;
-    private int alarmId;
+    private static String title;
+    private static String message;
+    private static int alarmId;
 
     @Override
     public void onReceive(Context context, Intent intent)
     {
-        NotificationHelper notificationHelper = new NotificationHelper(context);
-        NotificationCompat.Builder nb = notificationHelper.getChannelNotification(title, message);
-        notificationHelper.getManager().notify(alarmId, nb.build());
 
-        //cancelAlarm(context);
+        NotificationHelper notificationHelper = new NotificationHelper(context);
+        NotificationCompat.Builder nb = notificationHelper.getChannelNotification();
+        notificationHelper.getManager().notify(1, nb.build());
     }
 
     public static void onTimeSet(long time, String date)
@@ -36,29 +35,31 @@ public class AlarmReceiver extends BroadcastReceiver
         //startAlarm();
     }
 
-    public String getTitle() {
+    public static String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public static void setTitle(String title) {
+        AlarmReceiver.title = title;
     }
 
-    public String getMessage() {
+    public static String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public static void setMessage(String message) {
+        AlarmReceiver.message = message;
     }
 
-    public int getAlarmId() {
+    public static int getAlarmId() {
         return alarmId;
     }
 
-    public void setAlarmId(int alarmId) {
-        this.alarmId = alarmId;
+    public static void setAlarmId(int alarmId) {
+        AlarmReceiver.alarmId = alarmId;
     }
+
+
 
     /*
     private static void updateTimeText(Calendar c)

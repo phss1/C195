@@ -117,17 +117,19 @@ public class AssessmentModify extends AppCompatActivity
             spinner2.setSelection(Course.getSelectedItemIndex());
         }
 
-        /*String query3 = "select * goal where assessment_id = "
-                + DataProvider.getAllAssessments().get(Assessment.getSelectedItemIndex()).getId() + ";";
+        /*
+        String query3 = "select * goal where assessment_id = "
+                + assessment.getId() + ";";
         UtilityMethods.displayGuiMessage(AssessmentModify.this, query3);
         Cursor cursor4 = myHelper.getReadableDatabase().rawQuery(query3,null);
-        ArrayList<String> goals = new ArrayList<>();
+        List<String> goals = new ArrayList<>();
 
         while(cursor4.moveToNext())
         {
             goals.add(cursor4.getString(2));
         }
-        if(goals.size() > 1)
+
+        if(goals.size() > 0)
         {
             ArrayAdapter<String> assessmentsAdapter = new ArrayAdapter<>(
                     this, android.R.layout.simple_list_item_1, goals
