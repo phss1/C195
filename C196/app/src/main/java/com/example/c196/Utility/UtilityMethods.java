@@ -16,7 +16,7 @@ public class UtilityMethods
     public static int createUniqueId()
     {
         Random random = new Random();
-        int uniqueID = Integer.valueOf(random.toString());
+        int uniqueID = random.nextInt(10000)+1;
         return  uniqueID;
 
     }

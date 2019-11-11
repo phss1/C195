@@ -17,9 +17,10 @@ public class AlarmReceiver extends BroadcastReceiver
     public void onReceive(Context context, Intent intent)
     {
 
+        int id = getAlarmId();
         NotificationHelper notificationHelper = new NotificationHelper(context);
         NotificationCompat.Builder nb = notificationHelper.getChannelNotification();
-        notificationHelper.getManager().notify(1, nb.build());
+        notificationHelper.getManager().notify(id, nb.build());
     }
 
     public static void onTimeSet(long time, String date)

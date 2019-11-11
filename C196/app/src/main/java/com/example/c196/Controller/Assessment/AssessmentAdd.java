@@ -75,23 +75,25 @@ public class AssessmentAdd extends AppCompatActivity
 
     }
 
-    public void checkedEnableAlarmChkBx(View view) throws ParseException
+    public void isCheckBoxTicked() throws ParseException
     {
         String id = new Random().toString();
         EditText startDate = findViewById(R.id.startDateTxtFld);
         String sDate = startDate.getText().toString();
         //UtilityMethods.displayGuiMessage(AssessmentAdd.this, sDate);
 
-        boolean checked = ((CheckBox) view).isChecked();
+        boolean checked = ((CheckBox) findViewById(R.id.checkBox)).isChecked();
+        UtilityMethods.displayGuiMessage(AssessmentAdd.this, ""+checked);
         if(checked)
         {
             if(!sDate.isEmpty())
             {
-                EditText tempTitle = findViewById(R.id.modAssTitleTxtFld);
+                EditText tempTitle = findViewById(R.id.titleTxtFld);
                 String newTitle = tempTitle.getText().toString();
                 String title = newTitle + " Reminder";
                 String message = "Reminding you of your goal for " + newTitle;
                 int newAlarmId = UtilityMethods.createUniqueId();
+                //UtilityMethods.displayGuiMessage(AssessmentAdd.this, ""+newAlarmId);
 
                 ar.setTitle(title);
                 ar.setMessage(message);
@@ -99,14 +101,12 @@ public class AssessmentAdd extends AppCompatActivity
 
                 AlarmReceiver ar = new AlarmReceiver();
                 String sTitle = ar.getTitle();
-                UtilityMethods.displayGuiMessage(AssessmentAdd.this, sTitle);
 
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
                 Date date = sdf.parse(sDate);
                 long addTwoMin = 2000;
                 date.setTime(Calendar.getInstance().getTimeInMillis() + addTwoMin);
                 //long lStartDate = date.getTime();
-                //UtilityMethods.displayGuiMessage(AssessmentAdd.this, ""+ Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
 
                 onTimeSet(date, sDate);
             }
@@ -153,8 +153,9 @@ public class AssessmentAdd extends AppCompatActivity
                     boolean foundTitleMatch = course.getTitle().contains(associatedCourseTitle) ? true : false;
                     if(foundTitleMatch)
                     {
-                        int courseId = course.getId();
+                        isCheckBoxTicked();
 
+                        int courseId = course.getId();
                         String query = "insert into assessment(course_id, title, type, start_date, end_date) " +
                                 "values(" + courseId + ", \"" + title + "\", \"" + assessmentType + "\", \""
                                 + startDate + "\", \"" + endDate + "\");";
