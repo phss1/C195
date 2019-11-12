@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -14,7 +15,9 @@ import android.widget.Spinner;
 
 import com.example.c196.Classes.Assessment;
 import com.example.c196.Classes.Course;
+import com.example.c196.Classes.Goal;
 import com.example.c196.Classes.Note;
+import com.example.c196.Classes.Term;
 import com.example.c196.Controller.Goal.GoalAdd;
 import com.example.c196.R;
 import com.example.c196.Utility.DBConnector;
@@ -117,27 +120,36 @@ public class AssessmentModify extends AppCompatActivity
             spinner2.setSelection(Course.getSelectedItemIndex());
         }
 
-        /*
-        String query3 = "select * goal where assessment_id = "
-                + assessment.getId() + ";";
-        UtilityMethods.displayGuiMessage(AssessmentModify.this, query3);
-        Cursor cursor4 = myHelper.getReadableDatabase().rawQuery(query3,null);
-        List<String> goals = new ArrayList<>();
-
-        while(cursor4.moveToNext())
+        List<String> terms = populateGoalList(assessment);
+        Boolean isTermsEmpty = terms.isEmpty();
+        if(!isTermsEmpty)
         {
-            goals.add(cursor4.getString(2));
-        }
-
-        if(goals.size() > 0)
-        {
-            ArrayAdapter<String> assessmentsAdapter = new ArrayAdapter<>(
-                    this, android.R.layout.simple_list_item_1, goals
-            );
+            ArrayAdapter<String> termsAdapter = new ArrayAdapter<>
+                    (
+                            this, android.R.layout.simple_list_item_1, terms
+                    );
 
             ListView listView = findViewById(R.id.asmtGoalLstVw);
-            listView.setAdapter(assessmentsAdapter);
-        }*/
+            listView.setAdapter(termsAdapter);
+        }
+    }
+
+    private List<String> populateGoalList(Assessment assessment)
+    {
+        String query = "SELECT * from goal where assessment_id = " + assessment.getId();
+        Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
+
+        dp.getAllGoals().clear();
+        List<String> goalsList = new ArrayList<>();
+
+        while (cursor.moveToNext())
+        {
+            Goal tempGoal = new Goal(cursor.getString(2), cursor.getString(3));
+            dp.addNote(tempGoal);
+            goalsList.add(cursor.getString(2));
+        }
+
+        return goalsList;
     }
 
     private ArrayList<String> createCourseList()

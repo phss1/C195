@@ -76,7 +76,6 @@ public class GoalAdd extends AppCompatActivity
             String slqQuery = "insert into goal(assessment_id, description, date) values("
                     + dp.getAllAssessments().get(Assessment.getSelectedItemIndex()).getId() + ", \""
                     + description + "\", \"" + date + "\");";
-            UtilityMethods.displayGuiMessage(GoalAdd.this, "" + slqQuery);
             myHelper.insertRecord(slqQuery);
 
             Intent intent = new Intent(this, AssessmentModify.class);
@@ -99,7 +98,6 @@ public class GoalAdd extends AppCompatActivity
                 String title = newTitle + " Reminder";
                 String message = "Reminding you of your goal for " + newTitle;
                 int newAlarmId = UtilityMethods.createUniqueId();
-                //UtilityMethods.displayGuiMessage(AssessmentAdd.this, ""+newAlarmId);
 
                 ar.setTitle(title);
                 ar.setMessage(message);
@@ -110,9 +108,8 @@ public class GoalAdd extends AppCompatActivity
 
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
                 Date date = sdf.parse(sDate);
-                long addTwoMin = 2000;
+                long addTwoMin = 20000;
                 date.setTime(Calendar.getInstance().getTimeInMillis() + addTwoMin);
-                //long lStartDate = date.getTime();
 
                 onTimeSet(date, sDate);
             }

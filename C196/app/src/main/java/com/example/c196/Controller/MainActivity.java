@@ -52,12 +52,11 @@ public class MainActivity extends AppCompatActivity
         degreeStatus.setText(degreeProgress);
 
         // TODO notifications for assessment and goal dates
-        // TODO create scheduler app
-        // TODO story board
-        // TODO do signed apk for deployment package and take screen shots
+        // TODO
         // TODO Short essay on project reflection
 
-        //sendNotification();
+        //String query1 = "delete from goal";
+        //myHelper.deleteRecord(query1);
     }
 
     public void sendNotification()

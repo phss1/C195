@@ -2,7 +2,9 @@ package com.example.c196.Utility;
 
 import com.example.c196.Classes.Assessment;
 import com.example.c196.Classes.Course;
+import com.example.c196.Classes.Goal;
 import com.example.c196.Classes.Mentor;
+import com.example.c196.Classes.Note;
 import com.example.c196.Classes.Term;
 
 import java.util.ArrayList;
@@ -13,6 +15,8 @@ public class DataProvider
     private static ArrayList<Assessment> allAssessments = new ArrayList<>();
     private static ArrayList<Course> allCourses = new ArrayList<>();
     private static ArrayList<Term> allTerms = new ArrayList<>();
+    private static ArrayList<Goal> allGoals = new ArrayList<>();
+    private static ArrayList<Note> allNotes = new ArrayList<>();
 
     public static ArrayList<Mentor> getAllMentors()
     {
@@ -72,5 +76,31 @@ public class DataProvider
     public void setAllTerms(ArrayList<Term> allTerms)
     {
         this.allTerms = allTerms;
+    }
+
+    public static ArrayList<Goal> getAllGoals() {
+        return allGoals;
+    }
+
+    public static void setAllGoals(ArrayList<Goal> allGoals) {
+        DataProvider.allGoals = allGoals;
+    }
+
+    public static ArrayList<Note> getAllNotes() {
+        return allNotes;
+    }
+
+    public static void setAllNotes(ArrayList<Note> allNotes) {
+        DataProvider.allNotes = allNotes;
+    }
+
+    public static void addNote(Note newNote)
+    {
+        DataProvider.allNotes.add(newNote);
+    }
+
+    public static void addNote(Goal newGoal)
+    {
+        DataProvider.allGoals.add(newGoal);
     }
 }

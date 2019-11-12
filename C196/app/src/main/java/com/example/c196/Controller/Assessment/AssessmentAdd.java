@@ -74,7 +74,7 @@ public class AssessmentAdd extends AppCompatActivity
 
     }
 
-    public void isCheckBoxTicked() throws ParseException
+    /*public void isCheckBoxTicked() throws ParseException
     {
         EditText startDate = findViewById(R.id.startDateTxtFld);
         String sDate = startDate.getText().toString();
@@ -128,7 +128,7 @@ public class AssessmentAdd extends AppCompatActivity
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
-    }
+    }*/
 
     public void onClickAddAssSaveBtn(View view)
     {
@@ -150,7 +150,7 @@ public class AssessmentAdd extends AppCompatActivity
                     boolean foundTitleMatch = course.getTitle().contains(associatedCourseTitle) ? true : false;
                     if(foundTitleMatch)
                     {
-                        isCheckBoxTicked();
+                        //isCheckBoxTicked();
 
                         int courseId = course.getId();
                         String query = "insert into assessment(course_id, title, type, start_date, end_date) " +
