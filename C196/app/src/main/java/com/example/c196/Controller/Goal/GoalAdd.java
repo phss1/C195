@@ -103,8 +103,7 @@ public class GoalAdd extends AppCompatActivity
                 ar.setMessage(message);
                 ar.setAlarmId(newAlarmId);
 
-                AlarmReceiver ar = new AlarmReceiver();
-                String sTitle = ar.getTitle();
+
 
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
                 Date date = sdf.parse(sDate);
@@ -136,7 +135,7 @@ public class GoalAdd extends AppCompatActivity
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
     }
 
-    public void onTimeSet(Date date, String dateString, String title, String message, int alarmId)
+    /*public void onTimeSet(Date date, String dateString)
     {
         String[] dateValues = dateString.split("/");
         Calendar c = Calendar.getInstance();
@@ -144,22 +143,18 @@ public class GoalAdd extends AppCompatActivity
         c.set(Calendar.HOUR_OF_DAY, (c.get(Calendar.HOUR_OF_DAY)));
         c.setTime(date);
 
-        startAlarm(c, title, message, alarmId);
+        startAlarm(c);
     }
 
-    private void startAlarm(Calendar c, String title, String message, int alarmId)
+    private void startAlarm(Calendar c)
     {
-        AlarmReceiver receiver = new AlarmReceiver();
-        receiver.setTitle(title);
-        receiver.setMessage(message);
-        receiver.setAlarmId(alarmId);
-
+        int alarmId = ar.getAlarmId();
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, alarmId, intent, 0);
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
-    }
+    }*/
 
     @Override
     protected void onPause()

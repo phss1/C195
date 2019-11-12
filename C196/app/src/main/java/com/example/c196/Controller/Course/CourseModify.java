@@ -2,12 +2,16 @@ package com.example.c196.Controller.Course;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -21,17 +25,24 @@ import com.example.c196.Controller.Term.TermDetailedView;
 import com.example.c196.Controller.Term.TermModify;
 import com.example.c196.Controller.Term.Terms;
 import com.example.c196.R;
+import com.example.c196.Utility.AlarmReceiver;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
 import com.example.c196.Utility.UtilityMethods;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class CourseModify extends AppCompatActivity
 {
     DBConnector myHelper;
     DataProvider dp = new DataProvider();
+    AlarmReceiver ar = new AlarmReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -123,11 +134,13 @@ public class CourseModify extends AppCompatActivity
         int mentorIndex = ((Spinner) findViewById(R.id.courseMentorSpn)).getSelectedItemPosition();
         Mentor mentor = dp.getAllMentors().get(mentorIndex);
         int mentorId = mentor.getId();
-
         try
         {
             if(valuesNotNull)
             {
+                isCheckBoxTicked(startDate);
+                isCheckBoxTicked(endDate);
+
                 String sqlQuery = "update course set mentor_id = " + mentorId + ", title = \""
                         + title + "\", status = \"" + status
                         + "\", start_date = \"" + startDate + "\", end_date = \"" + endDate + "\" where course_id = "
@@ -146,6 +159,58 @@ public class CourseModify extends AppCompatActivity
         {
             //
         }
+    }
+
+    public void isCheckBoxTicked(String sDate) throws ParseException
+    {
+        boolean checked = ((CheckBox) findViewById(R.id.courseChkBx)).isChecked();
+        if(checked)
+        {
+            if(!sDate.isEmpty())
+            {
+                EditText tempTitle = findViewById(R.id.courseModifyTitleTxtFld);
+                String newTitle = tempTitle.getText().toString();
+                String title = newTitle + " Reminder";
+                String message = "Notification for " + newTitle + " on date " + sDate;
+
+
+                ar.setTitle(title);
+                ar.setMessage(message);
+
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                Date date = sdf.parse(sDate);
+                long addTime = 20000;
+                Long time = Calendar.getInstance().getTimeInMillis() + addTime;
+                date.setTime(time);
+                UtilityMethods.displayGuiMessage(CourseModify.this, "" + date);
+                //Long timeInMiliseconds = date.to
+
+                Calendar c = Calendar.getInstance();
+                //date.setTime(Calendar.getInstance().getTimeInMillis() + addTime);
+                //UtilityMethods.displayGuiMessage(CourseModify.this, "" + date);
+
+                onTimeSet(c, date, sDate);
+            }
+        }
+    }
+
+    public void onTimeSet(Calendar c, Date date, String dateString)
+    {
+        String[] dateValues = dateString.split("/");
+        c.set(Integer.valueOf(dateValues[2]), Integer.valueOf(dateValues[0]), Integer.valueOf(dateValues[1]));
+        c.setTime(date);
+        //UtilityMethods.displayGuiMessage(CourseModify.this, "" + c.get(Month));
+
+        startAlarm(c);
+    }
+
+    private void startAlarm(Calendar c)
+    {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
     }
 
     public void onClickModCourseDeleteBtn(View view)

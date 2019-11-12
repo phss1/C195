@@ -23,19 +23,6 @@ public class AlarmReceiver extends BroadcastReceiver
         notificationHelper.getManager().notify(id, nb.build());
     }
 
-    public static void onTimeSet(long time, String date)
-    {
-        String[] dateValues = date.split("/");
-        Calendar c = Calendar.getInstance();
-        c.set(Integer.valueOf(dateValues[0]), Integer.valueOf(dateValues[1]), Integer.valueOf(dateValues[2]));
-        c.set(Calendar.HOUR_OF_DAY, 14);
-        c.set(Calendar.MINUTE, 34);
-        c.set(Calendar.SECOND, 0);
-
-        //updateTimeText();
-        //startAlarm();
-    }
-
     public static String getTitle() {
         return title;
     }
