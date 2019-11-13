@@ -11,11 +11,10 @@ import java.util.Calendar;
 
 public class AlarmReceiver extends BroadcastReceiver
 {
-    private static String title;
-    private static String message;
-    private static int alarmId;
-    public static String NOTIFICATION_ID = "notification_id";
-    public static String NOTIFICATION = "notification";
+    public static String title;
+    public static String message;
+    public static String NOTIFICATION_ID;
+    public static String NOTIFICATION;
 
     @Override
     public void onReceive(Context context, Intent intent)
@@ -26,35 +25,9 @@ public class AlarmReceiver extends BroadcastReceiver
         int notificationId = intent.getIntExtra(NOTIFICATION_ID, 0);
         notificationManager.notify(notificationId, notification);
 
-
-        /*int id = getAlarmId();
-        NotificationHelper notificationHelper = new NotificationHelper(context);
-        NotificationCompat.Builder nb = notificationHelper.getChannelNotification();
-        notificationHelper.getManager().notify(id, nb.build());*/
-    }
-
-    public static String getTitle() {
-        return title;
-    }
-
-    public static void setTitle(String title) {
-        AlarmReceiver.title = title;
-    }
-
-    public static String getMessage() {
-        return message;
-    }
-
-    public static void setMessage(String message) {
-        AlarmReceiver.message = message;
-    }
-
-    public static int getAlarmId() {
-        return alarmId;
-    }
-
-    public static void setAlarmId(int alarmId) {
-        AlarmReceiver.alarmId = alarmId;
+        /*NotificationHelper notificationHelper = new NotificationHelper(context);
+        NotificationCompat.Builder nb = notificationHelper.getChannelNotification(title, message);
+        notificationHelper.getManager().notify(notificationId, nb.build());*/
     }
 
 

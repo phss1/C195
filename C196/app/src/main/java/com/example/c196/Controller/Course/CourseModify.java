@@ -143,17 +143,20 @@ public class CourseModify extends AppCompatActivity
         {
             if(valuesNotNull)
             {
+                //TODO method 2
+                
                 Long startDateNotif = getDateDelayMiliseconds(startDate);
                 int startDateNotifId = UtilityMethods.createUniqueId();
                 String startDateTitle = title + " Reminder";
                 String startDateMessage = "Notification for " + title + " on date " + startDate;
                 scheduleNotification(CourseModify.this, startDateNotif, startDateNotifId, startDateTitle, startDateMessage);
-                Long endDateNotif = getDateDelayMiliseconds(endDate);
+                /*Long endDateNotif = getDateDelayMiliseconds(endDate);
                 int endDateNotifId = UtilityMethods.createUniqueId();
                 String endDateTitle = title + " Reminder";
                 String endDateMessage = "Notification for " + title + " on date " + endDate;
-                scheduleNotification(CourseModify.this, endDateNotif, endDateNotifId, endDateTitle, endDateMessage);
+                scheduleNotification(CourseModify.this, endDateNotif, endDateNotifId, endDateTitle, endDateMessage);  */
 
+                //TODO method 1
                 //isCheckBoxTicked(startDate);
                 //isCheckBoxTicked(endDate);
 
@@ -196,11 +199,13 @@ public class CourseModify extends AppCompatActivity
         Intent notificationIntent = new Intent(context, AlarmReceiver.class);
         notificationIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, notificationId);
         notificationIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
+        notificationIntent.putExtra(AlarmReceiver.title, title);
+        notificationIntent.putExtra(AlarmReceiver.message, message);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-        long futureInMillis = SystemClock.elapsedRealtime() + delay;
+        //long futureInMillis = SystemClock.elapsedRealtime() + delay;
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, delay, pendingIntent);
     }
 
     private Long getDateDelayMiliseconds(String sDate) throws ParseException
@@ -225,7 +230,7 @@ public class CourseModify extends AppCompatActivity
                 c.set(c.SECOND, seconds);
                 c.set(c.MILLISECOND, miliseconds);
                 UtilityMethods.displayGuiMessage(CourseModify.this, "" + c);
-                timeInMiliseconds = date.getTime();
+                timeInMiliseconds = date.getTime() + addTime;
 
                 //alendar c = Calendar.getInstance();
                 //date.setTime(Calendar.getInstance().getTimeInMillis() + addTime);
