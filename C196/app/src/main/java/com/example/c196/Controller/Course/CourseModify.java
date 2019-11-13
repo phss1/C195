@@ -1,13 +1,18 @@
 package com.example.c196.Controller.Course;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.RingtoneManager;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -138,8 +143,19 @@ public class CourseModify extends AppCompatActivity
         {
             if(valuesNotNull)
             {
-                isCheckBoxTicked(startDate);
-                isCheckBoxTicked(endDate);
+                Long startDateNotif = getDateDelayMiliseconds(startDate);
+                int startDateNotifId = UtilityMethods.createUniqueId();
+                String startDateTitle = title + " Reminder";
+                String startDateMessage = "Notification for " + title + " on date " + startDate;
+                scheduleNotification(CourseModify.this, startDateNotif, startDateNotifId, startDateTitle, startDateMessage);
+                Long endDateNotif = getDateDelayMiliseconds(endDate);
+                int endDateNotifId = UtilityMethods.createUniqueId();
+                String endDateTitle = title + " Reminder";
+                String endDateMessage = "Notification for " + title + " on date " + endDate;
+                scheduleNotification(CourseModify.this, endDateNotif, endDateNotifId, endDateTitle, endDateMessage);
+
+                //isCheckBoxTicked(startDate);
+                //isCheckBoxTicked(endDate);
 
                 String sqlQuery = "update course set mentor_id = " + mentorId + ", title = \""
                         + title + "\", status = \"" + status
@@ -161,9 +177,37 @@ public class CourseModify extends AppCompatActivity
         }
     }
 
-    public void isCheckBoxTicked(String sDate) throws ParseException
+    public void scheduleNotification(Context context, long delay, int notificationId, String title, String message)
+    {
+        //delay is after how much time(in millis) from current time you want to schedule the notification
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setAutoCancel(true)
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setLargeIcon(((BitmapDrawable) context.getResources().getDrawable(R.drawable.ic_launcher_background)).getBitmap())
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+
+        Intent intent = new Intent(context, CourseModify.class);
+        PendingIntent activity = PendingIntent.getActivity(context, notificationId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        builder.setContentIntent(activity);
+
+        Notification notification = builder.build();
+
+        Intent notificationIntent = new Intent(context, AlarmReceiver.class);
+        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, notificationId);
+        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        long futureInMillis = SystemClock.elapsedRealtime() + delay;
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
+    }
+
+    private Long getDateDelayMiliseconds(String sDate) throws ParseException
     {
         boolean checked = ((CheckBox) findViewById(R.id.courseChkBx)).isChecked();
+        Long timeInMiliseconds = 0L;
         if(checked)
         {
             if(!sDate.isEmpty())
@@ -191,7 +235,7 @@ public class CourseModify extends AppCompatActivity
                 c.set(c.SECOND, seconds);
                 c.set(c.MILLISECOND, miliseconds);
                 UtilityMethods.displayGuiMessage(CourseModify.this, "" + c);
-                Long timeInMiliseconds = date.getTime();
+                timeInMiliseconds = date.getTime();
 
                 //alendar c = Calendar.getInstance();
                 //date.setTime(Calendar.getInstance().getTimeInMillis() + addTime);
@@ -200,6 +244,7 @@ public class CourseModify extends AppCompatActivity
                 //onTimeSet(c, date, sDate);
             }
         }
+        return timeInMiliseconds;
     }
 
     public void onTimeSet(Calendar c, Date date, String dateString)

@@ -1,5 +1,7 @@
 package com.example.c196.Utility;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,15 +14,23 @@ public class AlarmReceiver extends BroadcastReceiver
     private static String title;
     private static String message;
     private static int alarmId;
+    public static String NOTIFICATION_ID = "notification_id";
+    public static String NOTIFICATION = "notification";
 
     @Override
     public void onReceive(Context context, Intent intent)
     {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        int id = getAlarmId();
+        Notification notification = intent.getParcelableExtra(NOTIFICATION);
+        int notificationId = intent.getIntExtra(NOTIFICATION_ID, 0);
+        notificationManager.notify(notificationId, notification);
+
+
+        /*int id = getAlarmId();
         NotificationHelper notificationHelper = new NotificationHelper(context);
         NotificationCompat.Builder nb = notificationHelper.getChannelNotification();
-        notificationHelper.getManager().notify(id, nb.build());
+        notificationHelper.getManager().notify(id, nb.build());*/
     }
 
     public static String getTitle() {

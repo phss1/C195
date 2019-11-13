@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Controller.MainActivity">
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Controller.Assessment.AssessmentView">
@@ -17,13 +15,9 @@
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginStart="163dp"
-        android:layout_marginLeft="163dp"
         android:layout_marginTop="168dp"
-        android:layout_marginEnd="160dp"
-        android:layout_marginRight="160dp"
         android:onClick="onActionAddAssessment"
         android:text="Add"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,12 +26,12 @@
         android:layout_width="410dp"
         android:layout_height="353dp"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginTop="157dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.416"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addBtn3" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

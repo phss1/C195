@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Controller.MainActivity">
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/courseAlertChkBx"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -34,13 +32,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="182dp"
-        android:layout_marginRight="182dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/courseModifyStatusSpn" />
 
@@ -49,13 +43,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="13dp"
-        android:layout_marginEnd="182dp"
-        android:layout_marginRight="182dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/courseModifyStartDateTxtFld" />
 
@@ -64,11 +54,7 @@
         android:layout_width="212dp"
         android:layout_height="39dp"
         android:layout_marginStart="19dp"
-        android:layout_marginLeft="19dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="180dp"
-        android:layout_marginRight="180dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/courseMentorSpn" />
 
