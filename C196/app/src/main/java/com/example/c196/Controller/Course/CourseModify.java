@@ -173,7 +173,7 @@ public class CourseModify extends AppCompatActivity
         }
         catch(Exception e)
         {
-            //
+            UtilityMethods.displayGuiMessage(CourseModify.this, ""+e.getMessage());
         }
     }
 
@@ -185,7 +185,6 @@ public class CourseModify extends AppCompatActivity
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSmallIcon(R.drawable.ic_launcher_background)
-                .setLargeIcon(((BitmapDrawable) context.getResources().getDrawable(R.drawable.ic_launcher_background)).getBitmap())
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
 
         Intent intent = new Intent(context, CourseModify.class);
@@ -212,15 +211,6 @@ public class CourseModify extends AppCompatActivity
         {
             if(!sDate.isEmpty())
             {
-                EditText tempTitle = findViewById(R.id.courseModifyTitleTxtFld);
-                String newTitle = tempTitle.getText().toString();
-                String title = newTitle + " Reminder";
-                String message = "Notification for " + newTitle + " on date " + sDate;
-
-
-                ar.setTitle(title);
-                ar.setMessage(message);
-
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
                 Date date = sdf.parse(sDate);
                 long addTime = 20000;
@@ -252,7 +242,6 @@ public class CourseModify extends AppCompatActivity
         String[] dateValues = dateString.split("/");
         c.set(Integer.valueOf(dateValues[2]), Integer.valueOf(dateValues[0]), Integer.valueOf(dateValues[1]));
         c.setTime(date);
-        //UtilityMethods.displayGuiMessage(CourseModify.this, "" + c.get(Month));
 
         startAlarm(c);
     }
