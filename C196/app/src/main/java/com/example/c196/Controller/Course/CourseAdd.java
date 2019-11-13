@@ -36,7 +36,7 @@ public class CourseAdd extends AppCompatActivity
         spinner.setAdapter(spinnerAdapter);
     }
 
-    public void onClickAddCourseSaveBtn(View view)
+    public void onClickAddCourseSaveBtn2(View view)
     {
         String title = ((EditText) findViewById(R.id.addCourseTitleTxtFld)).getText().toString();
         String status = ((Spinner) findViewById(R.id.addCourseStatusSpn)).getSelectedItem().toString();

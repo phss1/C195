@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity
         myHelper.getWritableDatabase();
         myHelper.createTables();
 
-        notificationHelper = new NotificationHelper(this);
+        /*notificationHelper = new NotificationHelper(this);
 
         String query = "select status from course";
         Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity
         // TODO Short essay on project reflection
 
         //String query1 = "delete from goal";
-        //myHelper.deleteRecord(query1);
+        //myHelper.deleteRecord(query1);*/
     }
 
     public void sendNotification()

@@ -180,16 +180,24 @@ public class CourseModify extends AppCompatActivity
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
                 Date date = sdf.parse(sDate);
                 long addTime = 20000;
-                Long time = Calendar.getInstance().getTimeInMillis() + addTime;
-                date.setTime(time);
-                UtilityMethods.displayGuiMessage(CourseModify.this, "" + date);
-                //Long timeInMiliseconds = date.to
-
                 Calendar c = Calendar.getInstance();
+                c.setTime(date);
+                int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+                int minute = Calendar.getInstance().get(Calendar.MINUTE);
+                int seconds = Calendar.getInstance().get(Calendar.SECOND);
+                int miliseconds = (Calendar.getInstance().get(Calendar.MILLISECOND));
+                c.set(c.HOUR_OF_DAY, hour);
+                c.set(c.MINUTE, minute);
+                c.set(c.SECOND, seconds);
+                c.set(c.MILLISECOND, miliseconds);
+                UtilityMethods.displayGuiMessage(CourseModify.this, "" + c);
+                Long timeInMiliseconds = date.getTime();
+
+                //alendar c = Calendar.getInstance();
                 //date.setTime(Calendar.getInstance().getTimeInMillis() + addTime);
                 //UtilityMethods.displayGuiMessage(CourseModify.this, "" + date);
 
-                onTimeSet(c, date, sDate);
+                //onTimeSet(c, date, sDate);
             }
         }
     }
@@ -211,6 +219,15 @@ public class CourseModify extends AppCompatActivity
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+    }
+
+    private void startAlarm2(Long time)
+    {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, time, pendingIntent);
     }
 
     public void onClickModCourseDeleteBtn(View view)
