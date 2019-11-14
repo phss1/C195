@@ -29,6 +29,7 @@ import com.example.c196.Controller.Note.NoteAdd;
 import com.example.c196.Controller.Term.TermDetailedView;
 import com.example.c196.Controller.Term.TermModify;
 import com.example.c196.Controller.Term.Terms;
+import com.example.c196.CourseShareNote;
 import com.example.c196.R;
 import com.example.c196.Utility.AlarmReceiver;
 import com.example.c196.Utility.DBConnector;
@@ -139,6 +140,7 @@ public class CourseModify extends AppCompatActivity
         int mentorIndex = ((Spinner) findViewById(R.id.courseMentorSpn)).getSelectedItemPosition();
         Mentor mentor = dp.getAllMentors().get(mentorIndex);
         int mentorId = mentor.getId();
+
         try
         {
             if(valuesNotNull)
@@ -199,8 +201,8 @@ public class CourseModify extends AppCompatActivity
         Intent notificationIntent = new Intent(context, AlarmReceiver.class);
         notificationIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, notificationId);
         notificationIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
-        notificationIntent.putExtra(AlarmReceiver.title, title);
-        notificationIntent.putExtra(AlarmReceiver.message, message);
+        //notificationIntent.putExtra(AlarmReceiver.get, title);
+        //notificationIntent.putExtra(AlarmReceiver.message, message);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         //long futureInMillis = SystemClock.elapsedRealtime() + delay;
@@ -260,14 +262,12 @@ public class CourseModify extends AppCompatActivity
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
     }
 
-    private void startAlarm2(Long time)
+    public void onClickShareNote(View view)
     {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
-
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+        Intent intent = new Intent(this, CourseShareNote.class);
+        startActivity(intent);
     }
+
 
     public void onClickModCourseDeleteBtn(View view)
     {

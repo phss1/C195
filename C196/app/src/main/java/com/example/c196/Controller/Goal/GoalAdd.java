@@ -99,11 +99,9 @@ public class GoalAdd extends AppCompatActivity
                 String message = "Reminding you of your goal for " + newTitle;
                 int newAlarmId = UtilityMethods.createUniqueId();
 
-                //ar.setTitle(title);
-                //ar.setMessage(message);
-                //ar.setAlarmId(newAlarmId);
-
-
+                ar.setTitle(title);
+                ar.setMessage(message);
+                ar.setAlarmId(newAlarmId);
 
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
                 Date date = sdf.parse(sDate);

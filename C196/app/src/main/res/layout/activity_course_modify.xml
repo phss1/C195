@@ -169,5 +169,17 @@
         app:layout_constraintStart_toEndOf="@+id/courseModifyEndDateTxtFld"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="71dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="10dp"
+        android:onClick="onClickShareNote"
+        android:text="Share Note"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/modCourseNoteBtn"
+        app:layout_constraintTop_toBottomOf="@+id/modCourseDeleteBtn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

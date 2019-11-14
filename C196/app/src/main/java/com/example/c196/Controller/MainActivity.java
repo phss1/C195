@@ -54,9 +54,9 @@ public class MainActivity extends AppCompatActivity
         // TODO notifications for assessment and goal dates
         // TODO
         // TODO Short essay on project reflection
-
+*/
         //String query1 = "delete from goal";
-        //myHelper.deleteRecord(query1);*/
+        //myHelper.deleteRecord(query1);
     }
 
     public void sendNotification()
