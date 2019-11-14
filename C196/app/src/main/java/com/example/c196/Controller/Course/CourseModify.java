@@ -5,6 +5,7 @@ import androidx.core.app.NotificationCompat;
 
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +27,7 @@ import com.example.c196.R;
 import com.example.c196.Utility.AlarmReceiver;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
+import com.example.c196.Utility.NotificationHelper;
 import com.example.c196.Utility.UtilityMethods;
 
 import java.text.ParseException;
@@ -39,7 +41,9 @@ public class CourseModify extends AppCompatActivity
 {
     DBConnector myHelper;
     DataProvider dp = new DataProvider();
-    AlarmReceiver ar = new AlarmReceiver();
+    NotificationCompat.Builder notification;
+    public static final String channel_id = "channelId";
+    public static final String channel_name = "channel 1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -48,6 +52,10 @@ public class CourseModify extends AppCompatActivity
         setContentView(R.layout.activity_course_modify);
         getSupportActionBar().setTitle("Modify Course");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        notification = new NotificationCompat.Builder(this);
+        notification.setAutoCancel(true);
+
 
         myHelper = new DBConnector(CourseModify.this);
         myHelper.getWritableDatabase();
@@ -142,7 +150,7 @@ public class CourseModify extends AppCompatActivity
                 int startDateNotifId = UtilityMethods.createUniqueId();
                 String startDateTitle = title + " Reminder";
                 String startDateMessage = "Notification for " + title + " on date " + startDate;
-                scheduleNotification(CourseModify.this, startDateNotif, startDateNotifId, startDateTitle, startDateMessage);
+                //scheduleNotification(CourseModify.this, startDateNotif, startDateNotifId, startDateTitle, startDateMessage);
                 /*Long endDateNotif = getDateDelayMiliseconds(endDate);
                 int endDateNotifId = UtilityMethods.createUniqueId();
                 String endDateTitle = title + " Reminder";
@@ -150,8 +158,27 @@ public class CourseModify extends AppCompatActivity
                 scheduleNotification(CourseModify.this, endDateNotif, endDateNotifId, endDateTitle, endDateMessage);  */
 
                 //TODO method 1
-                //isCheckBoxTicked(startDate);
-                //isCheckBoxTicked(endDate);
+                NotificationHelper notificationHelper = new NotificationHelper(this);
+                NotificationCompat.Builder nb = notificationHelper.getChannelNotification(startDateTitle, startDateMessage);
+                notificationHelper.getManager().notify(startDateNotifId, nb.build());
+
+                //notification.setSmallIcon(R.drawable.ic_launcher_background);
+                //notification.setTicker("This is the ticker.");
+                UtilityMethods.displayGuiMessage(this,""+startDateNotif);
+                notification.setWhen(20000);
+                notification.setContentTitle(startDateTitle);
+                notification.setContentText(startDateMessage);
+                Intent intentNotif = new Intent(this, CourseModify.class);
+                PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                        0, intentNotif, PendingIntent.FLAG_UPDATE_CURRENT);
+                notification.setContentIntent(pendingIntent);
+
+                //notification.setChannelId("channel1");
+
+                NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                nm.notify(startDateNotifId, notification.build());
+
+
 
                 String sqlQuery = "update course set mentor_id = " + mentorId + ", title = \""
                         + title + "\", status = \"" + status
@@ -222,7 +249,6 @@ public class CourseModify extends AppCompatActivity
                 c.set(c.MINUTE, minute);
                 c.set(c.SECOND, seconds);
                 c.set(c.MILLISECOND, miliseconds);
-                UtilityMethods.displayGuiMessage(CourseModify.this, "" + c);
                 timeInMiliseconds = date.getTime() + addTime;
 
                 //alendar c = Calendar.getInstance();

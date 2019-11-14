@@ -49,18 +49,10 @@ public class NotificationHelper extends ContextWrapper
         return manager;
     }
 
-    public NotificationCompat.Builder getChannelNotification()
+    public NotificationCompat.Builder getChannelNotification(String title, String message)
     {
-        AlarmReceiver ar = new AlarmReceiver();
-        String sTitle = ar.getTitle();
-        String sMessage = ar.getMessage();
-
-
         return new NotificationCompat.Builder(getApplicationContext(), channel_id)
-                .setContentTitle(sTitle).setContentText(sMessage).setSmallIcon(R.drawable.ic_launcher_background);
-
-        //return new NotificationCompat.Builder(getApplicationContext(), channel_id)
-          //      .setContentTitle(title).setContentText(message).setSmallIcon(R.drawable.ic_launcher_background);
+                .setContentTitle(title).setContentText(message).setSmallIcon(R.drawable.ic_launcher_background);
 
     }
 }

@@ -31,41 +31,7 @@ public class MainActivity extends AppCompatActivity
         myHelper = new DBConnector(MainActivity.this);
         myHelper.getWritableDatabase();
         myHelper.createTables();
-
-        /*notificationHelper = new NotificationHelper(this);
-
-        String query = "select status from course";
-        Cursor cursor = myHelper.getReadableDatabase().rawQuery(query,null);
-
-        double completed = 0;
-        int notCompleted = 0;
-        double totalCourseCount = 0;
-        while(cursor.moveToNext())
-        {
-            double test = cursor.getString(0).contains("Completed") ? completed++ : notCompleted++;
-            totalCourseCount++;
-        }
-
-        String percentDone = String.valueOf((completed / totalCourseCount) * 100);
-        String degreeProgress = "Degree Completion - " + percentDone + "%";
-        TextView degreeStatus = findViewById(R.id.testTxtVw);
-        degreeStatus.setText(degreeProgress);
-
-        // TODO notifications for assessment and goal dates
-        // TODO
-        // TODO Short essay on project reflection
-*/
-        //String query1 = "delete from goal";
-        //myHelper.deleteRecord(query1);
     }
-
-    public void sendNotification()
-    {
-        //NotificationCompat.Builder nb = notificationHelper.getChannelNotification();
-        //notificationHelper.getManager().notify(1, nb.build());
-    }
-
-
 
     @Override
     protected void onResume()
