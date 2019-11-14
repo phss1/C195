@@ -1,28 +1,43 @@
 package com.example.c196.Utility;
-import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
 
+import com.example.c196.R;
+
 public class AlarmReceiver extends BroadcastReceiver
 {
     private String title;
     private String message;
     private int alarmId;
-    public static String NOTIFICATION_ID = "notification_id";
-    public static String NOTIFICATION = "notification";
 
     @Override
     public void onReceive(Context context, Intent intent)
     {
-        /*int id = getAlarmId();
-        NotificationHelper notificationHelper = new NotificationHelper(context);
-        NotificationCompat.Builder nb = notificationHelper.getChannelNotification();
-        notificationHelper.getManager().notify(id, nb.build());*/
+        String alarmTitle = intent.getStringExtra("title");
+        String alarmText = intent.getStringExtra("text");
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setContentTitle()
+                .setContentText(alarmText);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(UtilityMethods.createUniqueId(), builder.build());
+        //NotificationHelper notificationHelper = new NotificationHelper(context);
+        //NotificationCompat.Builder nb = notificationHelper.getChannelNotification(title, message);
+        //builder.notify(UtilityMethods.createUniqueId(),);
 
 
+    }
+
+    public AlarmReceiver(String title, String message, int alarmId)
+    {
+        this.title = title;
+        this.message = message;
+        this.alarmId = alarmId;
     }
 
     public String getTitle() {
@@ -48,6 +63,7 @@ public class AlarmReceiver extends BroadcastReceiver
     public void setAlarmId(int alarmId) {
         this.alarmId = alarmId;
     }
+
 
     /*public static String title;
     public static String message;

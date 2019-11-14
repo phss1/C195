@@ -217,8 +217,8 @@ public class CourseModify extends AppCompatActivity
         Notification notification = builder.build();
 
         Intent notificationIntent = new Intent(context, AlarmReceiver.class);
-        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, notificationId);
-        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
+        //notificationIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, notificationId);
+        //notificationIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
         //notificationIntent.putExtra(AlarmReceiver.get, title);
         //notificationIntent.putExtra(AlarmReceiver.message, message);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);

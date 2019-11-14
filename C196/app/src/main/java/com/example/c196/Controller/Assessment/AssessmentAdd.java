@@ -37,7 +37,6 @@ public class AssessmentAdd extends AppCompatActivity
 {
     DBConnector myHelper;
     DataProvider dp = new DataProvider();
-    AlarmReceiver ar = new AlarmReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

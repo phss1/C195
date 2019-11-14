@@ -20,7 +20,6 @@ import com.example.c196.Utility.DBConnector;
 public class MainActivity extends AppCompatActivity
 {
     DBConnector myHelper;
-    NotificationHelper notificationHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

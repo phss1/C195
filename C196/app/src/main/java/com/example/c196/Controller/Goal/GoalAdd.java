@@ -1,9 +1,11 @@
 package com.example.c196.Controller.Goal;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import com.example.c196.R;
 import com.example.c196.Utility.AlarmReceiver;
 import com.example.c196.Utility.DBConnector;
 import com.example.c196.Utility.DataProvider;
+import com.example.c196.Utility.NotificationHelper;
 import com.example.c196.Utility.UtilityMethods;
 
 import java.text.ParseException;
@@ -34,7 +37,6 @@ public class GoalAdd extends AppCompatActivity
 {
     DBConnector myHelper;
     DataProvider dp = new DataProvider();
-    AlarmReceiver ar = new AlarmReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -83,6 +85,29 @@ public class GoalAdd extends AppCompatActivity
         }
     }
 
+    AlarmHandler.scheduleCourseAlarm(getApplicationContext(), courseId, DateUtil.getDateTimestamp(course.start),
+                    "Course starts today!", course.name + " begins on " + course.start);
+    public static boolean scheduleCourseAlarm(Context context, long id, long time, String title, String text) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        int nextAlarmId = getNextAlarmId(context);
+        Intent intentAlarm = new Intent(context, AlarmHandler.class);
+        intentAlarm.putExtra("id", id);
+        intentAlarm.putExtra("title", title);
+        intentAlarm.putExtra("text", text);
+        intentAlarm.putExtra("destination", "course");
+        intentAlarm.putExtra("nextAlarmId", nextAlarmId);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, time, PendingIntent.getBroadcast(context, nextAlarmId, intentAlarm, PendingIntent.FLAG_ONE_SHOT));
+
+        SharedPreferences sp = context.getSharedPreferences(courseAlarmFile, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt(Long.toString(id), nextAlarmId);
+        editor.commit();
+
+        incrementNextAlarmId(context);
+        return true;
+    }
+
+
     public void isCheckBoxTicked() throws ParseException
     {
         EditText startDate = findViewById(R.id.dateTxtFld);
@@ -99,21 +124,22 @@ public class GoalAdd extends AppCompatActivity
                 String message = "Reminding you of your goal for " + newTitle;
                 int newAlarmId = UtilityMethods.createUniqueId();
 
+                AlarmReceiver ar = new AlarmReceiver(title, message, newAlarmId);
+                ar.setAlarmId(newAlarmId);
                 ar.setTitle(title);
                 ar.setMessage(message);
-                ar.setAlarmId(newAlarmId);
 
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
                 Date date = sdf.parse(sDate);
                 long addTwoMin = 20000;
                 date.setTime(Calendar.getInstance().getTimeInMillis() + addTwoMin);
 
-                onTimeSet(date, sDate);
+                onTimeSet(date, sDate, ar);
             }
         }
     }
 
-    public void onTimeSet(Date date, String dateString)
+    public void onTimeSet(Date date, String dateString, AlarmReceiver ar)
     {
         String[] dateValues = dateString.split("/");
         Calendar c = Calendar.getInstance();
@@ -121,16 +147,37 @@ public class GoalAdd extends AppCompatActivity
         c.set(Calendar.HOUR_OF_DAY, (c.get(Calendar.HOUR_OF_DAY)));
         c.setTime(date);
 
-        startAlarm(c);
+        startAlarm(c, ar);
     }
 
-    private void startAlarm(Calendar c)
+    private void startAlarm(Calendar c, AlarmReceiver ar)
     {
+        final String title = ar.getTitle();
+        final String message = ar.getMessage();
+        final int alarmId = ar.getAlarmId();
+
+        /*BroadcastReceiver test = new BroadcastReceiver()
+        {
+            @Override
+            public void onReceive(Context context, Intent intent)
+            {
+                NotificationHelper notificationHelper = new NotificationHelper(context);
+                NotificationCompat.Builder nb = notificationHelper.getChannelNotification(title, message);
+                notificationHelper.getManager().notify(alarmId, nb.build());
+            }
+        };*/
+
+
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, alarmId, intent, 0);
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+
+
+
+
+
     }
 
     /*public void onTimeSet(Date date, String dateString)
