@@ -145,7 +145,7 @@ public class AssessmentModify extends AppCompatActivity
         while (cursor.moveToNext())
         {
             Goal tempGoal = new Goal(cursor.getString(2), cursor.getString(3));
-            dp.addNote(tempGoal);
+            dp.addGoal(tempGoal);
             goalsList.add(cursor.getString(2));
         }
 

@@ -99,7 +99,7 @@ public class DataProvider
         DataProvider.allNotes.add(newNote);
     }
 
-    public static void addNote(Goal newGoal)
+    public static void addGoal(Goal newGoal)
     {
         DataProvider.allGoals.add(newGoal);
     }

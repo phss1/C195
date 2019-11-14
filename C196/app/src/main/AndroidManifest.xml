@@ -10,17 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".CourseShareNote">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-                <action android:name="android.intent.action.SEND"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="message/rfc822"/>
-            </intent-filter>
-        </activity>
+
         <activity android:name=".Controller.Course.CourseManageAssessments" />
         <activity android:name=".Controller.Course.CourseDeleteNote" />
+        <activity android:name=".Controller.Course.CourseShareNote" />
         <activity android:name=".Controller.Term.TermCreateCourse" />
         <activity android:name=".Controller.Note.NoteAdd" />
         <activity android:name=".Controller.Course.CourseAdd" />
@@ -43,7 +36,7 @@
         <activity android:name=".Controller.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.SEND"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

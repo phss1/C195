@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CourseShareNote">
+    tools:context=".Controller.Course.CourseShareNote">
 
     <EditText
         android:id="@+id/editText"
@@ -20,10 +20,10 @@
 
     <ListView
         android:id="@+id/notesLstVw"
-        android:layout_width="411dp"
-        android:layout_height="384dp"
+        android:layout_width="412dp"
+        android:layout_height="549dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="215dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/shareEmailBtn" />
 
