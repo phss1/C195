@@ -98,12 +98,12 @@ public class GoalAdd extends AppCompatActivity
             {
                 EditText tempTitle = findViewById(R.id.descriptionTxtFld);
                 String newTitle = tempTitle.getText().toString();
-                String title = newTitle + " reminder for your goal.";
-                String message = "Reminding you of your goal for " + newTitle;
+                String title = "Assessment Goal Reminder";
+                String message = "Your goal " + newTitle + " is due today " + sDate + ".";
 
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
                 Date date = sdf.parse(sDate);
-                long addTwoMin = 15000;
+                long addTwoMin = 20000;
                 date.setTime(Calendar.getInstance().getTimeInMillis() + addTwoMin);
 
                 onTimeSet(date, sDate, title, message);
@@ -132,67 +132,7 @@ public class GoalAdd extends AppCompatActivity
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
-
-        /*
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Context context = getApplicationContext();
-        Intent intent = new Intent(this, AlarmReceiver.class);
-
-        Intent intentAlarm = new Intent(context, AlarmReceiver.class);
-        //intentAlarm.putExtra("id", id);
-        intentAlarm.putExtra("title", title);
-        intentAlarm.putExtra("text", message);
-        intentAlarm.putExtra("nextAlarmId", nextAlarmId);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, c, PendingIntent.getBroadcast(context, nextAlarmId, intentAlarm, PendingIntent.FLAG_ONE_SHOT));
-*/
-
-        //PendingIntent pendingIntent = PendingIntent.getBroadcast(this, alarmId, intent, 0);
-        //alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
     }
-
-
-    /*AlarmHandler.scheduleCourseAlarm(getApplicationContext(), courseId, DateUtil.getDateTimestamp(course.start),
-                    "Course starts today!", course.name + " begins on " + course.start);
-    public static boolean scheduleCourseAlarm(Context context, long id, long time, String title, String text) {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        int nextAlarmId = getNextAlarmId(context);
-        Intent intentAlarm = new Intent(context, AlarmHandler.class);
-        intentAlarm.putExtra("id", id);
-        intentAlarm.putExtra("title", title);
-        intentAlarm.putExtra("text", text);
-        intentAlarm.putExtra("destination", "course");
-        intentAlarm.putExtra("nextAlarmId", nextAlarmId);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, time, PendingIntent.getBroadcast(context, nextAlarmId, intentAlarm, PendingIntent.FLAG_ONE_SHOT));
-
-        SharedPreferences sp = context.getSharedPreferences(courseAlarmFile, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putInt(Long.toString(id), nextAlarmId);
-        editor.commit();
-
-        incrementNextAlarmId(context);
-        return true;
-    }*/
-
-    /*public void onTimeSet(Date date, String dateString)
-    {
-        String[] dateValues = dateString.split("/");
-        Calendar c = Calendar.getInstance();
-        c.set(Integer.valueOf(dateValues[0]), Integer.valueOf(dateValues[1]), Integer.valueOf(dateValues[2]));
-        c.set(Calendar.HOUR_OF_DAY, (c.get(Calendar.HOUR_OF_DAY)));
-        c.setTime(date);
-
-        startAlarm(c);
-    }
-
-    private void startAlarm(Calendar c)
-    {
-        int alarmId = ar.getAlarmId();
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, alarmId, intent, 0);
-
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
-    }*/
 
     @Override
     protected void onPause()

@@ -1,6 +1,4 @@
 package com.example.c196.Utility;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,14 +13,11 @@ public class AlarmReceiver extends BroadcastReceiver
     private String message;
     private int alarmId;
 
-    public static String NOTIFICATION_ID;
-    public static String NOTIFICATION;
-
     @Override
     public void onReceive(Context context, Intent intent)
     {
         String alarmTitle = intent.getStringExtra("title");
-        String alarmText = intent.getStringExtra("text");
+        String alarmText = intent.getStringExtra("message");
 
         NotificationHelper notificationHelper = new NotificationHelper(context);
         NotificationCompat.Builder nb = notificationHelper.getChannelNotification(alarmTitle, alarmText);

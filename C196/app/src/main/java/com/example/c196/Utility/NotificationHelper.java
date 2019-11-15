@@ -15,6 +15,8 @@ public class NotificationHelper extends ContextWrapper
 {
     public static final String channel_id = "channelId";
     public static final String channel_name = "channel 1";
+    public static final String channel2_id = "channe2Id";
+    public static final String channel2_name = "channel 2";
     private NotificationManager manager;
 
     public NotificationHelper(Context base)
@@ -49,9 +51,25 @@ public class NotificationHelper extends ContextWrapper
         return manager;
     }
 
-    public NotificationCompat.Builder getChannelNotification(String title, String message)
+    public NotificationCompat.Builder getChannelNotification(String title, String message, int channel)
     {
-        return new NotificationCompat.Builder(getApplicationContext(), channel_id)
-                .setContentTitle(title).setContentText(message).setSmallIcon(R.drawable.ic_launcher_background);
+        NotificationCompat.Builder builder = channel == 1 ?
+                new NotificationCompat.Builder(getApplicationContext(), channel_id)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setSmallIcon(R.drawable.ic_launcher_background) :
+                new NotificationCompat.Builder(getApplicationContext(), channel2_id)
+                        .setContentTitle(title)
+                        .setContentText(message)
+                        .setSmallIcon(R.drawable.ic_launcher_background);
+
+        switch(channel)
+        {
+            case 1:
+                builder = new NotificationCompat.Builder(getApplicationContext(), channel_id)
+                        .setContentTitle(title)
+                        .setContentText(message)
+                        .setSmallIcon(R.drawable.ic_launcher_background);
+        }
     }
 }

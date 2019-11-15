@@ -144,41 +144,12 @@ public class CourseModify extends AppCompatActivity
         {
             if(valuesNotNull)
             {
-                //TODO method 2
-                
-                Long startDateNotif = getDateDelayMiliseconds(startDate);
-                int startDateNotifId = UtilityMethods.createUniqueId();
-                String startDateTitle = title + " Reminder";
-                String startDateMessage = "Notification for " + title + " on date " + startDate;
-                //scheduleNotification(CourseModify.this, startDateNotif, startDateNotifId, startDateTitle, startDateMessage);
-                /*Long endDateNotif = getDateDelayMiliseconds(endDate);
-                int endDateNotifId = UtilityMethods.createUniqueId();
-                String endDateTitle = title + " Reminder";
-                String endDateMessage = "Notification for " + title + " on date " + endDate;
-                scheduleNotification(CourseModify.this, endDateNotif, endDateNotifId, endDateTitle, endDateMessage);  */
-
-                //TODO method 1
-                NotificationHelper notificationHelper = new NotificationHelper(this);
-                NotificationCompat.Builder nb = notificationHelper.getChannelNotification(startDateTitle, startDateMessage);
-                notificationHelper.getManager().notify(startDateNotifId, nb.build());
-
-                //notification.setSmallIcon(R.drawable.ic_launcher_background);
-                //notification.setTicker("This is the ticker.");
-                UtilityMethods.displayGuiMessage(this,""+startDateNotif);
-                notification.setWhen(20000);
-                notification.setContentTitle(startDateTitle);
-                notification.setContentText(startDateMessage);
-                Intent intentNotif = new Intent(this, CourseModify.class);
-                PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                        0, intentNotif, PendingIntent.FLAG_UPDATE_CURRENT);
-                notification.setContentIntent(pendingIntent);
-
-                //notification.setChannelId("channel1");
-
-                NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                nm.notify(startDateNotifId, notification.build());
-
-
+                String startDateTitle = "Course Reminder";
+                String startDateMessage = title + " starts today.";
+                isCheckBoxTicked(startDate, startDateTitle, startDateMessage, 20000);
+                String endDateTitle = "Course Reminder";
+                String endDateMessage = title + " ends today.";
+                isCheckBoxTicked(endDate, endDateTitle, endDateMessage, 25000);
 
                 String sqlQuery = "update course set mentor_id = " + mentorId + ", title = \""
                         + title + "\", status = \"" + status
@@ -200,80 +171,41 @@ public class CourseModify extends AppCompatActivity
         }
     }
 
-    public void scheduleNotification(Context context, long delay, int notificationId, String title, String message)
+    public void isCheckBoxTicked(String tempDate, String title, String message, long delay) throws ParseException
     {
-        //delay is after how much time(in millis) from current time you want to schedule the notification
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setAutoCancel(true)
-                .setSmallIcon(R.drawable.ic_launcher_background)
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+        String sDate = tempDate;
 
-        Intent intent = new Intent(context, CourseModify.class);
-        PendingIntent activity = PendingIntent.getActivity(context, notificationId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        builder.setContentIntent(activity);
-
-        Notification notification = builder.build();
-
-        Intent notificationIntent = new Intent(context, AlarmReceiver.class);
-        //notificationIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, notificationId);
-        //notificationIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
-        //notificationIntent.putExtra(AlarmReceiver.get, title);
-        //notificationIntent.putExtra(AlarmReceiver.message, message);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-        //long futureInMillis = SystemClock.elapsedRealtime() + delay;
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, delay, pendingIntent);
-    }
-
-    private Long getDateDelayMiliseconds(String sDate) throws ParseException
-    {
         boolean checked = ((CheckBox) findViewById(R.id.courseChkBx)).isChecked();
-        Long timeInMiliseconds = 0L;
         if(checked)
         {
             if(!sDate.isEmpty())
             {
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
                 Date date = sdf.parse(sDate);
-                long addTime = 20000;
-                Calendar c = Calendar.getInstance();
-                c.setTime(date);
-                int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-                int minute = Calendar.getInstance().get(Calendar.MINUTE);
-                int seconds = Calendar.getInstance().get(Calendar.SECOND);
-                int miliseconds = (Calendar.getInstance().get(Calendar.MILLISECOND));
-                c.set(c.HOUR_OF_DAY, hour);
-                c.set(c.MINUTE, minute);
-                c.set(c.SECOND, seconds);
-                c.set(c.MILLISECOND, miliseconds);
-                timeInMiliseconds = date.getTime() + addTime;
+                date.setTime(Calendar.getInstance().getTimeInMillis() + delay);
 
-                //alendar c = Calendar.getInstance();
-                //date.setTime(Calendar.getInstance().getTimeInMillis() + addTime);
-                //UtilityMethods.displayGuiMessage(CourseModify.this, "" + date);
-
-                //onTimeSet(c, date, sDate);
+                onTimeSet(date, sDate, title, message);
             }
         }
-        return timeInMiliseconds;
     }
 
-    public void onTimeSet(Calendar c, Date date, String dateString)
+    public void onTimeSet(Date date, String dateString, String title, String message)
     {
         String[] dateValues = dateString.split("/");
-        c.set(Integer.valueOf(dateValues[2]), Integer.valueOf(dateValues[0]), Integer.valueOf(dateValues[1]));
+        Calendar c = Calendar.getInstance();
+        c.set(Integer.valueOf(dateValues[0]), Integer.valueOf(dateValues[1]), Integer.valueOf(dateValues[2]));
+        c.set(Calendar.HOUR_OF_DAY, (c.get(Calendar.HOUR_OF_DAY)));
         c.setTime(date);
 
-        startAlarm(c);
+        startAlarm(c, title, message);
     }
 
-    private void startAlarm(Calendar c)
+    private void startAlarm(Calendar c, String title, String message)
     {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("title", title);
+        intent.putExtra("message", message);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
