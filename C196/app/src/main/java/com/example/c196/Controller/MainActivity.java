@@ -1,15 +1,10 @@
 package com.example.c196.Controller;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-
-import com.example.c196.Utility.NotificationHelper;
 import com.example.c196.Controller.Assessment.AssessmentView;
 import com.example.c196.Controller.Course.Courses;
 import com.example.c196.Controller.Mentor.MentorView;
@@ -30,6 +25,9 @@ public class MainActivity extends AppCompatActivity
         myHelper = new DBConnector(MainActivity.this);
         myHelper.getWritableDatabase();
         myHelper.createTables();
+
+        String query1 = "delete from goal";
+        myHelper.deleteRecord(query1);
     }
 
     @Override

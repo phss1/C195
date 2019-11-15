@@ -1,4 +1,5 @@
 package com.example.c196.Utility;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,30 +15,31 @@ public class AlarmReceiver extends BroadcastReceiver
     private String message;
     private int alarmId;
 
+    public static String NOTIFICATION_ID;
+    public static String NOTIFICATION;
+
     @Override
     public void onReceive(Context context, Intent intent)
     {
         String alarmTitle = intent.getStringExtra("title");
         String alarmText = intent.getStringExtra("text");
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+        NotificationHelper notificationHelper = new NotificationHelper(context);
+        NotificationCompat.Builder nb = notificationHelper.getChannelNotification(alarmTitle, alarmText);
+        notificationHelper.getManager().notify(UtilityMethods.createUniqueId(), nb.build());
+
+        /*NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentTitle()
+                .setContentTitle(alarmTitle)
                 .setContentText(alarmText);
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(UtilityMethods.createUniqueId(), builder.build());
-        //NotificationHelper notificationHelper = new NotificationHelper(context);
-        //NotificationCompat.Builder nb = notificationHelper.getChannelNotification(title, message);
-        //builder.notify(UtilityMethods.createUniqueId(),);
+
+        NotificationHelper notificationHelper = new NotificationHelper(context);
+        NotificationCompat.Builder nb = notificationHelper.getChannelNotification(alarmTitle, alarmText);
+        builder.notify(UtilityMethods.createUniqueId(), nb.build());*/
 
 
-    }
-
-    public AlarmReceiver(String title, String message, int alarmId)
-    {
-        this.title = title;
-        this.message = message;
-        this.alarmId = alarmId;
     }
 
     public String getTitle() {

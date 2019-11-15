@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -97,18 +98,12 @@ public class GoalAdd extends AppCompatActivity
             {
                 EditText tempTitle = findViewById(R.id.descriptionTxtFld);
                 String newTitle = tempTitle.getText().toString();
-                String title = newTitle + " Reminder";
+                String title = newTitle + " reminder for your goal.";
                 String message = "Reminding you of your goal for " + newTitle;
-                int newAlarmId = UtilityMethods.createUniqueId();
-
-                AlarmReceiver ar = new AlarmReceiver(title, message, newAlarmId);
-                ar.setAlarmId(newAlarmId);
-                ar.setTitle(title);
-                ar.setMessage(message);
 
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
                 Date date = sdf.parse(sDate);
-                long addTwoMin = 20000;
+                long addTwoMin = 15000;
                 date.setTime(Calendar.getInstance().getTimeInMillis() + addTwoMin);
 
                 onTimeSet(date, sDate, title, message);
@@ -123,15 +118,22 @@ public class GoalAdd extends AppCompatActivity
         c.set(Integer.valueOf(dateValues[0]), Integer.valueOf(dateValues[1]), Integer.valueOf(dateValues[2]));
         c.set(Calendar.HOUR_OF_DAY, (c.get(Calendar.HOUR_OF_DAY)));
         c.setTime(date);
-        Long time = c.getTimeInMillis();
+        //Long time = c.getTimeInMillis();
 
-        startAlarm(time, title, message);
+        startAlarm(c, title, message);
     }
 
-    private void startAlarm(Long c, String title, String message)
+    private void startAlarm(Calendar c, String title, String message)
     {
-        int nextAlarmId = UtilityMethods.createUniqueId();
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("title", title);
+        intent.putExtra("message", message);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
 
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+
+        /*
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Context context = getApplicationContext();
         Intent intent = new Intent(this, AlarmReceiver.class);
@@ -142,7 +144,7 @@ public class GoalAdd extends AppCompatActivity
         intentAlarm.putExtra("text", message);
         intentAlarm.putExtra("nextAlarmId", nextAlarmId);
         alarmManager.set(AlarmManager.RTC_WAKEUP, c, PendingIntent.getBroadcast(context, nextAlarmId, intentAlarm, PendingIntent.FLAG_ONE_SHOT));
-
+*/
 
         //PendingIntent pendingIntent = PendingIntent.getBroadcast(this, alarmId, intent, 0);
         //alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
