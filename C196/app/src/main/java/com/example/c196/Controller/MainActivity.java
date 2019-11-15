@@ -71,4 +71,29 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, AssessmentView.class);
         startActivity(intent);
     }
+
+    /*
+
+    AlarmHandler.scheduleCourseAlarm(getApplicationContext(), courseId, DateUtil.getDateTimestamp(course.start),
+                    "Course starts today!", course.name + " begins on " + course.start);
+    public static boolean scheduleCourseAlarm(Context context, long id, long time, String title, String text) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        int nextAlarmId = getNextAlarmId(context);
+        Intent intentAlarm = new Intent(context, AlarmHandler.class);
+        intentAlarm.putExtra("id", id);
+        intentAlarm.putExtra("title", title);
+        intentAlarm.putExtra("text", text);
+        intentAlarm.putExtra("destination", "course");
+        intentAlarm.putExtra("nextAlarmId", nextAlarmId);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, time, PendingIntent.getBroadcast(context, nextAlarmId, intentAlarm, PendingIntent.FLAG_ONE_SHOT));
+
+        SharedPreferences sp = context.getSharedPreferences(courseAlarmFile, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt(Long.toString(id), nextAlarmId);
+        editor.commit();
+
+        incrementNextAlarmId(context);
+        return true;
+    }
+     */
 }

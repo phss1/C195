@@ -85,29 +85,6 @@ public class GoalAdd extends AppCompatActivity
         }
     }
 
-    AlarmHandler.scheduleCourseAlarm(getApplicationContext(), courseId, DateUtil.getDateTimestamp(course.start),
-                    "Course starts today!", course.name + " begins on " + course.start);
-    public static boolean scheduleCourseAlarm(Context context, long id, long time, String title, String text) {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        int nextAlarmId = getNextAlarmId(context);
-        Intent intentAlarm = new Intent(context, AlarmHandler.class);
-        intentAlarm.putExtra("id", id);
-        intentAlarm.putExtra("title", title);
-        intentAlarm.putExtra("text", text);
-        intentAlarm.putExtra("destination", "course");
-        intentAlarm.putExtra("nextAlarmId", nextAlarmId);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, time, PendingIntent.getBroadcast(context, nextAlarmId, intentAlarm, PendingIntent.FLAG_ONE_SHOT));
-
-        SharedPreferences sp = context.getSharedPreferences(courseAlarmFile, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putInt(Long.toString(id), nextAlarmId);
-        editor.commit();
-
-        incrementNextAlarmId(context);
-        return true;
-    }
-
-
     public void isCheckBoxTicked() throws ParseException
     {
         EditText startDate = findViewById(R.id.dateTxtFld);
@@ -134,51 +111,65 @@ public class GoalAdd extends AppCompatActivity
                 long addTwoMin = 20000;
                 date.setTime(Calendar.getInstance().getTimeInMillis() + addTwoMin);
 
-                onTimeSet(date, sDate, ar);
+                onTimeSet(date, sDate, title, message);
             }
         }
     }
 
-    public void onTimeSet(Date date, String dateString, AlarmReceiver ar)
+    public void onTimeSet(Date date, String dateString, String title, String message)
     {
         String[] dateValues = dateString.split("/");
         Calendar c = Calendar.getInstance();
         c.set(Integer.valueOf(dateValues[0]), Integer.valueOf(dateValues[1]), Integer.valueOf(dateValues[2]));
         c.set(Calendar.HOUR_OF_DAY, (c.get(Calendar.HOUR_OF_DAY)));
         c.setTime(date);
+        Long time = c.getTimeInMillis();
 
-        startAlarm(c, ar);
+        startAlarm(time, title, message);
     }
 
-    private void startAlarm(Calendar c, AlarmReceiver ar)
+    private void startAlarm(Long c, String title, String message)
     {
-        final String title = ar.getTitle();
-        final String message = ar.getMessage();
-        final int alarmId = ar.getAlarmId();
-
-        /*BroadcastReceiver test = new BroadcastReceiver()
-        {
-            @Override
-            public void onReceive(Context context, Intent intent)
-            {
-                NotificationHelper notificationHelper = new NotificationHelper(context);
-                NotificationCompat.Builder nb = notificationHelper.getChannelNotification(title, message);
-                notificationHelper.getManager().notify(alarmId, nb.build());
-            }
-        };*/
-
+        int nextAlarmId = UtilityMethods.createUniqueId();
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Context context = getApplicationContext();
         Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, alarmId, intent, 0);
 
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+        Intent intentAlarm = new Intent(context, AlarmReceiver.class);
+        //intentAlarm.putExtra("id", id);
+        intentAlarm.putExtra("title", title);
+        intentAlarm.putExtra("text", message);
+        intentAlarm.putExtra("nextAlarmId", nextAlarmId);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, c, PendingIntent.getBroadcast(context, nextAlarmId, intentAlarm, PendingIntent.FLAG_ONE_SHOT));
 
 
-
-
-
+        //PendingIntent pendingIntent = PendingIntent.getBroadcast(this, alarmId, intent, 0);
+        //alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
     }
+
+
+    /*AlarmHandler.scheduleCourseAlarm(getApplicationContext(), courseId, DateUtil.getDateTimestamp(course.start),
+                    "Course starts today!", course.name + " begins on " + course.start);
+    public static boolean scheduleCourseAlarm(Context context, long id, long time, String title, String text) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        int nextAlarmId = getNextAlarmId(context);
+        Intent intentAlarm = new Intent(context, AlarmHandler.class);
+        intentAlarm.putExtra("id", id);
+        intentAlarm.putExtra("title", title);
+        intentAlarm.putExtra("text", text);
+        intentAlarm.putExtra("destination", "course");
+        intentAlarm.putExtra("nextAlarmId", nextAlarmId);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, time, PendingIntent.getBroadcast(context, nextAlarmId, intentAlarm, PendingIntent.FLAG_ONE_SHOT));
+
+        SharedPreferences sp = context.getSharedPreferences(courseAlarmFile, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt(Long.toString(id), nextAlarmId);
+        editor.commit();
+
+        incrementNextAlarmId(context);
+        return true;
+    }*/
 
     /*public void onTimeSet(Date date, String dateString)
     {
