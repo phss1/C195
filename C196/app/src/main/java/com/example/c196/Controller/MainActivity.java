@@ -25,9 +25,6 @@ public class MainActivity extends AppCompatActivity
         myHelper = new DBConnector(MainActivity.this);
         myHelper.getWritableDatabase();
         myHelper.createTables();
-
-        String query1 = "delete from goal";
-        myHelper.deleteRecord(query1);
     }
 
     @Override
