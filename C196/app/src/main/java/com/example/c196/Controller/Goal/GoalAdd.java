@@ -102,12 +102,22 @@ public class GoalAdd extends AppCompatActivity
                 String title = "Assessment Goal Reminder";
                 String message = "Your goal " + newTitle + " is due today " + sDate + ".";
 
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-                Date date = sdf.parse(sDate);
-                long addTwoMin = 20000;
-                date.setTime(Calendar.getInstance().getTimeInMillis() + addTwoMin);
+                String[] dateValues = sDate.split("/");
+                Calendar c = Calendar.getInstance();
+                int month = Integer.valueOf(dateValues[0]);
+                int day = Integer.valueOf(dateValues[1]);
+                int year = Integer.valueOf(dateValues[2]);
+                int hour = c.get(Calendar.HOUR_OF_DAY);
+                int minute = c.get(Calendar.MINUTE);
+                int second = c.get(Calendar.SECOND) + 30;
+                c.set(Calendar.MONTH, month - 1);
+                c.set(Calendar.DAY_OF_MONTH, day);
+                c.set(Calendar.YEAR, year);
+                c.set(Calendar.HOUR_OF_DAY, hour);
+                c.set(Calendar.MINUTE, minute);
+                c.set(Calendar.SECOND, second);
 
-                onTimeSet(date, sDate, title, message, "one");
+                startAlarm(c, title, message, "one");
             }
         }
     }

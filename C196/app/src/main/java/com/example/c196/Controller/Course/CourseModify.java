@@ -30,8 +30,10 @@ import com.example.c196.Utility.DataProvider;
 import com.example.c196.Utility.NotificationHelper;
 import com.example.c196.Utility.UtilityMethods;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -146,10 +148,10 @@ public class CourseModify extends AppCompatActivity
             {
                 String startDateTitle = "Course Reminder";
                 String startDateMessage = title + " starts today.";
-                //isCheckBoxTicked(startDate, startDateTitle, startDateMessage, 5000, "two");
+                isCheckBoxTicked(startDate, startDateTitle, startDateMessage, "two");
                 String endDateTitle = "Course Reminder";
                 String endDateMessage = title + " ends today.";
-                isCheckBoxTicked(endDate, endDateTitle, endDateMessage, 10000, "three");
+                isCheckBoxTicked(endDate, endDateTitle, endDateMessage,"three");
 
                 String sqlQuery = "update course set mentor_id = " + mentorId + ", title = \""
                         + title + "\", status = \"" + status
@@ -171,33 +173,30 @@ public class CourseModify extends AppCompatActivity
         }
     }
 
-    public void isCheckBoxTicked(String tempDate, String title, String message, long delay, String channel) throws ParseException
+    public void isCheckBoxTicked(String tempDate, String title, String message, String channel) throws ParseException
     {
-        String sDate = tempDate;
-
         boolean checked = ((CheckBox) findViewById(R.id.courseChkBx)).isChecked();
         if(checked)
         {
-            if(!sDate.isEmpty())
-            {
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-                Date date = sdf.parse(sDate);
-                date.setTime(Calendar.getInstance().getTimeInMillis() + delay);
+            if(!tempDate.isEmpty()) {
+                String[] dateValues = tempDate.split("/");
+                Calendar c = Calendar.getInstance();
+                int month = Integer.valueOf(dateValues[0]);
+                int day = Integer.valueOf(dateValues[1]);
+                int year = Integer.valueOf(dateValues[2]);
+                int hour = c.get(Calendar.HOUR_OF_DAY);
+                int minute = c.get(Calendar.MINUTE);
+                int second = c.get(Calendar.SECOND) + 30;
+                c.set(Calendar.MONTH, month - 1);
+                c.set(Calendar.DAY_OF_MONTH, day);
+                c.set(Calendar.YEAR, year);
+                c.set(Calendar.HOUR_OF_DAY, hour);
+                c.set(Calendar.MINUTE, minute);
+                c.set(Calendar.SECOND, second);
 
-                onTimeSet(date, sDate, title, message, channel);
+                startAlarm(c, title, message, channel);
             }
         }
-    }
-
-    public void onTimeSet(Date date, String dateString, String title, String message, String channel)
-    {
-        String[] dateValues = dateString.split("/");
-        Calendar c = Calendar.getInstance();
-        c.set(Integer.valueOf(dateValues[0]), Integer.valueOf(dateValues[1]), Integer.valueOf(dateValues[2]));
-        c.set(Calendar.HOUR_OF_DAY, (c.get(Calendar.HOUR_OF_DAY)));
-        c.setTime(date);
-
-        startAlarm(c, title, message, channel);
     }
 
     private void startAlarm(Calendar c, String title, String message, String channel)
