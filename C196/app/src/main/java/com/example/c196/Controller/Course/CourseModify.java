@@ -146,10 +146,10 @@ public class CourseModify extends AppCompatActivity
             {
                 String startDateTitle = "Course Reminder";
                 String startDateMessage = title + " starts today.";
-                isCheckBoxTicked(startDate, startDateTitle, startDateMessage, 20000);
+                //isCheckBoxTicked(startDate, startDateTitle, startDateMessage, 5000, "two");
                 String endDateTitle = "Course Reminder";
                 String endDateMessage = title + " ends today.";
-                isCheckBoxTicked(endDate, endDateTitle, endDateMessage, 25000);
+                isCheckBoxTicked(endDate, endDateTitle, endDateMessage, 10000, "three");
 
                 String sqlQuery = "update course set mentor_id = " + mentorId + ", title = \""
                         + title + "\", status = \"" + status
@@ -171,7 +171,7 @@ public class CourseModify extends AppCompatActivity
         }
     }
 
-    public void isCheckBoxTicked(String tempDate, String title, String message, long delay) throws ParseException
+    public void isCheckBoxTicked(String tempDate, String title, String message, long delay, String channel) throws ParseException
     {
         String sDate = tempDate;
 
@@ -184,12 +184,12 @@ public class CourseModify extends AppCompatActivity
                 Date date = sdf.parse(sDate);
                 date.setTime(Calendar.getInstance().getTimeInMillis() + delay);
 
-                onTimeSet(date, sDate, title, message);
+                onTimeSet(date, sDate, title, message, channel);
             }
         }
     }
 
-    public void onTimeSet(Date date, String dateString, String title, String message)
+    public void onTimeSet(Date date, String dateString, String title, String message, String channel)
     {
         String[] dateValues = dateString.split("/");
         Calendar c = Calendar.getInstance();
@@ -197,16 +197,17 @@ public class CourseModify extends AppCompatActivity
         c.set(Calendar.HOUR_OF_DAY, (c.get(Calendar.HOUR_OF_DAY)));
         c.setTime(date);
 
-        startAlarm(c, title, message);
+        startAlarm(c, title, message, channel);
     }
 
-    private void startAlarm(Calendar c, String title, String message)
+    private void startAlarm(Calendar c, String title, String message, String channel)
     {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
         intent.putExtra("title", title);
         intent.putExtra("message", message);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+        intent.putExtra("channel", channel);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, UtilityMethods.createUniqueId(), intent, 0);
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
     }

@@ -18,9 +18,10 @@ public class AlarmReceiver extends BroadcastReceiver
     {
         String alarmTitle = intent.getStringExtra("title");
         String alarmText = intent.getStringExtra("message");
+        String channel = intent.getStringExtra("channel");
 
         NotificationHelper notificationHelper = new NotificationHelper(context);
-        NotificationCompat.Builder nb = notificationHelper.getChannelNotification(alarmTitle, alarmText);
+        NotificationCompat.Builder nb = notificationHelper.getChannelNotification(alarmTitle, alarmText, channel);
         notificationHelper.getManager().notify(UtilityMethods.createUniqueId(), nb.build());
 
         /*NotificationCompat.Builder builder = new NotificationCompat.Builder(context)

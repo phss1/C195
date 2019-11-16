@@ -54,7 +54,7 @@ public class GoalAdd extends AppCompatActivity
         int id = item.getItemId();
         if (id == android.R.id.home)
         {
-            Intent intent = new Intent(this, Terms.class);
+            Intent intent = new Intent(this, AssessmentModify.class);
             startActivity(intent);
         }
 
@@ -71,7 +71,8 @@ public class GoalAdd extends AppCompatActivity
     {
         String description = ((EditText) findViewById(R.id.descriptionTxtFld)).getText().toString();
         String date = ((EditText) findViewById(R.id.dateTxtFld)).getText().toString();
-        Boolean valuesNotNull = !description.isEmpty() && !date.isEmpty() && UtilityMethods.isValidDate(date);
+        Boolean valuesNotNull = !description.isEmpty() && !date.isEmpty()
+                && UtilityMethods.isValidDate(date);
 
         if (valuesNotNull.equals(true))
         {
@@ -106,30 +107,34 @@ public class GoalAdd extends AppCompatActivity
                 long addTwoMin = 20000;
                 date.setTime(Calendar.getInstance().getTimeInMillis() + addTwoMin);
 
-                onTimeSet(date, sDate, title, message);
+                onTimeSet(date, sDate, title, message, "one");
             }
         }
     }
 
-    public void onTimeSet(Date date, String dateString, String title, String message)
+    public void onTimeSet(Date date, String dateString, String title,
+                          String message, String channel)
     {
         String[] dateValues = dateString.split("/");
         Calendar c = Calendar.getInstance();
-        c.set(Integer.valueOf(dateValues[0]), Integer.valueOf(dateValues[1]), Integer.valueOf(dateValues[2]));
+        c.set(Integer.valueOf(dateValues[0]), Integer.valueOf(dateValues[1]),
+                Integer.valueOf(dateValues[2]));
         c.set(Calendar.HOUR_OF_DAY, (c.get(Calendar.HOUR_OF_DAY)));
         c.setTime(date);
         //Long time = c.getTimeInMillis();
 
-        startAlarm(c, title, message);
+        startAlarm(c, title, message, channel);
     }
 
-    private void startAlarm(Calendar c, String title, String message)
+    private void startAlarm(Calendar c, String title, String message, String channel)
     {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
         intent.putExtra("title", title);
         intent.putExtra("message", message);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+        intent.putExtra("channel", channel);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
+                UtilityMethods.createUniqueId(), intent, 0);
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
     }

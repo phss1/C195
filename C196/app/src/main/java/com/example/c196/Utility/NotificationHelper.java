@@ -17,6 +17,8 @@ public class NotificationHelper extends ContextWrapper
     public static final String channel_name = "channel 1";
     public static final String channel2_id = "channe2Id";
     public static final String channel2_name = "channel 2";
+    public static final String channel3_id = "channe3Id";
+    public static final String channel3_name = "channel 3";
     private NotificationManager manager;
 
     public NotificationHelper(Context base)
@@ -31,14 +33,32 @@ public class NotificationHelper extends ContextWrapper
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void createChannels()
     {
-        NotificationChannel channel = new NotificationChannel(channel_id, channel_name,
+        NotificationChannel channel1 = new NotificationChannel(channel_id, channel_name,
                 NotificationManager.IMPORTANCE_DEFAULT);
-        channel.enableLights(true);
-        channel.enableVibration(true);
-        channel.setLightColor(R.color.colorPrimary);
-        channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        channel1.enableLights(true);
+        channel1.enableVibration(true);
+        channel1.setLightColor(R.color.colorPrimary);
+        channel1.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
 
-        getManager().createNotificationChannel(channel);
+        getManager().createNotificationChannel(channel1);
+
+        NotificationChannel channel2 = new NotificationChannel(channel2_id, channel2_name,
+                NotificationManager.IMPORTANCE_DEFAULT);
+        channel2.enableLights(true);
+        channel2.enableVibration(true);
+        channel2.setLightColor(R.color.colorPrimary);
+        channel2.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+
+        getManager().createNotificationChannel(channel2);
+
+        NotificationChannel channel3 = new NotificationChannel(channel3_id, channel3_name,
+                NotificationManager.IMPORTANCE_DEFAULT);
+        channel3.enableLights(true);
+        channel3.enableVibration(true);
+        channel3.setLightColor(R.color.colorPrimary);
+        channel3.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+
+        getManager().createNotificationChannel(channel3);
     }
 
     public NotificationManager getManager()
@@ -51,9 +71,11 @@ public class NotificationHelper extends ContextWrapper
         return manager;
     }
 
-    public NotificationCompat.Builder getChannelNotification(String title, String message, int channel)
+    public NotificationCompat.Builder getChannelNotification(String title, String message, String channel)
     {
-        NotificationCompat.Builder builder = channel == 1 ?
+
+
+        /*NotificationCompat.Builder builder = channel.contains("one") ?
                 new NotificationCompat.Builder(getApplicationContext(), channel_id)
                 .setContentTitle(title)
                 .setContentText(message)
@@ -61,15 +83,31 @@ public class NotificationHelper extends ContextWrapper
                 new NotificationCompat.Builder(getApplicationContext(), channel2_id)
                         .setContentTitle(title)
                         .setContentText(message)
-                        .setSmallIcon(R.drawable.ic_launcher_background);
+                        .setSmallIcon(R.drawable.ic_launcher_background);*/
 
-        switch(channel)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
+        if(channel.contains("one"))
         {
-            case 1:
-                builder = new NotificationCompat.Builder(getApplicationContext(), channel_id)
-                        .setContentTitle(title)
-                        .setContentText(message)
-                        .setSmallIcon(R.drawable.ic_launcher_background);
+            builder = new NotificationCompat.Builder(getApplicationContext(), channel_id)
+                    .setContentTitle(title)
+                    .setContentText(message)
+                    .setSmallIcon(R.drawable.ic_launcher_background);
         }
+        else if(channel.contains("two"))
+        {
+            builder = new NotificationCompat.Builder(getApplicationContext(), channel2_id)
+                    .setContentTitle(title)
+                    .setContentText(message)
+                    .setSmallIcon(R.drawable.ic_launcher_background);
+        }
+        else if(channel.contains("three"))
+        {
+            builder = new NotificationCompat.Builder(getApplicationContext(), channel3_id)
+                    .setContentTitle(title)
+                    .setContentText(message)
+                    .setSmallIcon(R.drawable.ic_launcher_background);
+        }
+
+        return builder;
     }
 }

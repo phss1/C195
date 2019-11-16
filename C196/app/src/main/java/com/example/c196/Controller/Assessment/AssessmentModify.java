@@ -243,7 +243,8 @@ public class AssessmentModify extends AppCompatActivity
 
     public void modAssCancelBtn(View view)
     {
-        finish();
+        Intent intent = new Intent(this, AssessmentView.class);
+        startActivity(intent);
     }
 
     @Override
